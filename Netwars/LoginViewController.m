@@ -7,6 +7,7 @@
 //
 
 #import "LoginViewController.h"
+#import "LoginInputCell.h"
 
 @interface LoginViewController ()
 
@@ -35,6 +36,7 @@
     [self.tableView registerNib:[UINib nibWithNibName:@"LoginInputCell"
                                                bundle:[NSBundle mainBundle]]
          forCellReuseIdentifier:@"LoginInput"];
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"RegularCell"];
 }
 
 - (void)didReceiveMemoryWarning
@@ -52,21 +54,71 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 1;
+    return 4;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"LoginInput";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    static NSString *headerCell = @"RegularCell";
+    static NSString *inputCell = @"LoginInput";
+    NSString *currCell;
+    switch (indexPath.row) {
+        case 1:
+            currCell = inputCell;
+            break;
+        default:
+            currCell = headerCell;
+            break;
+    }
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:currCell forIndexPath:indexPath];
     
+    if (currCell == inputCell) {
+        LoginInputCell *input = (LoginInputCell *)cell;
+        input.nickName.delegate = self;
+        input.nickName.tag = 1;
+        input.email.delegate = self;
+        input.email.tag = 2;
+    } else if (currCell == headerCell){
     // Configure the cell...
-    
+    }
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 102.0f;
+    CGFloat height;
+    CGFloat tableHeight = [self.tableView bounds].size.height;
+    switch (indexPath.row) {
+        case 0:
+            height = tableHeight - 228.0f;
+            break;
+        case 1:
+            height = 108.0f;
+            break;
+        default:
+            height = 120.0f;
+            break;
+    }
+    return height;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+	// the user pressed the "Done" button, so dismiss the keyboard
+	[textField resignFirstResponder];
+	return YES;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    switch (textField.tag) {
+        case 1:
+            self.nick = textField.text;
+            break;
+            
+        case 2:
+            self.email = textField.text;
+            break;
+    }
 }
 
 /*
@@ -119,6 +171,9 @@
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
+    if (indexPath.row == 2) {
+        NSLog(@"email: %@ nickname: %@", self.email, self.nick);
+    }
 }
 
 @end

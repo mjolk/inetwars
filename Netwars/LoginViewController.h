@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LoginViewController : UITableViewController
+@interface LoginViewController : UITableViewController <UITextFieldDelegate>
+
+@property(nonatomic, strong) NSString *email;
+@property(nonatomic, strong) NSString *nick;
 
 @end
