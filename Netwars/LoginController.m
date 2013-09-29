@@ -6,14 +6,17 @@
 //  Copyright (c) 2013 mjolk. All rights reserved.
 //
 
-#import "LoginViewController.h"
+#import "LoginController.h"
 #import "LoginInputCell.h"
+#import "Player.h"
 
-@interface LoginViewController ()
+@interface LoginController ()
+
+- (void) createPlayer;
 
 @end
 
-@implementation LoginViewController
+@implementation LoginController
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -59,27 +62,30 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *headerCell = @"RegularCell";
+    static NSString *btnCell = @"RegularCell";
     static NSString *inputCell = @"LoginInput";
-    NSString *currCell;
-    switch (indexPath.row) {
-        case 1:
-            currCell = inputCell;
-            break;
-        default:
-            currCell = headerCell;
-            break;
-    }
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:currCell forIndexPath:indexPath];
-    
-    if (currCell == inputCell) {
-        LoginInputCell *input = (LoginInputCell *)cell;
-        input.nickName.delegate = self;
-        input.nickName.tag = 1;
-        input.email.delegate = self;
-        input.email.tag = 2;
-    } else if (currCell == headerCell){
-    // Configure the cell...
+    UITableViewCell *cell;
+        switch (indexPath.row) {
+            case 0:
+            cell = [tableView dequeueReusableCellWithIdentifier:btnCell forIndexPath:indexPath];
+            cell.textLabel.text = @"Existing player";
+                break;
+            case 1:
+                cell = [tableView dequeueReusableCellWithIdentifier:btnCell forIndexPath:indexPath];
+                break;
+            case 2:{
+            cell = [tableView dequeueReusableCellWithIdentifier:inputCell forIndexPath:indexPath];
+            LoginInputCell *input = (LoginInputCell *)cell;
+            input.nickName.delegate = self;
+            input.nickName.tag = 1;
+            input.email.delegate = self;
+            input.email.tag = 2;
+            break;}
+            case 3:{
+            cell = [tableView dequeueReusableCellWithIdentifier:btnCell forIndexPath:indexPath];
+            cell.textLabel.text = @"Create new account";
+                break;}
+
     }
     return cell;
 }
@@ -88,14 +94,14 @@
     CGFloat height;
     CGFloat tableHeight = [self.tableView bounds].size.height;
     switch (indexPath.row) {
-        case 0:
-            height = tableHeight - 228.0f;
-            break;
         case 1:
+            height = tableHeight - 216.0f;
+            break;
+        case 2:
             height = 108.0f;
             break;
         default:
-            height = 120.0f;
+            height = 54.0f;
             break;
     }
     return height;
@@ -171,9 +177,34 @@
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
-    if (indexPath.row == 2) {
+    if (indexPath.row == 3) {
         NSLog(@"email: %@ nickname: %@", self.email, self.nick);
+        if ([self.email length] == 0 || [self.nick length] == 0) {
+            //error
+        } else {
+            
+            [self createPlayer];
+            
+        }
+        
     }
+}
+
+#pragma mark - create player
+
+- (void) createPlayer {
+    Player *player = [Player sharedPlayer];
+    //__weak LoginViewController *sself = self;
+    [player create:self.nick email:self.email callback:^(NSDictionary *errors) {
+        if(errors) {
+            //errors
+            NSLog(@"errors %@", errors);
+        } else {
+            [self.delegate userCreated:nil];
+            NSLog(@"playerkey %@", player.playerKey);
+        }
+    }];
+    
 }
 
 @end

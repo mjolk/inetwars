@@ -7,6 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "AFNetClient.h"
+#import "Player.h"
+#import "Program.h"
+
 @class Player;
 
 typedef void (^PlayerCreate)(NSDictionary *errors);
@@ -25,13 +29,17 @@ typedef void (^PlayerAllocate)(BOOL);
 @property(nonatomic, strong) NSString *playerKey;
 @property(nonatomic, strong) NSMutableArray *programs;
 @property(nonatomic, assign) NSUInteger newLocals;
-@property(nonatomic, assign) BOOL authenticated;
+@property(nonatomic, assign) BOOL notAuthenticated;
+@property(nonatomic, strong) NSString *nick;
+@property(nonatomic, strong) NSString *email;
+@property(nonatomic, strong) NSDate *updated;
 
 + (id)sharedPlayer;
-- (void) update:(NSDictionary *) values;
-- (void) create:(PlayerCreate) block;
+- (void) create:(NSString *)n email:(NSString *)e callback:(PlayerCreate) block;
 - (void) state:(PlayerState) block;
-- (void) allocate:(PlayerAllocate) block;
+- (void) allocate:(NSUInteger) dir program:(NSString *) prgKey amount:(NSUInteger) a allocBlock:(PlayerAllocate)block;
 - (id) initWithDefaults;
+- (void) update:(NSDictionary *) values;
+- (void) persistKey;
 
 @end
