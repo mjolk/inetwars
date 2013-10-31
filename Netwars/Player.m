@@ -7,6 +7,8 @@
 //
 
 #import "Player.h"
+#import "AFNetClient.h"
+#import "Program.h"
 
 @interface Player ()
 
@@ -30,6 +32,7 @@
 	if (self) {
 		NSUserDefaults *data = [NSUserDefaults standardUserDefaults];
 		NSString *playerKey = [data objectForKey:@"playerKey"];
+        //playerKey = @"agtkZXZ-bjN0d2Fyc3IsCxIGUGxheWVyIiA1NTE5NTIwNjQwNDFlODI4ODA2ZjNjZTcwOTBlODIwZQw";
 		if (playerKey == nil) {
 			self.notAuthenticated = YES;
 		}
@@ -40,6 +43,20 @@
 	}
     
 	return self;
+}
+
+- (id) initForPublic:(NSDictionary *)values {
+    self = [super init];
+    if (self) {
+        self.nick = [values objectForKey:@"nick"];
+        self.bandwidthUsage = [[values objectForKey:@"bandwidth_usage"] floatValue];
+        self.clanTag = [values objectForKey:@"clan_tag"];
+        self.avatar = [values objectForKey:@"avatar_thumb"];
+        self.playerID = [[values objectForKey:@"player_id"] integerValue];
+        self.status = [values objectForKey:@"status"];
+        self.publicKey = [values objectForKey:@"key"];
+    }
+    return self;
 }
 
 - (void)persistKey {
@@ -67,48 +84,63 @@
 	NSLog(@" updated : %d", self.memory);
 }
 
-- (void)create:(NSString *)n email:(NSString *)e callback:(PlayerCreate)block {
-	__weak Player *weakPlayer = self;
-	[[AFNetClient sharedClient] postPath:@"player_create" parameters:[NSDictionary dictionaryWithObjectsAndKeys:n, @"nick", e,  @"email", nil] success: ^(AFHTTPRequestOperation *operation, id JSON) {
-	    NSLog(@"json result create player %@", JSON);
-	    NSLog(@"success?? %@", [JSON objectForKey:@"success"]);
-	    BOOL status = [[JSON objectForKey:@"success"] boolValue];
-	    if (status) {
-	        weakPlayer.playerKey = [JSON objectForKey:@"result"];
-	        weakPlayer.email = e;
-	        weakPlayer.nick = n;
-	        weakPlayer.notAuthenticated = NO;
-	        block(nil);
-		}
-	    else {
-	        NSDictionary *errors = [JSON objectForKey:@"result"];
-	        block(errors);
-		}
-	} failure: ^(AFHTTPRequestOperation *operation, NSError *error) {
-	    [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:[error localizedDescription] delegate:nil cancelButtonTitle:nil otherButtonTitles:NSLocalizedString(@"OK", nil), nil] show];
-	}];
+- (NSURLSessionDataTask *) create:(NSString *)n email:(NSString *)e callback:(PlayerCreate)block {
+    __weak Player *weakPlayer = self;
+    return [[AFNetClient sharedClient] POST:@"player_create" parameters:@{@"nick":n, @"email":e} success:^(NSURLSessionDataTask *task, id responseObject) {
+        BOOL status = [[responseObject objectForKey:@"success"]boolValue];
+        if(status) {
+            weakPlayer.playerKey = [responseObject objectForKey:@"result"];
+            weakPlayer.email = e;
+            weakPlayer.nick = n;
+            weakPlayer.notAuthenticated = NO;
+            block(nil);
+        } else {
+            NSDictionary *errors = [responseObject objectForKey:@"result"];
+            block(errors);
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        //errors
+    }];
 }
 
-- (void)state:(PlayerState)block {
-	__weak Player *weakPlayer = self;
-	[[AFNetClient sharedClient] getPath:@"player_status" parameters:[NSDictionary dictionaryWithObjectsAndKeys:self.playerKey, @"pkey", nil] success: ^(AFHTTPRequestOperation *operation, id JSON) {
-	    NSLog(@"json result state player %@", JSON);
-	    NSLog(@"success?? %@", [JSON objectForKey:@"success"]);
-	    BOOL status = [[JSON objectForKey:@"success"] boolValue];
-	    if (status) {
-	        [weakPlayer update:[JSON objectForKey:@"result"]];
-            NSLog(@"weakplayer: %@ \n", [[weakPlayer.programs objectAtIndex:0] programs]);
-	        block(NO);
-		}
-	    else {
-	        block(YES);
-		}
-	} failure: ^(AFHTTPRequestOperation *operation, NSError *error) {
-	    [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:[error localizedDescription] delegate:nil cancelButtonTitle:nil otherButtonTitles:NSLocalizedString(@"OK", nil), nil] show];
-	}];
+- (NSURLSessionDataTask *) state:(PlayerState)block {
+    __weak Player *wPlayer = self;
+    return [[AFNetClient sharedClient] GET:@"player_status" parameters:@{@"pkey": self.playerKey} success:^(NSURLSessionDataTask *task, id responseObject) {
+        BOOL status = [[responseObject objectForKey:@"success"] boolValue];
+        if(status){
+            [wPlayer update:[responseObject objectForKey:@"result"]];
+            block(NO);
+        } else {
+            block(YES);
+        }
+    }
+       failure:^(NSURLSessionDataTask *task, NSError *error) {
+           //send error message
+       }];
 }
 
-- (void) allocate:(NSUInteger) dir program:(NSString *) prgKey amount:(NSUInteger) a allocBlock:(PlayerAllocate)block {
++ (NSURLSessionDataTask *) list:(NSString *)playerKey range:(BOOL) rnge cursor:(NSString *) c callback:(PlayerList) block {
+    return [[AFNetClient sharedClient] GET:@"player_list" parameters:@{@"pkey":playerKey, @"range":[NSNumber numberWithBool:rnge], @"c": c} success:^(NSURLSessionDataTask *task, id responseObject) {
+        BOOL status = [[responseObject objectForKey:@"success"] boolValue];
+        if (status) {
+            NSLog(@"result players: %@", responseObject);
+            NSDictionary *listObj = [responseObject objectForKey:@"result"];
+            NSString *cur = [listObj objectForKey:@"cursor"];
+            NSArray *dictPls = [listObj objectForKey:@"players"];
+            NSMutableArray *pls = [[NSMutableArray alloc] initWithCapacity:[listObj count]];
+            for(NSDictionary *pDict in dictPls) {
+                [pls addObject:[[Player alloc] initForPublic:pDict]];
+            }
+            block(pls, cur);
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        //error
+    }];
+}
+
+
+
+- (NSURLSessionDataTask *) allocate:(NSUInteger) dir program:(NSString *) prgKey amount:(NSUInteger) a allocBlock:(PlayerAllocate)block {
     NSString *aType = @"";
     switch (dir) {
         case 0:
@@ -119,19 +151,17 @@
             aType = @"player_deallocate";
             break;
     }
-    [[AFNetClient sharedClient] postPath:aType parameters:@{@"pkey": self.playerKey, @"prgkey":prgKey, @"amount": [NSString stringWithFormat:@"%d", a]} success: ^(AFHTTPRequestOperation *operation , id JSON) {
-        if (JSON != nil){
-            NSLog(@"error response : %@ \n", JSON);
+    return [[AFNetClient sharedClient] POST:aType parameters:@{@"pkey": self.playerKey, @"prgkey": prgKey, @"amount": [NSString stringWithFormat:@"%d", a]} success:^(NSURLSessionDataTask *task, id responseObject) {
+        if (responseObject != nil){
+            NSLog(@"error response : %@ \n", responseObject);
             block(YES);
-            NSString *error = [JSON objectForKey:@"error"];
+            NSString *error = [responseObject objectForKey:@"error"];
             [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:error delegate:nil cancelButtonTitle:nil otherButtonTitles:NSLocalizedString(@"OK", nil), nil] show];
-            block(YES);
         } else {
             block(NO);
         }
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:[error localizedDescription] delegate:nil cancelButtonTitle:nil otherButtonTitles:NSLocalizedString(@"OK", nil), nil] show];
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        //error
     }];
 }
 

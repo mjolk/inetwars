@@ -7,6 +7,7 @@
 //
 
 #import "HUDCell.h"
+#import "DACircularProgressView.h"
 
 @interface HUDCell()
 

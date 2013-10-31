@@ -41,16 +41,16 @@
     
     UIButton *localEventsBtn = [[UIButton alloc] initForAutoLayout];
     [localEventsBtn setImage:[UIImage imageNamed:@"events_44.png" ] forState:UIControlStateNormal];
-    [localEventsBtn addTarget:localEventsBtn action:@selector(localsSelected:) forControlEvents:UIControlEventTouchUpInside];
+    [localEventsBtn addTarget:self action:@selector(localsSelected:) forControlEvents:UIControlEventTouchUpInside];
     UIButton *programsBtn = [[UIButton alloc] initForAutoLayout];
     [programsBtn setImage:[UIImage imageNamed:@"programs_44.png"] forState:UIControlStateNormal];
     [programsBtn addTarget:self action:@selector(programsSelected:) forControlEvents:UIControlEventTouchUpInside];
     UIButton *listBtn = [[UIButton alloc] initForAutoLayout];
     [listBtn setImage:[UIImage imageNamed:@"list_44.png"] forState:UIControlStateNormal];
-    [listBtn addTarget:listBtn action:@selector(listSelected:) forControlEvents:UIControlEventTouchUpInside];
+    [listBtn addTarget:self action:@selector(listSelected:) forControlEvents:UIControlEventTouchUpInside];
     UIButton *messageBtn = [[UIButton alloc]initForAutoLayout];
     [messageBtn setImage:[UIImage imageNamed:@"messages_44.png"] forState:UIControlStateNormal];
-    [messageBtn addTarget:messageBtn action:@selector(messageSelected:) forControlEvents:UIControlEventTouchUpInside];
+    [messageBtn addTarget:self action:@selector(messageSelected:) forControlEvents:UIControlEventTouchUpInside];
     
     [container addSubview:localEventsBtn];
     [container addSubview:programsBtn];

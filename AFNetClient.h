@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 mjolk. All rights reserved.
 //
 
-#import "AFHTTPClient.h"
+#import "AFHTTPSessionManager.h"
 
-@interface AFNetClient : AFHTTPClient
+@interface AFNetClient : AFHTTPSessionManager
 
 + (AFNetClient *)sharedClient;
 

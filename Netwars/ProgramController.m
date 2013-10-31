@@ -7,6 +7,12 @@
 //
 
 #import "ProgramController.h"
+#import "Program.h"
+#import "ProgramCell.h"
+#import "EffectorView.h"
+#import "AllocController.h"
+#import "UIAlertView+AFNetworking.h"
+#import "Player.h"
 
 @interface ProgramController ()
 
@@ -42,14 +48,48 @@
 	[self load];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+    [self updateSource];
+}
+
+- (void)updateSource {
+	NSMutableArray *supportedProgramTypes = [[NSMutableArray alloc] init];
+	Player *player = [Player sharedPlayer];
+	for (ProgramGroup *pGroup in player.programs) {
+		//only programs for which you can have power.
+		if ([pGroup.ptype isEqualToString:@"Connection"]) {
+			for (Program *energy in pGroup.programs) {
+				NSLog(@"supported types : %@\n", [energy.effectors objectAtIndex:0]);
+				[supportedProgramTypes addObject:[energy.effectors objectAtIndex:0]];
+			}
+		}
+	}
+	//always show connections/ power units
+	[supportedProgramTypes addObject:@"Connection"];
+	NSPredicate *prgPred = [NSPredicate predicateWithFormat:@"ptype IN $NAME_LIST"];
+	NSArray *filtered = [self.programs filteredArrayUsingPredicate:[prgPred predicateWithSubstitutionVariables:@{ @"NAME_LIST":supportedProgramTypes }]];
+    for (ProgramGroup *_prog in filtered) {
+        NSLog(@"filtered program A--- %@", _prog.ptype);
+    }
+    self.filteredPrograms = [NSMutableArray arrayWithArray:filtered];
+    for (ProgramGroup *prog in self.filteredPrograms) {
+        NSLog(@"filtered program B--- %@", prog.ptype);
+    }
+    NSLog(@"filter ----");
+    [self.tableView reloadData];
+}
+
 - (void)load {
 	__weak ProgramController *pself = self;
-	[Program list: ^(NSMutableArray *progs) {
+	NSURLSessionDataTask *task = [Program list: ^(NSMutableArray *progs) {
+        NSLog(@"loaded programs %@", progs);
 	    if (progs != nil) {
-	        pself.programs = progs;
-	        [pself.tableView reloadData];
+	        pself.programs = [NSArray arrayWithArray:progs];
+	        [pself updateSource];
 		}
 	}];
+	[UIAlertView showAlertViewForTaskWithErrorOnCompletion:task delegate:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -60,39 +100,39 @@
 - (UIView *)createHeader:(NSString *)programType {
 	UIView *header = [[UIView alloc] init];
     
-    UILabel *ptype = [[UILabel alloc] initForAutoLayout];
-   // ptype.translatesAutoresizingMaskIntoConstraints = NO;
-        [header addSubview:ptype];
-    ptype.font = [UIFont systemFontOfSize:32.0f];
-    ptype.textColor = [UIColor whiteColor];
-    ptype.backgroundColor = [UIColor clearColor];
-    ptype.text = [programType substringToIndex:2];
-    [ptype autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:20.0f];
-    [ptype autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:3.0f];
+	UILabel *ptype = [[UILabel alloc] initForAutoLayout];
+	// ptype.translatesAutoresizingMaskIntoConstraints = NO;
+	[header addSubview:ptype];
+	ptype.font = [UIFont systemFontOfSize:32.0f];
+	ptype.textColor = [UIColor whiteColor];
+	ptype.backgroundColor = [UIColor clearColor];
+	ptype.text = [programType substringToIndex:2];
+	[ptype autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:20.0f];
+	[ptype autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:3.0f];
     
 	UIImageView *imgv = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@.png", self.imgMap[programType][@"group"]]]];
 	imgv.translatesAutoresizingMaskIntoConstraints = NO;
 	[header addSubview:imgv];
 	[imgv autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:10.0f];
 	[imgv autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:10.0f];
-	header.backgroundColor = [UIColor colorWithRed:(22.0f/255.0f) green:160.0f/255.0f blue:133.0f/255.0f alpha:0.6f];
+	header.backgroundColor = [UIColor colorWithRed:(22.0f / 255.0f) green:160.0f / 255.0f blue:133.0f / 255.0f alpha:0.6f];
     
     
-    UILabel *alLabel = [[UILabel alloc] initForAutoLayout];
-    alLabel.font = [UIFont systemFontOfSize:10.0f];
-    alLabel.text = @"attack/life";
-    alLabel.backgroundColor = [UIColor clearColor];
-    alLabel.textColor = [UIColor whiteColor];
-    [header addSubview:alLabel];
-    [alLabel autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:2.0f];
-    [alLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:4.0f];
+	UILabel *alLabel = [[UILabel alloc] initForAutoLayout];
+	alLabel.font = [UIFont systemFontOfSize:10.0f];
+	alLabel.text = @"attack/life";
+	alLabel.backgroundColor = [UIColor clearColor];
+	alLabel.textColor = [UIColor whiteColor];
+	[header addSubview:alLabel];
+	[alLabel autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:2.0f];
+	[alLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:4.0f];
 	return header;
 }
 
 #pragma mark - Table view data source
 
 - (UIView *)tableView:(UITableView *)aTableView viewForHeaderInSection:(NSInteger)section {
-	NSString *programType = [[self.programs objectAtIndex:section] ptype];
+	NSString *programType = [[self.filteredPrograms objectAtIndex:section] ptype];
 	UIView *hdr = [self createHeader:programType];
 	return hdr;
 }
@@ -102,26 +142,26 @@
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-	return [[self.programs objectAtIndex:section] ptype];
+	return [[self.filteredPrograms objectAtIndex:section] ptype];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 	// Return the number of sections.
-	return [self.programs count];
+	return [self.filteredPrograms count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	// Return the number of rows in the section.
-	return [[[self.programs objectAtIndex:section] programs] count];
+	return [[[self.filteredPrograms objectAtIndex:section] programs] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	static NSString *CellIdentifier = @"ProgramCell";
 	ProgramCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    ProgramGroup *programGroup = [self.programs objectAtIndex:indexPath.section];
+	ProgramGroup *programGroup = [self.filteredPrograms objectAtIndex:indexPath.section];
 	Program *prog = [[programGroup programs] objectAtIndex:indexPath.row];
-   // [cell.imageView setImage:[UIImage imageNamed:self.imgMap[programGroup.ptype][@"program"]]];
+	// [cell.imageView setImage:[UIImage imageNamed:self.imgMap[programGroup.ptype][@"program"]]];
 	[cell setProgram:prog];
     
     
@@ -183,11 +223,11 @@
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
 	 */
-    Program *program = [[[self.programs objectAtIndex:indexPath.section] programs] objectAtIndex:indexPath.row];
-    AllocController *allocController = [[AllocController alloc] initWithProgram:program];
-    // ...
-    // Pass the selected object to the new view controller.
-    [self.navigationController pushViewController:allocController animated:YES];
+	Program *program = [[[self.filteredPrograms objectAtIndex:indexPath.section] programs] objectAtIndex:indexPath.row];
+	AllocController *allocController = [[AllocController alloc] initWithProgram:program];
+	// ...
+	// Pass the selected object to the new view controller.
+	[self.navigationController pushViewController:allocController animated:YES];
 }
 
 @end

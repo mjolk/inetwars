@@ -9,6 +9,7 @@
 #import "LoginController.h"
 #import "LoginInputCell.h"
 #import "Player.h"
+#import "UIAlertView+AFNetworking.h"
 
 @interface LoginController ()
 
@@ -193,18 +194,16 @@
 #pragma mark - create player
 
 - (void) createPlayer {
-    Player *player = [Player sharedPlayer];
     //__weak LoginViewController *sself = self;
-    [player create:self.nick email:self.email callback:^(NSDictionary *errors) {
+    NSURLSessionDataTask *task = [[Player sharedPlayer] create:self.nick email:self.email callback:^(NSDictionary *errors) {
         if(errors) {
             //errors
             NSLog(@"errors %@", errors);
         } else {
             [self.delegate userCreated:nil];
-            NSLog(@"playerkey %@", player.playerKey);
         }
     }];
-    
+    [UIAlertView showAlertViewForTaskWithErrorOnCompletion:task delegate:nil];
 }
 
 @end

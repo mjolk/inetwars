@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "EffectorView.h"
-#import "Program.h"
+
+@class Program;
 
 @interface ProgramInfoCell : UITableViewCell
 

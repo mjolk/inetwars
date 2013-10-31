@@ -7,6 +7,7 @@
 //
 
 #import "ResourceCell.h"
+#import "DACircularProgressView.h"
 
 @interface ResourceCell()
 

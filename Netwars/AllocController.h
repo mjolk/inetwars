@@ -8,10 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "Program.h"
-#import "ResourceCell.h"
-#import "ProgramInfoCell.h"
-#import "SliderCell.h"
-#import "Player.h"
 
 typedef enum AllocType {
     Allocate = 0,

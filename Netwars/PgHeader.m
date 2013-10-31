@@ -7,6 +7,8 @@
 //
 
 #import "PgHeader.h"
+#import "DACircularProgressView.h"
+#import "Program.h"
 
 @interface PgHeader()
 

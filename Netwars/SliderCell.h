@@ -12,4 +12,6 @@
 
 @property(nonatomic, weak) UISlider *slider;
 
+-(void) positionSlider:(UIView *) view;
+
 @end

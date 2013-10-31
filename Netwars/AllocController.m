@@ -7,6 +7,12 @@
 //
 
 #import "AllocController.h"
+#import "ResourceCell.h"
+#import "ProgramInfoCell.h"
+#import "SliderCell.h"
+#import "Player.h"
+#import "UIAlertView+AFNetworking.h"
+#import "DACircularProgressView.h"
 
 @interface AllocController ()
 
@@ -183,6 +189,7 @@
             
 		case 2:
 			scell = [tableView dequeueReusableCellWithIdentifier:slider];
+			[scell positionSlider:nil];
 			[scell.slider addTarget:self action:@selector(sliderChange:) forControlEvents:UIControlEventValueChanged];
 			self.slider = scell.slider;
 			CGFloat amountForCycles = 0.f;
@@ -277,25 +284,50 @@
 - (void)sliderChange:(id)sender {
 	UISlider *slider = (UISlider *)sender;
 	int increment = (int)1.f / self.program.memory;
-	[slider setValue:((int)slider.value - (int)slider.value % increment) animated:NO];
-	[self updateResource:slider.value];
+	//[slider setValue: animated:NO];
+	[self updateResource:((int)slider.value - (int)slider.value % increment)];
 }
 
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	// Navigation logic may go here. Create and push another view controller.
+	//__weak AllocController *this = self;
+	__weak Player *player = [Player sharedPlayer];
+    __weak AllocController *alloc = self;
 	if (indexPath.row > 2) {
-		[[Player sharedPlayer] allocate:self.at program:self.program.programKey amount:self.amount allocBlock: ^(BOOL failed) {
+        NSLog(@"program selected : %@", self.program.programKey);
+		NSURLSessionDataTask *allocTask = [player allocate:self.at program:self.program.programKey amount:self.amount allocBlock: ^(BOOL failed) {
+            BOOL notExists = YES;
 		    if (failed) {
 		        NSLog(@"error!!!!");
 		        return;
 			}
+            if ([self.program.type isEqualToString:@"Connection"]) {
+                
+                for (ProgramGroup *pg in player.programs) {
+                    if([pg.ptype isEqualToString:alloc.program.effectors[0]]) {
+                        notExists = NO;
+                    }
+                }
+                NSLog(@"notextists %hhd", notExists);
+                if (notExists) {
+                    NSLog(@"effector-- : %@ \n", self.program.effectors[0]);
+                    ProgramGroup *newGroup = [[ProgramGroup alloc] initForType:@"Connection"];
+                    alloc.program.amount = alloc.amount;
+                    alloc.program.effectors = [[NSArray alloc] initWithObjects:self.program.effectors[0], nil];
+                    [newGroup.programs addObject:alloc.program];
+                    [player.programs addObject:newGroup];
+                }
+            }
+            [alloc.navigationController popViewControllerAnimated:YES];
+            
 		    //state.navigationItem.rightBarButtonItem.enabled = YES;
-		    NSLog(@"tableView reload");
+		   // NSLog(@"tableView reload");
 		    //[.tableView reloadData];
 		    //        [self refreshPrograms];
 		}];
+		[UIAlertView showAlertViewForTaskWithErrorOnCompletion:allocTask delegate:nil];
 	}
 	/*
      <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];

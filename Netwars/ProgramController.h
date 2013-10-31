@@ -7,14 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Program.h"
-#import "ProgramCell.h"
-#import "EffectorView.h"
-#import "AllocController.h"
+
 
 @interface ProgramController : UITableViewController
 
-@property(nonatomic, strong) NSMutableArray *programs;
+@property(nonatomic, strong) NSArray *programs;
+@property(nonatomic, strong) NSMutableArray *filteredPrograms;
 @property(nonatomic, strong) NSDictionary *imgMap;
+
+- (void) updateSource;
 
 @end

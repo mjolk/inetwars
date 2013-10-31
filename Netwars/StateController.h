@@ -7,12 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+
 #import "LoginController.h"
 #import "NavCell.h"
-#import "ProgramController.h"
-#import "Player.h"
-#import "HUDCell.h"
-#import "PgHeader.h"
+
 
 @interface StateController : UITableViewController <LoginDelegate, MenuDelegate>
 

@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DACircularProgressView.h"
-#import "Program.h"
+
+@class DACircularProgressView;
 
 @interface PgHeader : UIView
 

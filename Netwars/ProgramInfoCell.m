@@ -7,6 +7,8 @@
 //
 
 #import "ProgramInfoCell.h"
+#import "EffectorView.h"
+#import "Program.h"
 
 @interface ProgramInfoCell()
 

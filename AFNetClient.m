@@ -7,7 +7,6 @@
 //
 
 #import "AFNetClient.h"
-#import "AFJSONRequestOperation.h"
 
 static NSString * const kAFAppNetwarsAPIBaseURLTestString = @"http://localhost:8080/";
 static NSString * const kAFAppNetwarsAPIBaseURLString = @"http://n3twars.appspot.com/";
@@ -24,7 +23,7 @@ static NSString * const kAFAppNetwarsAPIBaseURLString = @"http://n3twars.appspot
     return _sharedClient;
 }
 
-- (id)initWithBaseURL:(NSURL *)url {
+/*- (id)initWithBaseURL:(NSURL *)url {
     self = [super initWithBaseURL:url];
     if (!self) {
         return nil;
@@ -43,5 +42,5 @@ static NSString * const kAFAppNetwarsAPIBaseURLString = @"http://n3twars.appspot
     }
     
     return self;
-}
+}*/
 @end

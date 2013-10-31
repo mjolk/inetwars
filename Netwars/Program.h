@@ -7,11 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "AFNetClient.h"
+
 
 typedef void (^ProgramList)(NSMutableArray *programs);
 
-@interface Program : NSObject
+@interface Program : NSObject <NSCopying>
 
 @property (nonatomic, assign) NSUInteger attack;
 @property (nonatomic, assign) NSUInteger life;
@@ -32,21 +32,23 @@ typedef void (^ProgramList)(NSMutableArray *programs);
 @property (nonatomic, strong) NSDate *expires;
 @property (nonatomic, assign) BOOL active;
 @property (nonatomic, strong) NSString *pdescription;
+@property(nonatomic, strong) NSDictionary *dict;
 
-+(void) list:(ProgramList) block;
++(NSURLSessionDataTask *) list:(ProgramList) block;
 -(void) update:(NSDictionary *) values;
 - (id) initWithValues:(NSDictionary *) values;
 
 
 @end
 
-@interface ProgramGroup : NSObject
+@interface ProgramGroup : NSObject <NSCopying>
 
 @property (nonatomic, strong) NSString *ptype;
 @property (nonatomic, assign) CGFloat usage;
 @property (nonatomic, assign) NSUInteger yield;
 @property (nonatomic, assign) BOOL power;
 @property (nonatomic, strong) NSMutableArray *programs;
+@property (nonatomic, strong) NSDictionary *dict;
 
 -(id) initForType:(NSString *) type;
 -(id) initWithValues:(NSDictionary *) values;

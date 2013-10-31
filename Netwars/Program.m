@@ -7,11 +7,19 @@
 //
 
 #import "Program.h"
+#import "AFNetClient.h"
+
+@interface Program()
+
+
+
+@end
 
 @implementation Program
 
 - (void) update:(NSDictionary *) values {
     
+    self.dict = values;
     self.attack = [[values objectForKey:@"attack"] integerValue];
     self.life = [[values objectForKey:@"life"] integerValue];
     self.name = [values objectForKey:@"name"];
@@ -24,8 +32,12 @@
     self.pdescription = [values objectForKey:@"description"];
     self.effectors = [values objectForKey:@"effector"];
     self.amount = [[values objectForKey:@"amount"] integerValue];
-    NSLog(@"EFFECTORS %@ \n", self.effectors);
+   // NSLog(@"EFFECTORS %@ \n", self.effectors);
     
+}
+
+- (id) copyWithZone:(NSZone *)zone {
+    return [[Program alloc] initWithValues:self.dict];
 }
 
 - (id) initWithValues:(NSDictionary *) values {
@@ -38,15 +50,16 @@
     
 }
 
-+ (void)list:(ProgramList) block {
-    [[AFNetClient sharedClient] getPath:@"program_list" parameters:nil success:^(AFHTTPRequestOperation *operation, id JSON) {
-        BOOL status = [[JSON objectForKey:@"success"] boolValue];
++ (NSURLSessionDataTask *) list:(ProgramList) block {
+    return [[AFNetClient sharedClient] GET:@"program_list" parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        BOOL status = [[responseObject objectForKey:@"success"] boolValue];
         if (status) {
             NSMutableArray *programs = [[NSMutableArray alloc] init];
-            NSDictionary *dictProgs = [JSON objectForKey:@"result"];
+            NSDictionary *dictProgs = [responseObject objectForKey:@"result"];
             for(NSString *tpe in dictProgs) {
                 NSDictionary *progsForType = [dictProgs objectForKey:tpe];
                 ProgramGroup *pGroup = [[ProgramGroup alloc] initForType:tpe];
+                NSLog(@"ptype loaded : %@ \n", pGroup.ptype);
                 for(NSDictionary *dictProg in progsForType) {
                     [pGroup.programs addObject:[[Program alloc] initWithValues:dictProg]];
                 }
@@ -56,8 +69,8 @@
         } else {
             block(nil);
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:[error localizedDescription] delegate:nil cancelButtonTitle:nil otherButtonTitles:NSLocalizedString(@"OK", nil), nil] show];
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        //error
     }];
 }
 
@@ -75,6 +88,12 @@
     return self;
 }
 
+
+- (id) copyWithZone:(NSZone *)zone {
+    ProgramGroup *pg = [[ProgramGroup alloc] initWithValues:self.dict];
+    return pg;
+}
+
 - (id) initWithValues:(NSDictionary *) values {
     self = [super init];
     if (self) {
@@ -84,6 +103,7 @@
 }
 
 - (void) update:(NSDictionary *) values {
+    self.dict = values;
     self.ptype = [values objectForKey:@"type"];
     self.usage = [[values objectForKey:@"usage"] floatValue];
     self.yield = [[values objectForKey:@"yield"] integerValue];

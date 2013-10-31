@@ -8,6 +8,10 @@
         <string>memoryinout_white</string>
         <key>program</key>
         <string>memory_22</string>
+        <key>event_in</key>
+        <string>memoryin</string>
+        <key>event_out</key>
+        <string>memoryout</string>
     </dict>
     <key>Mutator</key>
     <dict>
@@ -15,6 +19,10 @@
         <string>memoryinout_white</string>
         <key>program</key>
         <string>memory_22</string>
+        <key>event_in</key>
+        <string>memoryin</string>
+        <key>event_out</key>
+        <string>memoryout</string>
     </dict>
     <key>Hunter/Killer</key>
     <dict>
@@ -22,6 +30,10 @@
         <string>bandwidthattackinout_white</string>
         <key>program</key>
         <string>bandwidth_22</string>
+        <key>event_in</key>
+        <string>bandwidthin</string>
+        <key>event_out</key>
+        <string>bandwidthout</string>
     </dict>
     <key>d0s</key>
     <dict>
@@ -29,6 +41,10 @@
     <string>bandwidthattackinout_white</string>
         <key>program</key>
         <string>bandwidth_22</string>
+        <key>event_in</key>
+        <string>bandwidthin</string>
+        <key>event_out</key>
+        <string>bandwidthout</string>
     </dict>
     <key>Ice</key>
     <dict>
@@ -36,6 +52,10 @@
         <string>bandwidthattackinout_white</string>
         <key>program</key>
         <string>bandwidth_22</string>
+        <key>event_in</key>
+        <string>bandwidthin</string>
+        <key>event_out</key>
+        <string>bandwidthout</string>
     </dict>
     <key>Intelligence</key>
     <dict>
@@ -43,6 +63,10 @@
         <string>bandwidthattackinout_white</string>
         <key>program</key>
         <string>bandwidth_22</string>
+        <key>event_in</key>
+        <string>bandwidthin</string>
+        <key>event_out</key>
+        <string>bandwidthout</string>
     </dict>
     <key>Infect</key>
     <dict>
@@ -50,6 +74,10 @@
         <string>bandwidthattackin_white</string>
         <key>program</key>
         <string>bandwidth_22</string>
+        <key>event_in</key>
+        <string>bandwidthin</string>
+        <key>event_out</key>
+        <string>bandwidthout</string>
     </dict>
     <key>Connection</key>
     <dict>
@@ -57,6 +85,10 @@
         <string>bandwidthattackin_white</string>
         <key>program</key>
         <string>bandwidth_22</string>
+        <key>event_in</key>
+        <string>bandwidthin</string>
+        <key>event_out</key>
+        <string>bandwidthout</string>
     </dict>
     <key>Firewall</key>
     <dict>
@@ -64,6 +96,10 @@
         <string>bandwidthattackin_white</string>
         <key>program</key>
         <string>bandwidth_22</string>
+        <key>event_in</key>
+        <string>bandwidthin</string>
+        <key>event_out</key>
+        <string>bandwidthout</string>
     </dict>
 </dict>
 </plist>
