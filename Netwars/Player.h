@@ -14,6 +14,7 @@
 typedef void (^PlayerCreate)(NSDictionary *errors);
 typedef void (^PlayerState)(BOOL);
 typedef void (^PlayerAllocate)(BOOL);
+typedef void (^PlayerProfile)(BOOL);
 typedef void (^PlayerList)(NSMutableArray *players, NSString *cursor);
 
 @interface Player : NSObject
@@ -27,6 +28,7 @@ typedef void (^PlayerList)(NSMutableArray *players, NSString *cursor);
 @property(nonatomic, assign) NSUInteger aps;
 @property(nonatomic, strong) NSString *playerKey;
 @property(nonatomic, strong) NSString *publicKey;
+@property(nonatomic, strong) NSString *memberKey;
 @property(nonatomic, strong) NSMutableArray *programs;
 @property(nonatomic, assign) NSUInteger newLocals;
 @property(nonatomic, assign) BOOL notAuthenticated;
@@ -44,6 +46,7 @@ typedef void (^PlayerList)(NSMutableArray *players, NSString *cursor);
 //- (void) state:(PlayerState) block;
 - (NSURLSessionDataTask *) state:(PlayerState) block;
 - (NSURLSessionDataTask *) allocate:(NSUInteger) dir program:(NSString *) prgKey amount:(NSUInteger) a allocBlock:(PlayerAllocate)block;
+- (NSURLSessionDataTask *) profile:(PlayerProfile) block;
 + (NSURLSessionDataTask *) list:(NSString *)playerKey range:(BOOL) rnge cursor:(NSString *) c callback:(PlayerList) block;
 - (id) initWithDefaults;
 - (void) update:(NSDictionary *) values;

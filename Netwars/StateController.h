@@ -16,9 +16,11 @@
 
 @property (nonatomic, retain) UIActivityIndicatorView *activityIndicator;
 
-- (void) showGlobalEvents;
-- (void) showLists;
-- (void) showLocalEvents;
+- (void) showPrograms;
+- (void) showLocals;
+- (void) showGlobals;
+- (void) showClan;
 - (void) showMessages;
+- (void) showPlayers;
 
 @end

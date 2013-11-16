@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+@class PageController;
+
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-@property (nonatomic, strong) UINavigationController *navigationController;
+@property (nonatomic, strong) UINavigationController *navController;
 
 @end

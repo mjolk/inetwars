@@ -45,16 +45,12 @@
     if (self.result == nil) {
         AFNetClient *client = [AFNetClient sharedClient];
         AFHTTPRequestSerializer *serializer = client.requestSerializer;
+        [serializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
         [client setRequestSerializer:[[AFJSONRequestSerializer alloc] init]];
         NSURLSessionDataTask *task = [[AFNetClient sharedClient] POST:@"attack" parameters:[self toDict] success:^(NSURLSessionDataTask *task, id responseObject) {
-            BOOL result = [[responseObject objectForKey:@"success"] boolValue];
-            if (result) {
+            //BOOL result = [[responseObject objectForKey:@"success"] boolValue];
                 block([[Event alloc] initWithValues:[responseObject objectForKey:@"result"]]);
-            } else {
-                block(nil);
-            }
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
-            //error
         }];
         [client setRequestSerializer:serializer];
         return task;

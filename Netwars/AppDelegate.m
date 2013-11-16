@@ -8,7 +8,6 @@
 
 #import "AppDelegate.h"
 #import "AFNetworkActivityIndicatorManager.h"
-#import "LoginController.h"
 #import "StateController.h"
 #import "Player.h"
 
@@ -22,15 +21,14 @@
     
     [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
     
-    StateController *stateController = [[StateController alloc] initWithStyle:UITableViewStylePlain];
+    self.navController = [[UINavigationController alloc] initWithRootViewController:[[StateController alloc] initWithStyle:UITableViewStylePlain]];
     
-    self.navigationController = [[UINavigationController alloc] initWithRootViewController:stateController];
     //self.navigationController.navigationBar.tintColor = [UIColor darkGrayColor];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
-    self.window.rootViewController = self.navigationController;
+    self.window.rootViewController = self.navController;
     [self.window makeKeyAndVisible];
     
     return YES;

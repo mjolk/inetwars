@@ -9,17 +9,24 @@
 #import <UIKit/UIKit.h>
 
 @protocol MenuDelegate <NSObject>
-- (void) showLocalEvents;
 - (void) showPrograms;
-- (void) showLists;
+- (void) showLocals;
+- (void) showGlobals;
+- (void) showClan;
 - (void) showMessages;
+- (void) showPlayers;
 @end
 
 @interface NavCell : UITableViewCell
 @property (weak, nonatomic) id delegate;
-- (void)messageSelected:(id)sender;
-- (void)listSelected:(id)sender;
-- (void)programsSelected:(id)sender;
+@property (strong, nonatomic) NSDictionary *btns;
+@property (weak, nonatomic) UIScrollView *scroller;
+@property (strong, nonatomic) NSArray *active;
+- (void)messagesSelected:(id)sender;
 - (void)localsSelected:(id)sender;
-
+- (void)globalsSelected:(id)sender;
+- (void)programsSelected:(id)sender;
+- (void)clansSelected:(id)sender;
+- (void)playersSelected:(id)sender;
+- (void)initMenu:(NSArray *) enabled;
 @end

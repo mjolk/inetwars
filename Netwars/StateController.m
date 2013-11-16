@@ -20,6 +20,7 @@
 #import "DACircularProgressView.h"
 #import "Program.h"
 #import "AllocController.h"
+#import "ClanController.h"
 
 @interface StateController ()
 
@@ -88,7 +89,6 @@
 - (void)userCreated:(LoginController *)controller {
 	NSLog(@"user created");
 	[self dismissViewControllerAnimated:YES completion: ^(void) {
-	    NSLog(@"usercreated animation finished");
 	    [self load];
 	}];
 }
@@ -108,6 +108,7 @@
 	}];
 	[UIAlertView showAlertViewForTaskWithErrorOnCompletion:task delegate:nil];
 	[self.activityIndicator setAnimatingWithStateOfTask:task];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -163,7 +164,7 @@
 	if (indexPath.section == 0) {
 		HUDCell *hudCell = [tableView dequeueReusableCellWithIdentifier:HUDCELL forIndexPath:indexPath];
 		[hudCell setUsageProgress:(player.bandwidthUsage / player.bandwidth)];
-		[hudCell setAmemProgress:(player.activeMemory / 10)];
+		[hudCell setAmemProgress:((float)player.activeMemory / 10.0)];
 		[hudCell setMemory:player.memory];
 		[hudCell setBandwidth:player.bandwidthUsage bandwidth:player.bandwidth];
 		[hudCell setActivememory:player.activeMemory];
@@ -172,6 +173,7 @@
 	}
 	else if (indexPath.section == 1) {
 		NavCell *eventCell = [tableView dequeueReusableCellWithIdentifier:EVENTCELL forIndexPath:indexPath];
+        [eventCell initMenu:@[@"players", @"globals", @"locals", @"programs", @"messages", @"clan"]];
 		eventCell.delegate = self;
 		return eventCell;
 	}
@@ -221,7 +223,7 @@
 	[self.navigationController pushViewController:programController animated:YES];
 }
 
-- (void)showLists {
+- (void)showPlayers {
 	LookupController *lookupController = [[LookupController alloc] initWithStyle:UITableViewStylePlain];
 	// ...
 	// Pass the selected object to the new view controller.
@@ -231,8 +233,22 @@
 - (void)showMessages {
 }
 
-- (void)showLocalEvents {
+- (void)showLocals {
 	EventController *eventController = [[EventController alloc] initWithStyle:UITableViewStylePlain];
+	// ...
+	// Pass the selected object to the new view controller.
+	[self.navigationController pushViewController:eventController animated:YES];
+}
+
+- (void)showGlobals {
+	EventController *eventController = [[EventController alloc] initWithStyle:UITableViewStylePlain];
+	// ...
+	// Pass the selected object to the new view controller.
+	[self.navigationController pushViewController:eventController animated:YES];
+}
+
+- (void)showClan {
+	ClanController *eventController = [[ClanController alloc] initWithStyle:UITableViewStylePlain];
 	// ...
 	// Pass the selected object to the new view controller.
 	[self.navigationController pushViewController:eventController animated:YES];

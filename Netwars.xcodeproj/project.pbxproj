@@ -90,6 +90,11 @@
 		3011ABC517E5AEA000B45374 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3011ABC417E5AEA000B45374 /* Security.framework */; };
 		306B8DEF17E817DE00F7C24D /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 306B8DEE17E817DE00F7C24D /* Player.m */; };
 		306B8DF217E86B5500F7C24D /* LoginInputCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 306B8DF117E86B5500F7C24D /* LoginInputCell.m */; };
+		30F8729C1833D50A00EC7308 /* PageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30F8729B1833D50A00EC7308 /* PageController.m */; };
+		30F8729F1833EF2800EC7308 /* ClanController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30F8729E1833EF2800EC7308 /* ClanController.m */; };
+		30F872A21833FDA900EC7308 /* IndexedNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30F872A11833FDA900EC7308 /* IndexedNavController.m */; };
+		30F872A51835201D00EC7308 /* JSONResponseSerializerWithErrorData.m in Sources */ = {isa = PBXBuildFile; fileRef = 30F872A41835201D00EC7308 /* JSONResponseSerializerWithErrorData.m */; };
+		30F872A7183526C500EC7308 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 30F872A6183526C500EC7308 /* Images.xcassets */; };
 		F61F04DE3B604BB78DEA67C8 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F5CE4C42522E43E8A35CDE55 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -217,6 +222,15 @@
 		306B8DEE17E817DE00F7C24D /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Player.m; sourceTree = "<group>"; };
 		306B8DF017E86B5500F7C24D /* LoginInputCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginInputCell.h; sourceTree = "<group>"; };
 		306B8DF117E86B5500F7C24D /* LoginInputCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginInputCell.m; sourceTree = "<group>"; };
+		30F8729A1833D50A00EC7308 /* PageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageController.h; sourceTree = "<group>"; };
+		30F8729B1833D50A00EC7308 /* PageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageController.m; sourceTree = "<group>"; };
+		30F8729D1833EF2800EC7308 /* ClanController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClanController.h; sourceTree = "<group>"; };
+		30F8729E1833EF2800EC7308 /* ClanController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClanController.m; sourceTree = "<group>"; };
+		30F872A01833FDA900EC7308 /* IndexedNavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndexedNavController.h; sourceTree = "<group>"; };
+		30F872A11833FDA900EC7308 /* IndexedNavController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IndexedNavController.m; sourceTree = "<group>"; };
+		30F872A31835201D00EC7308 /* JSONResponseSerializerWithErrorData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONResponseSerializerWithErrorData.h; sourceTree = "<group>"; };
+		30F872A41835201D00EC7308 /* JSONResponseSerializerWithErrorData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONResponseSerializerWithErrorData.m; sourceTree = "<group>"; };
+		30F872A6183526C500EC7308 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Netwars/Images.xcassets; sourceTree = "<group>"; };
 		E46679DD16644E41942B4244 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		F5CE4C42522E43E8A35CDE55 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -253,6 +267,7 @@
 		3011AB2817E52D1E00B45374 = {
 			isa = PBXGroup;
 			children = (
+				30F872A6183526C500EC7308 /* Images.xcassets */,
 				3011ABA717E5415C00B45374 /* Networking */,
 				3011AB3A17E52D1E00B45374 /* Classes */,
 				3011AB5817E52D1E00B45374 /* NetwarsTests */,
@@ -405,6 +420,12 @@
 				06AC8B4F17FA04F500FD7A1A /* EventController.m */,
 				06AC8B5717FB4AC200FD7A1A /* AttackController.h */,
 				06AC8B5817FB4AC200FD7A1A /* AttackController.m */,
+				30F8729A1833D50A00EC7308 /* PageController.h */,
+				30F8729B1833D50A00EC7308 /* PageController.m */,
+				30F8729D1833EF2800EC7308 /* ClanController.h */,
+				30F8729E1833EF2800EC7308 /* ClanController.m */,
+				30F872A01833FDA900EC7308 /* IndexedNavController.h */,
+				30F872A11833FDA900EC7308 /* IndexedNavController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -448,6 +469,8 @@
 			children = (
 				3011ABA817E545B200B45374 /* AFNetClient.h */,
 				3011ABA917E545B200B45374 /* AFNetClient.m */,
+				30F872A31835201D00EC7308 /* JSONResponseSerializerWithErrorData.h */,
+				30F872A41835201D00EC7308 /* JSONResponseSerializerWithErrorData.m */,
 			);
 			name = Networking;
 			sourceTree = "<group>";
@@ -566,6 +589,7 @@
 				06FAFFF017F1F2B3005E2362 /* bandwidthattackin@2x.png in Resources */,
 				06B7148317FFCF8D00B977A1 /* trackright_46@2x.png in Resources */,
 				061BCA0C17EFDD81000B6F59 /* cyclesicon_16.png in Resources */,
+				30F872A7183526C500EC7308 /* Images.xcassets in Resources */,
 				061BCA0E17EFDF68000B6F59 /* bandwidthattackinout_16.png in Resources */,
 				06FAFFEF17F1F2B3005E2362 /* events_44@2x.png in Resources */,
 				06FAFFEB17F1F2B3005E2362 /* memoryin_white@2x.png in Resources */,
@@ -638,8 +662,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				30F8729C1833D50A00EC7308 /* PageController.m in Sources */,
 				3011AB4117E52D1E00B45374 /* main.m in Sources */,
 				3011AB4517E52D1E00B45374 /* AppDelegate.m in Sources */,
+				30F8729F1833EF2800EC7308 /* ClanController.m in Sources */,
 				0655ACD917F3A3C400B960C6 /* SliderCell.m in Sources */,
 				06AC8B1417F8C32C00FD7A1A /* LookupController.m in Sources */,
 				3011ABAA17E545B200B45374 /* AFNetClient.m in Sources */,
@@ -650,6 +676,7 @@
 				06AC8B4B17F9948600FD7A1A /* PlayerCell.m in Sources */,
 				06B714891801DEC000B977A1 /* PickerCell.m in Sources */,
 				06AC8B5917FB4AC200FD7A1A /* AttackController.m in Sources */,
+				30F872A51835201D00EC7308 /* JSONResponseSerializerWithErrorData.m in Sources */,
 				06AC8B5617FA056200FD7A1A /* Event.m in Sources */,
 				065E8CE617E99172004D2276 /* StateController.m in Sources */,
 				06AC8B5017FA04F500FD7A1A /* EventController.m in Sources */,
@@ -659,6 +686,7 @@
 				06DED8BC17ED4D5D0067EAC5 /* ProgramController.m in Sources */,
 				06DED8BF17ED4D8B0067EAC5 /* Program.m in Sources */,
 				06AC8B5317FA051F00FD7A1A /* EventCell.m in Sources */,
+				30F872A21833FDA900EC7308 /* IndexedNavController.m in Sources */,
 				06DED8C517ED64BD0067EAC5 /* ProgramCell.m in Sources */,
 				06B714861801B5CD00B977A1 /* ProgramSliderCell.m in Sources */,
 				06DED8C817ED9FDE0067EAC5 /* AllocController.m in Sources */,
@@ -766,6 +794,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E46679DD16644E41942B4244 /* Pods.xcconfig */;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Netwars/Netwars-Prefix.pch";
@@ -787,6 +817,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E46679DD16644E41942B4244 /* Pods.xcconfig */;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Netwars/Netwars-Prefix.pch";

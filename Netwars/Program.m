@@ -51,9 +51,7 @@
 }
 
 + (NSURLSessionDataTask *) list:(ProgramList) block {
-    return [[AFNetClient sharedClient] GET:@"program_list" parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-        BOOL status = [[responseObject objectForKey:@"success"] boolValue];
-        if (status) {
+    return [[AFNetClient sharedClient] GET:@"programs/" parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
             NSMutableArray *programs = [[NSMutableArray alloc] init];
             NSDictionary *dictProgs = [responseObject objectForKey:@"result"];
             for(NSString *tpe in dictProgs) {
@@ -66,9 +64,6 @@
                 [programs addObject:pGroup];
             }
             block(programs);
-        } else {
-            block(nil);
-        }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         //error
     }];

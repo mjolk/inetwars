@@ -11,7 +11,7 @@
 #import "Program.h"
 
 @interface Player ()
-
+-(void) updatePublic:(NSDictionary *) values;
 @end
 
 @implementation Player
@@ -48,15 +48,21 @@
 - (id) initForPublic:(NSDictionary *)values {
     self = [super init];
     if (self) {
-        self.nick = [values objectForKey:@"nick"];
+        [self updatePublic:values];
         self.bandwidthUsage = [[values objectForKey:@"bandwidth_usage"] floatValue];
-        self.clanTag = [values objectForKey:@"clan_tag"];
-        self.avatar = [values objectForKey:@"avatar_thumb"];
-        self.playerID = [[values objectForKey:@"player_id"] integerValue];
-        self.status = [values objectForKey:@"status"];
         self.publicKey = [values objectForKey:@"key"];
     }
     return self;
+}
+
+- (void) updatePublic:(NSDictionary *) values {
+    self.nick = [values objectForKey:@"nick"];
+    self.clanTag = [values objectForKey:@"clan_tag"];
+    self.avatar = [values objectForKey:@"avatar_thumb"];
+    self.playerID = [[values objectForKey:@"player_id"] integerValue];
+    self.status = [values objectForKey:@"status"];
+    self.email = [values objectForKey:@"email"];
+    
 }
 
 - (void)persistKey {
@@ -75,6 +81,8 @@
 	self.cycles = [[player objectForKey:@"cycles"]integerValue];
 	self.activeMemory = [[player objectForKey:@"active_mem"] integerValue];
 	self.newLocals = [[player objectForKey:@"new_locals"] integerValue];
+    self.publicKey = [player objectForKey:@"public_key"];
+    self.memberKey = [player objectForKey:@"clan_member"];
     NSArray *pGroups = [values objectForKey:@"programs"];
     self.programs = [[NSMutableArray alloc] initWithCapacity:[pGroups count]];
     for (NSDictionary *pGroup in pGroups) {
@@ -86,18 +94,10 @@
 
 - (NSURLSessionDataTask *) create:(NSString *)n email:(NSString *)e callback:(PlayerCreate)block {
     __weak Player *weakPlayer = self;
-    return [[AFNetClient sharedClient] POST:@"player_create" parameters:@{@"nick":n, @"email":e} success:^(NSURLSessionDataTask *task, id responseObject) {
-        BOOL status = [[responseObject objectForKey:@"success"]boolValue];
-        if(status) {
+    return [[AFNetClient sharedClient] POST:@"players/" parameters:@{@"nick":n, @"email":e} success:^(NSURLSessionDataTask *task, id responseObject) {
             weakPlayer.playerKey = [responseObject objectForKey:@"result"];
-            weakPlayer.email = e;
-            weakPlayer.nick = n;
             weakPlayer.notAuthenticated = NO;
             block(nil);
-        } else {
-            NSDictionary *errors = [responseObject objectForKey:@"result"];
-            block(errors);
-        }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         //errors
     }];
@@ -105,24 +105,29 @@
 
 - (NSURLSessionDataTask *) state:(PlayerState)block {
     __weak Player *wPlayer = self;
-    return [[AFNetClient sharedClient] GET:@"player_status" parameters:@{@"pkey": self.playerKey} success:^(NSURLSessionDataTask *task, id responseObject) {
-        BOOL status = [[responseObject objectForKey:@"success"] boolValue];
-        if(status){
+    return [[AFNetClient sharedClient] GET:@"players/status" parameters:@{@"pkey": self.playerKey} success:^(NSURLSessionDataTask *task, id responseObject) {
             [wPlayer update:[responseObject objectForKey:@"result"]];
             block(NO);
-        } else {
-            block(YES);
-        }
     }
        failure:^(NSURLSessionDataTask *task, NSError *error) {
            //send error message
        }];
 }
 
+- (NSURLSessionDataTask *) profile:(PlayerProfile) block {
+    __weak Player *wPlayer = self;
+    return [[AFNetClient sharedClient] GET:@"players/profile" parameters:@{@"pkey": self.playerKey} success:^(NSURLSessionDataTask *task, id responseObject) {
+        NSLog(@"profile %@ \n", responseObject);
+            [wPlayer updatePublic:[responseObject objectForKey:@"result"]];
+            block(NO);
+        }
+       failure:^(NSURLSessionDataTask *task, NSError *error) {
+           //send error message
+       }];
+}
+
 + (NSURLSessionDataTask *) list:(NSString *)playerKey range:(BOOL) rnge cursor:(NSString *) c callback:(PlayerList) block {
-    return [[AFNetClient sharedClient] GET:@"player_list" parameters:@{@"pkey":playerKey, @"range":[NSNumber numberWithBool:rnge], @"c": c} success:^(NSURLSessionDataTask *task, id responseObject) {
-        BOOL status = [[responseObject objectForKey:@"success"] boolValue];
-        if (status) {
+    return [[AFNetClient sharedClient] GET:@"players/" parameters:@{@"pkey":playerKey, @"range":[NSNumber numberWithBool:rnge], @"c": c} success:^(NSURLSessionDataTask *task, id responseObject) {
             NSLog(@"result players: %@", responseObject);
             NSDictionary *listObj = [responseObject objectForKey:@"result"];
             NSString *cur = [listObj objectForKey:@"cursor"];
@@ -132,7 +137,6 @@
                 [pls addObject:[[Player alloc] initForPublic:pDict]];
             }
             block(pls, cur);
-        }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         //error
     }];
@@ -144,22 +148,15 @@
     NSString *aType = @"";
     switch (dir) {
         case 0:
-            aType = @"player_allocate";
+            aType = @"players/allocation";
             break;
             
         case 1:
-            aType = @"player_deallocate";
+            aType = @"players/deallocation";
             break;
     }
     return [[AFNetClient sharedClient] POST:aType parameters:@{@"pkey": self.playerKey, @"prgkey": prgKey, @"amount": [NSString stringWithFormat:@"%d", a]} success:^(NSURLSessionDataTask *task, id responseObject) {
-        if (responseObject != nil){
-            NSLog(@"error response : %@ \n", responseObject);
-            block(YES);
-            NSString *error = [responseObject objectForKey:@"error"];
-            [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:error delegate:nil cancelButtonTitle:nil otherButtonTitles:NSLocalizedString(@"OK", nil), nil] show];
-        } else {
             block(NO);
-        }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         //error
     }];

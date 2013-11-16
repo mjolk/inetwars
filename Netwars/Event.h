@@ -41,7 +41,7 @@ typedef void (^EventList)(NSMutableArray *events, NSString *cursor);
 @property(nonatomic, assign) BOOL win;
 
 - (id) initWithValues:(NSDictionary *) values;
-+ (NSURLSessionDataTask *) list:(NSString *)playerKey cursor:(NSString *) c callback:(EventList) block;
++ (NSURLSessionDataTask *) list:(NSString *)playerKey eventType:(NSString *) tpe cursor:(NSString *) c callback:(EventList) block;
 
 @end
 

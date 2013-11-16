@@ -59,10 +59,8 @@
     return self;
 }
 
-+ (NSURLSessionDataTask *) list:(NSString *)playerKey cursor:(NSString *) c callback:(EventList) block {
-    return [[AFNetClient sharedClient] GET:@"player_events" parameters:@{@"pkey":playerKey, @"c":c} success:^(NSURLSessionDataTask *task, id responseObject) {
-        BOOL status = [[responseObject objectForKey:@"success"] boolValue];
-        if (status) {
++ (NSURLSessionDataTask *) list:(NSString *)playerKey eventType:(NSString *) tpe cursor:(NSString *) c callback:(EventList) block {
+    return [[AFNetClient sharedClient] GET:tpe parameters:@{@"pkey":playerKey, @"c":c} success:^(NSURLSessionDataTask *task, id responseObject) {
             NSDictionary *listObj = [responseObject objectForKey:@"result"];
             NSString *cursor = [listObj objectForKey:@"c"];
             NSArray *eventDicts = [listObj objectForKey:@"events"];
@@ -71,7 +69,6 @@
                 [events addObject:[[Event alloc] initWithValues:eDict]];
             }
             block(events, cursor);
-        }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         //error
     }];

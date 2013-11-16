@@ -10,6 +10,7 @@
 #import "Player.h"
 #import "Event.h"
 #import "EventCell.h"
+#import "UIAlertView+AFNetworking.h"
 
 @interface EventController ()
 
@@ -43,13 +44,14 @@
 
 - (void)load {
 	NSString *playerKey = [[Player sharedPlayer] playerKey];
-	[Event list:playerKey cursor:self.cursor callback: ^(NSMutableArray *events, NSString *cursor) {
+	NSURLSessionDataTask *task = [Event list:playerKey eventType:@"locals" cursor:self.cursor callback: ^(NSMutableArray *events, NSString *cursor) {
 	    if ([self.cursor length] == 0) {
 	        self.events = events;
 		}
 	    self.cursor = cursor;
 	    [self.tableView reloadData];
 	}];
+    [UIAlertView showAlertViewForTaskWithErrorOnCompletion:task delegate:nil];
 }
 
 - (void)didReceiveMemoryWarning {

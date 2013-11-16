@@ -10,6 +10,7 @@
 #import "Player.h"
 #import "PlayerCell.h"
 #import "AttackController.h"
+#import "UIAlertView+AFNetworking.h"
 
 @interface LookupController ()
 
@@ -43,7 +44,7 @@
 
 - (void)load {
 	__weak LookupController *lookup = self;
-	[Player list:[[Player sharedPlayer] playerKey] range:self.range cursor:self.cursor
+	NSURLSessionDataTask *task = [Player list:[[Player sharedPlayer] playerKey] range:self.range cursor:self.cursor
 	    callback: ^(NSMutableArray *players, NSString *cursor) {
             if ([self.cursor length] == 0) {
                 lookup.players = players;
@@ -51,6 +52,7 @@
             lookup.cursor = cursor;
             [lookup.tableView reloadData];
         }];
+    [UIAlertView showAlertViewForTaskWithErrorOnCompletion:task delegate:nil];
 }
 
 - (void)didReceiveMemoryWarning {
