@@ -68,6 +68,7 @@
 		06FAFFF417F1F2B3005E2362 /* bandwidth_22@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 06FAFFE717F1F2B3005E2362 /* bandwidth_22@2x.png */; };
 		06FAFFF517F1F2B3005E2362 /* cyclesicon_22@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 06FAFFE817F1F2B3005E2362 /* cyclesicon_22@2x.png */; };
 		06FEE46E17E9DD52001BDAE7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06FEE46D17E9DD52001BDAE7 /* QuartzCore.framework */; };
+		30068B531839887C00F97462 /* InviteController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30068B521839887C00F97462 /* InviteController.m */; };
 		3011AB3517E52D1E00B45374 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3011AB3417E52D1E00B45374 /* UIKit.framework */; };
 		3011AB3717E52D1E00B45374 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3011AB3617E52D1E00B45374 /* Foundation.framework */; };
 		3011AB3917E52D1E00B45374 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3011AB3817E52D1E00B45374 /* CoreGraphics.framework */; };
@@ -84,12 +85,12 @@
 		3011AB6017E52D1E00B45374 /* NetwarsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3011AB5F17E52D1E00B45374 /* NetwarsTests.m */; };
 		3011ABAA17E545B200B45374 /* AFNetClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 3011ABA917E545B200B45374 /* AFNetClient.m */; };
 		3011ABAD17E54DF600B45374 /* LoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3011ABAC17E54DF600B45374 /* LoginController.m */; };
-		3011ABBB17E5A4DE00B45374 /* LoginInputCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3011ABBA17E5A4DE00B45374 /* LoginInputCell.xib */; };
+		3011ABBB17E5A4DE00B45374 /* InputCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3011ABBA17E5A4DE00B45374 /* InputCell.xib */; };
 		3011ABC117E5AB6A00B45374 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3011ABC017E5AB6A00B45374 /* MobileCoreServices.framework */; };
 		3011ABC317E5AB7400B45374 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3011ABC217E5AB7400B45374 /* SystemConfiguration.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		3011ABC517E5AEA000B45374 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3011ABC417E5AEA000B45374 /* Security.framework */; };
 		306B8DEF17E817DE00F7C24D /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 306B8DEE17E817DE00F7C24D /* Player.m */; };
-		306B8DF217E86B5500F7C24D /* LoginInputCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 306B8DF117E86B5500F7C24D /* LoginInputCell.m */; };
+		306B8DF217E86B5500F7C24D /* InputCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 306B8DF117E86B5500F7C24D /* InputCell.m */; };
 		30F8729C1833D50A00EC7308 /* PageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30F8729B1833D50A00EC7308 /* PageController.m */; };
 		30F8729F1833EF2800EC7308 /* ClanController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30F8729E1833EF2800EC7308 /* ClanController.m */; };
 		30F872A21833FDA900EC7308 /* IndexedNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30F872A11833FDA900EC7308 /* IndexedNavController.m */; };
@@ -191,6 +192,8 @@
 		06FAFFE717F1F2B3005E2362 /* bandwidth_22@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bandwidth_22@2x.png"; sourceTree = "<group>"; };
 		06FAFFE817F1F2B3005E2362 /* cyclesicon_22@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cyclesicon_22@2x.png"; sourceTree = "<group>"; };
 		06FEE46D17E9DD52001BDAE7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		30068B511839887C00F97462 /* InviteController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InviteController.h; sourceTree = "<group>"; };
+		30068B521839887C00F97462 /* InviteController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InviteController.m; sourceTree = "<group>"; };
 		3011AB3117E52D1E00B45374 /* Netwars.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Netwars.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3011AB3417E52D1E00B45374 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		3011AB3617E52D1E00B45374 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -214,14 +217,14 @@
 		3011ABA917E545B200B45374 /* AFNetClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetClient.m; sourceTree = "<group>"; };
 		3011ABAB17E54DF600B45374 /* LoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginController.h; sourceTree = "<group>"; };
 		3011ABAC17E54DF600B45374 /* LoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginController.m; sourceTree = "<group>"; };
-		3011ABBA17E5A4DE00B45374 /* LoginInputCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginInputCell.xib; sourceTree = "<group>"; };
+		3011ABBA17E5A4DE00B45374 /* InputCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InputCell.xib; sourceTree = "<group>"; };
 		3011ABC017E5AB6A00B45374 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		3011ABC217E5AB7400B45374 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		3011ABC417E5AEA000B45374 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		306B8DED17E817DE00F7C24D /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
 		306B8DEE17E817DE00F7C24D /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Player.m; sourceTree = "<group>"; };
-		306B8DF017E86B5500F7C24D /* LoginInputCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginInputCell.h; sourceTree = "<group>"; };
-		306B8DF117E86B5500F7C24D /* LoginInputCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginInputCell.m; sourceTree = "<group>"; };
+		306B8DF017E86B5500F7C24D /* InputCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputCell.h; sourceTree = "<group>"; };
+		306B8DF117E86B5500F7C24D /* InputCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputCell.m; sourceTree = "<group>"; };
 		30F8729A1833D50A00EC7308 /* PageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageController.h; sourceTree = "<group>"; };
 		30F8729B1833D50A00EC7308 /* PageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageController.m; sourceTree = "<group>"; };
 		30F8729D1833EF2800EC7308 /* ClanController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClanController.h; sourceTree = "<group>"; };
@@ -426,6 +429,8 @@
 				30F8729E1833EF2800EC7308 /* ClanController.m */,
 				30F872A01833FDA900EC7308 /* IndexedNavController.h */,
 				30F872A11833FDA900EC7308 /* IndexedNavController.m */,
+				30068B511839887C00F97462 /* InviteController.h */,
+				30068B521839887C00F97462 /* InviteController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -433,9 +438,9 @@
 		3011ABA617E5413000B45374 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				3011ABBA17E5A4DE00B45374 /* LoginInputCell.xib */,
-				306B8DF017E86B5500F7C24D /* LoginInputCell.h */,
-				306B8DF117E86B5500F7C24D /* LoginInputCell.m */,
+				3011ABBA17E5A4DE00B45374 /* InputCell.xib */,
+				306B8DF017E86B5500F7C24D /* InputCell.h */,
+				306B8DF117E86B5500F7C24D /* InputCell.m */,
 				065E8CEF17E9AFEB004D2276 /* HUDCell.h */,
 				065E8CF017E9AFEB004D2276 /* HUDCell.m */,
 				06DED8B517ECA5CA0067EAC5 /* NavCell.h */,
@@ -559,7 +564,7 @@
 				3011AB4717E52D1E00B45374 /* Default.png in Resources */,
 				3011AB4917E52D1E00B45374 /* Default@2x.png in Resources */,
 				3011AB4B17E52D1E00B45374 /* Default-568h@2x.png in Resources */,
-				3011ABBB17E5A4DE00B45374 /* LoginInputCell.xib in Resources */,
+				3011ABBB17E5A4DE00B45374 /* InputCell.xib in Resources */,
 				06DED8A417EC41A60067EAC5 /* memory.png in Resources */,
 				06FAFFF517F1F2B3005E2362 /* cyclesicon_22@2x.png in Resources */,
 				06DED8A617EC47910067EAC5 /* memory_22.png in Resources */,
@@ -662,6 +667,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				30068B531839887C00F97462 /* InviteController.m in Sources */,
 				30F8729C1833D50A00EC7308 /* PageController.m in Sources */,
 				3011AB4117E52D1E00B45374 /* main.m in Sources */,
 				3011AB4517E52D1E00B45374 /* AppDelegate.m in Sources */,
@@ -672,7 +678,7 @@
 				3011ABAD17E54DF600B45374 /* LoginController.m in Sources */,
 				06AC8B5C17FB4B5800FD7A1A /* Attack.m in Sources */,
 				306B8DEF17E817DE00F7C24D /* Player.m in Sources */,
-				306B8DF217E86B5500F7C24D /* LoginInputCell.m in Sources */,
+				306B8DF217E86B5500F7C24D /* InputCell.m in Sources */,
 				06AC8B4B17F9948600FD7A1A /* PlayerCell.m in Sources */,
 				06B714891801DEC000B977A1 /* PickerCell.m in Sources */,
 				06AC8B5917FB4AC200FD7A1A /* AttackController.m in Sources */,

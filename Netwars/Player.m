@@ -32,6 +32,7 @@
 	if (self) {
 		NSUserDefaults *data = [NSUserDefaults standardUserDefaults];
 		NSString *playerKey = [data objectForKey:@"playerKey"];
+        NSString *memberKey = [data objectForKey:@"memberKey"];
         //playerKey = @"agtkZXZ-bjN0d2Fyc3IsCxIGUGxheWVyIiA1NTE5NTIwNjQwNDFlODI4ODA2ZjNjZTcwOTBlODIwZQw";
 		if (playerKey == nil) {
 			self.notAuthenticated = YES;
@@ -40,6 +41,13 @@
 			self.notAuthenticated = NO;
 			self.playerKey = playerKey;
 		}
+        
+        if (memberKey == nil) {
+            self.notInClan = YES;
+        } else {
+            self.notInClan = NO;
+            self.memberKey = memberKey;
+        }
 	}
     
 	return self;
@@ -68,6 +76,7 @@
 - (void)persistKey {
 	NSUserDefaults *data = [NSUserDefaults standardUserDefaults];
 	[data setObject:self.playerKey forKey:@"playerKey"];
+    [data setObject:self.memberKey forKey:@"memberKey"];
 	[data synchronize];
 }
 

@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 mjolk. All rights reserved.
 //
 
-#import "LoginInputCell.h"
+#import "InputCell.h"
 
-@implementation LoginInputCell
+@implementation InputCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {

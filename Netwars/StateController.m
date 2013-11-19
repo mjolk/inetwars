@@ -248,10 +248,10 @@
 }
 
 - (void)showClan {
-	ClanController *eventController = [[ClanController alloc] initWithStyle:UITableViewStylePlain];
+	ClanController *clanController = [[ClanController alloc] initWithStyle:UITableViewStylePlain];
 	// ...
 	// Pass the selected object to the new view controller.
-	[self.navigationController pushViewController:eventController animated:YES];
+	[self.navigationController pushViewController:clanController animated:YES];
 }
 
 /*

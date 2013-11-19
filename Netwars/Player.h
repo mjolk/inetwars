@@ -32,6 +32,7 @@ typedef void (^PlayerList)(NSMutableArray *players, NSString *cursor);
 @property(nonatomic, strong) NSMutableArray *programs;
 @property(nonatomic, assign) NSUInteger newLocals;
 @property(nonatomic, assign) BOOL notAuthenticated;
+@property(nonatomic, assign) BOOL notInClan;
 @property(nonatomic, strong) NSString *nick;
 @property(nonatomic, strong) NSString *email;
 @property(nonatomic, strong) NSDate *updated;

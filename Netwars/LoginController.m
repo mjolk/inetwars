@@ -7,7 +7,7 @@
 //
 
 #import "LoginController.h"
-#import "LoginInputCell.h"
+#import "InputCell.h"
 #import "Player.h"
 #import "UIAlertView+AFNetworking.h"
 
@@ -37,7 +37,7 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    [self.tableView registerNib:[UINib nibWithNibName:@"LoginInputCell"
+    [self.tableView registerNib:[UINib nibWithNibName:@"InputCell"
                                                bundle:[NSBundle mainBundle]]
          forCellReuseIdentifier:@"LoginInput"];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"RegularCell"];
@@ -76,11 +76,11 @@
                 break;
             case 2:{
             cell = [tableView dequeueReusableCellWithIdentifier:inputCell forIndexPath:indexPath];
-            LoginInputCell *input = (LoginInputCell *)cell;
-            input.nickName.delegate = self;
-            input.nickName.tag = 1;
-            input.email.delegate = self;
-            input.email.tag = 2;
+            InputCell *input = (InputCell *)cell;
+            input.name.delegate = self;
+            input.name.tag = 1;
+            input.field.delegate = self;
+            input.field.tag = 2;
             break;}
             case 3:{
             cell = [tableView dequeueReusableCellWithIdentifier:btnCell forIndexPath:indexPath];

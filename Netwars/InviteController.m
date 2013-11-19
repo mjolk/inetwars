@@ -1,20 +1,19 @@
 //
-//  ClanController.m
+//  InviteController.m
 //  Netwars
 //
-//  Created by mjolk on 13/11/13.
+//  Created by mjolk on 18/11/13.
 //  Copyright (c) 2013 mjolk. All rights reserved.
 //
 
-#import "ClanController.h"
-#import "Player.h"
 #import "InviteController.h"
+#import "InputCell.h"
 
-@interface ClanController ()
+@interface InviteController ()
 
 @end
 
-@implementation ClanController
+@implementation InviteController
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -34,23 +33,11 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    if ([[Player sharedPlayer] notAuthenticated]) {
-		InviteController *invite = [[InviteController alloc] initWithStyle:UITableViewStylePlain];
-		invite.modalPresentationStyle = UIModalPresentationFullScreen;
-		invite.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-		[invite setDelegate:self];
-		[self presentViewController:invite animated:NO completion:nil];
-	}
-	else {
-		//[self load];
-	}
-}
-
-- (void) clanAvailable:(ClanController *) controller {
-	NSLog(@"clan available");
-	[self dismissViewControllerAnimated:YES completion: ^(void) {
-	    //[self load];
-	}];
+    
+    [self.tableView registerNib:[UINib nibWithNibName:@"InputCell"
+                                               bundle:[NSBundle mainBundle]]
+         forCellReuseIdentifier:@"InputCell"];
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"RegularCell"];
 }
 
 - (void)didReceiveMemoryWarning
@@ -63,26 +50,41 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return 3 + [self.invites count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
-    return cell;
+    static NSString *btnCell = @"RegularCell";
+    static NSString *inputCell = @"InputCell";
+    if (indexPath.row == 0) {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:btnCell forIndexPath:indexPath];
+        cell.textLabel.text = @"Create clan";
+        return cell;
+    } else if ( indexPath.row == 1) {
+        InputCell *input = [tableView dequeueReusableCellWithIdentifier:inputCell forIndexPath:indexPath];
+        input.name.delegate = self;
+        input.name.tag = 1;
+        input.field.delegate = self;
+        input.field.tag = 2;
+        return input;
+    } else if ( indexPath.row == 2) {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:btnCell forIndexPath:indexPath];
+        cell.textLabel.text = @"Create clan";
+        return cell;
+    } else if ( indexPath.row > 2) {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:btnCell forIndexPath:indexPath];
+        cell.textLabel.text = @"Join clan";
+        return cell;
+    }
+    return nil;
 }
 
 /*
