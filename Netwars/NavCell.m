@@ -146,7 +146,7 @@
     }
 }
 
-- (void)clansSelected:(id)sender {
+- (void)clanSelected:(id)sender {
     if (self.delegate != nil ) {
         [self.delegate showClan];
     }

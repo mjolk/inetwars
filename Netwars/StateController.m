@@ -21,6 +21,7 @@
 #import "Program.h"
 #import "AllocController.h"
 #import "ClanController.h"
+#import "InviteController.h"
 
 @interface StateController ()
 
@@ -248,10 +249,20 @@
 }
 
 - (void)showClan {
-	ClanController *clanController = [[ClanController alloc] initWithStyle:UITableViewStylePlain];
-	// ...
-	// Pass the selected object to the new view controller.
-	[self.navigationController pushViewController:clanController animated:YES];
+    
+    if ([[Player sharedPlayer] notInClan]) {
+        NSLog(@"invite controller ----\n");
+		InviteController *invite = [[InviteController alloc] initWithStyle:UITableViewStylePlain];
+        [self.navigationController pushViewController:invite animated:YES];
+	}
+	else {
+		ClanController *clanController = [[ClanController alloc] initWithStyle:UITableViewStylePlain];
+        // ...
+        // Pass the selected object to the new view controller.
+        [self.navigationController pushViewController:clanController animated:YES];
+	}
+
+	
 }
 
 /*

@@ -8,8 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "InviteController.h"
 
-@interface ClanController : UITableViewController <ClanDelegate>
+@interface ClanController : UITableViewController
 
 @end

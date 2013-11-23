@@ -26,7 +26,7 @@
 - (void)localsSelected:(id)sender;
 - (void)globalsSelected:(id)sender;
 - (void)programsSelected:(id)sender;
-- (void)clansSelected:(id)sender;
+- (void)clanSelected:(id)sender;
 - (void)playersSelected:(id)sender;
 - (void)initMenu:(NSArray *) enabled;
 @end

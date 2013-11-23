@@ -34,24 +34,8 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    if ([[Player sharedPlayer] notAuthenticated]) {
-		InviteController *invite = [[InviteController alloc] initWithStyle:UITableViewStylePlain];
-		invite.modalPresentationStyle = UIModalPresentationFullScreen;
-		invite.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-		[invite setDelegate:self];
-		[self presentViewController:invite animated:NO completion:nil];
-	}
-	else {
-		//[self load];
-	}
 }
 
-- (void) clanAvailable:(ClanController *) controller {
-	NSLog(@"clan available");
-	[self dismissViewControllerAnimated:YES completion: ^(void) {
-	    //[self load];
-	}];
-}
 
 - (void)didReceiveMemoryWarning
 {

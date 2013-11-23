@@ -91,6 +91,8 @@
 		3011ABC517E5AEA000B45374 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3011ABC417E5AEA000B45374 /* Security.framework */; };
 		306B8DEF17E817DE00F7C24D /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 306B8DEE17E817DE00F7C24D /* Player.m */; };
 		306B8DF217E86B5500F7C24D /* InputCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 306B8DF117E86B5500F7C24D /* InputCell.m */; };
+		307D16BB183D161C00ED7E7E /* Invite.m in Sources */ = {isa = PBXBuildFile; fileRef = 307D16BA183D161C00ED7E7E /* Invite.m */; };
+		30DAB74E183D6201004F4D9D /* Clan.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DAB74D183D6201004F4D9D /* Clan.m */; };
 		30F8729C1833D50A00EC7308 /* PageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30F8729B1833D50A00EC7308 /* PageController.m */; };
 		30F8729F1833EF2800EC7308 /* ClanController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30F8729E1833EF2800EC7308 /* ClanController.m */; };
 		30F872A21833FDA900EC7308 /* IndexedNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30F872A11833FDA900EC7308 /* IndexedNavController.m */; };
@@ -225,6 +227,10 @@
 		306B8DEE17E817DE00F7C24D /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Player.m; sourceTree = "<group>"; };
 		306B8DF017E86B5500F7C24D /* InputCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputCell.h; sourceTree = "<group>"; };
 		306B8DF117E86B5500F7C24D /* InputCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputCell.m; sourceTree = "<group>"; };
+		307D16B9183D161C00ED7E7E /* Invite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Invite.h; sourceTree = "<group>"; };
+		307D16BA183D161C00ED7E7E /* Invite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Invite.m; sourceTree = "<group>"; };
+		30DAB74C183D6201004F4D9D /* Clan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Clan.h; sourceTree = "<group>"; };
+		30DAB74D183D6201004F4D9D /* Clan.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Clan.m; sourceTree = "<group>"; };
 		30F8729A1833D50A00EC7308 /* PageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageController.h; sourceTree = "<group>"; };
 		30F8729B1833D50A00EC7308 /* PageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageController.m; sourceTree = "<group>"; };
 		30F8729D1833EF2800EC7308 /* ClanController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClanController.h; sourceTree = "<group>"; };
@@ -402,6 +408,10 @@
 				06AC8B5517FA056200FD7A1A /* Event.m */,
 				06AC8B5A17FB4B5800FD7A1A /* Attack.h */,
 				06AC8B5B17FB4B5800FD7A1A /* Attack.m */,
+				307D16B9183D161C00ED7E7E /* Invite.h */,
+				307D16BA183D161C00ED7E7E /* Invite.m */,
+				30DAB74C183D6201004F4D9D /* Clan.h */,
+				30DAB74D183D6201004F4D9D /* Clan.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -684,7 +694,9 @@
 				06AC8B5917FB4AC200FD7A1A /* AttackController.m in Sources */,
 				30F872A51835201D00EC7308 /* JSONResponseSerializerWithErrorData.m in Sources */,
 				06AC8B5617FA056200FD7A1A /* Event.m in Sources */,
+				307D16BB183D161C00ED7E7E /* Invite.m in Sources */,
 				065E8CE617E99172004D2276 /* StateController.m in Sources */,
+				30DAB74E183D6201004F4D9D /* Clan.m in Sources */,
 				06AC8B5017FA04F500FD7A1A /* EventController.m in Sources */,
 				065E8CF117E9AFEB004D2276 /* HUDCell.m in Sources */,
 				06AC8B1117F6DEEA00FD7A1A /* PgHeader.m in Sources */,

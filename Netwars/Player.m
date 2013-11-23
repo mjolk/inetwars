@@ -9,6 +9,7 @@
 #import "Player.h"
 #import "AFNetClient.h"
 #import "Program.h"
+#import "Invite.h"
 
 @interface Player ()
 -(void) updatePublic:(NSDictionary *) values;
@@ -34,7 +35,7 @@
 		NSString *playerKey = [data objectForKey:@"playerKey"];
         NSString *memberKey = [data objectForKey:@"memberKey"];
         //playerKey = @"agtkZXZ-bjN0d2Fyc3IsCxIGUGxheWVyIiA1NTE5NTIwNjQwNDFlODI4ODA2ZjNjZTcwOTBlODIwZQw";
-		if (playerKey == nil) {
+		if (playerKey == nil || [playerKey length] < 5) {
 			self.notAuthenticated = YES;
 		}
 		else {
@@ -42,9 +43,11 @@
 			self.playerKey = playerKey;
 		}
         
-        if (memberKey == nil) {
+        if (memberKey == nil || [memberKey length] < 4) {
+            NSLog(@"memberkey not nil %@ \n", memberKey);
             self.notInClan = YES;
         } else {
+            NSLog(@"memberkey not nil %@ \n", memberKey);
             self.notInClan = NO;
             self.memberKey = memberKey;
         }
@@ -101,8 +104,8 @@
 	NSLog(@" updated : %d", self.memory);
 }
 
-- (NSURLSessionDataTask *) create:(NSString *)n email:(NSString *)e callback:(PlayerCreate)block {
-    __weak Player *weakPlayer = self;
++ (NSURLSessionDataTask *) create:(NSString *)n email:(NSString *)e callback:(PlayerCreate)block {
+    __weak Player *weakPlayer = [Player sharedPlayer];
     return [[AFNetClient sharedClient] POST:@"players/" parameters:@{@"nick":n, @"email":e} success:^(NSURLSessionDataTask *task, id responseObject) {
             weakPlayer.playerKey = [responseObject objectForKey:@"result"];
             weakPlayer.notAuthenticated = NO;
@@ -166,6 +169,19 @@
     }
     return [[AFNetClient sharedClient] POST:aType parameters:@{@"pkey": self.playerKey, @"prgkey": prgKey, @"amount": [NSString stringWithFormat:@"%d", a]} success:^(NSURLSessionDataTask *task, id responseObject) {
             block(NO);
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        //error
+    }];
+}
+
+- (NSURLSessionDataTask *) invites:(PlayerInvites)block {
+    return [[AFNetClient sharedClient] GET:@"clans/invitations" parameters:@{@"pkey": self.playerKey} success:^(NSURLSessionDataTask *task, id responseObject) {
+        NSDictionary *dictInvites = [responseObject objectForKey:@"result"];
+        NSMutableArray *invites = [[NSMutableArray alloc] initWithCapacity:[dictInvites count]];
+        for( NSDictionary *inv in dictInvites) {
+            [invites addObject:[[Invite alloc] initWithValues:inv]];
+        }
+        block(invites);
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         //error
     }];

@@ -16,6 +16,7 @@ typedef void (^PlayerState)(BOOL);
 typedef void (^PlayerAllocate)(BOOL);
 typedef void (^PlayerProfile)(BOOL);
 typedef void (^PlayerList)(NSMutableArray *players, NSString *cursor);
+typedef void (^PlayerInvites)(NSMutableArray *invites);
 
 @interface Player : NSObject
 
@@ -43,8 +44,8 @@ typedef void (^PlayerList)(NSMutableArray *players, NSString *cursor);
 @property(nonatomic, strong) NSString *status;
 
 + (id)sharedPlayer;
-- (NSURLSessionDataTask *) create:(NSString *)n email:(NSString *)e callback:(PlayerCreate) block;
-//- (void) state:(PlayerState) block;
++ (NSURLSessionDataTask *) create:(NSString *)n email:(NSString *)e callback:(PlayerCreate) block;
+- (NSURLSessionDataTask *) invites:(PlayerInvites) block;
 - (NSURLSessionDataTask *) state:(PlayerState) block;
 - (NSURLSessionDataTask *) allocate:(NSUInteger) dir program:(NSString *) prgKey amount:(NSUInteger) a allocBlock:(PlayerAllocate)block;
 - (NSURLSessionDataTask *) profile:(PlayerProfile) block;

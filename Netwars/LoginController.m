@@ -39,7 +39,7 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     [self.tableView registerNib:[UINib nibWithNibName:@"InputCell"
                                                bundle:[NSBundle mainBundle]]
-         forCellReuseIdentifier:@"LoginInput"];
+         forCellReuseIdentifier:@"InputCell"];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"RegularCell"];
 }
 
@@ -64,7 +64,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *btnCell = @"RegularCell";
-    static NSString *inputCell = @"LoginInput";
+    static NSString *inputCell = @"InputCell";
     UITableViewCell *cell;
         switch (indexPath.row) {
             case 0:
@@ -195,7 +195,7 @@
 
 - (void) createPlayer {
     //__weak LoginViewController *sself = self;
-    NSURLSessionDataTask *task = [[Player sharedPlayer] create:self.nick email:self.email callback:^(NSDictionary *errors) {
+    NSURLSessionDataTask *task = [Player create:self.nick email:self.email callback:^(NSDictionary *errors) {
         if(errors) {
             //errors
             NSLog(@"errors %@", errors);

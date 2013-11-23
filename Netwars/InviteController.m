@@ -8,8 +8,13 @@
 
 #import "InviteController.h"
 #import "InputCell.h"
+#import "Player.h"
+#import "Invite.h"
 
 @interface InviteController ()
+
+-(void) loadInvites;
+-(void) createClan;
 
 @end
 
@@ -38,6 +43,18 @@
                                                bundle:[NSBundle mainBundle]]
          forCellReuseIdentifier:@"InputCell"];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"RegularCell"];
+    
+    [self loadInvites];
+    
+    
+}
+
+- (void) loadInvites {
+    InviteController *weakCtrl = self;
+    [[Player sharedPlayer] invites:^(NSMutableArray *invites) {
+        weakCtrl.invites = invites;
+        [weakCtrl.tableView reloadData];
+    }];
 }
 
 - (void)didReceiveMemoryWarning
@@ -65,26 +82,97 @@
     static NSString *btnCell = @"RegularCell";
     static NSString *inputCell = @"InputCell";
     if (indexPath.row == 0) {
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:btnCell forIndexPath:indexPath];
-        cell.textLabel.text = @"Create clan";
-        return cell;
-    } else if ( indexPath.row == 1) {
         InputCell *input = [tableView dequeueReusableCellWithIdentifier:inputCell forIndexPath:indexPath];
         input.name.delegate = self;
         input.name.tag = 1;
         input.field.delegate = self;
         input.field.tag = 2;
         return input;
-    } else if ( indexPath.row == 2) {
+    } else if ( indexPath.row == 1) {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:btnCell forIndexPath:indexPath];
         cell.textLabel.text = @"Create clan";
         return cell;
-    } else if ( indexPath.row > 2) {
+    } else if ( indexPath.row == 2) {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:btnCell forIndexPath:indexPath];
-        cell.textLabel.text = @"Join clan";
+        cell.textLabel.text = @"Invites";
         return cell;
+    } else if ( indexPath.row > 2) {
+        if ([self.invites count] > 0) {
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:btnCell forIndexPath:indexPath];
+            cell.textLabel.text = [[self.invites objectAtIndex:indexPath.row - 2] clan];
+           // cell.detailTextLabel.text = [[[self.invites objectAtIndex:indexPath.row - 2] expires];
+            return cell;
+        }
+        
     }
     return nil;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    CGFloat height;
+    switch (indexPath.row) {
+        case 0:
+            height = 108.0f;
+            break;
+        default:
+            height = 44.0f;
+            break;
+    }
+    return height;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+	// the user pressed the "Done" button, so dismiss the keyboard
+	[textField resignFirstResponder];
+	return YES;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    switch (textField.tag) {
+        case 1:
+            self.name = textField.text;
+            break;
+            
+        case 2:
+            self.tag = textField.text;
+            break;
+    }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Navigation logic may go here. Create and push another view controller.
+    /*
+     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
+     // ...
+     // Pass the selected object to the new view controller.
+     [self.navigationController pushViewController:detailViewController animated:YES];
+     */
+    if (indexPath.row == 3) {
+        NSLog(@"email: %@ nickname: %@", self.name, self.tag);
+        if ([self.name length] == 0 || [self.tag length] == 0) {
+            //error
+        } else {
+            
+            [self createClan];
+            
+        }
+        
+    }
+}
+
+- (void) createClan {
+  /*  NSURLSessionDataTask *task = [[Player sharedPlayer] create:self.nick email:self.email callback:^(NSDictionary *errors) {
+        if(errors) {
+            //errors
+            NSLog(@"errors %@", errors);
+        } else {
+            [self.delegate userCreated:nil];
+        }
+    }];
+    [UIAlertView showAlertViewForTaskWithErrorOnCompletion:task delegate:nil];*/
 }
 
 /*
