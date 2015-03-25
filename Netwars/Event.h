@@ -8,7 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+@class PlayerTracker;
+
 typedef void (^EventList)(NSMutableArray *events, NSString *cursor);
+typedef void (^Tracker)(PlayerTracker *tracker);
 
 @interface Event : NSObject
 
@@ -42,6 +45,7 @@ typedef void (^EventList)(NSMutableArray *events, NSString *cursor);
 
 - (id) initWithValues:(NSDictionary *) values;
 + (NSURLSessionDataTask *) list:(NSString *)playerKey eventType:(NSString *) tpe cursor:(NSString *) c callback:(EventList) block;
++ (NSURLSessionDataTask *) tracker:(NSString *)playerKey clan:(NSString *) clanKey callback:(Tracker) block;
 
 @end
 
@@ -53,6 +57,15 @@ typedef void (^EventList)(NSMutableArray *events, NSString *cursor);
 @property(nonatomic, strong) NSString *typeName;
 @property(nonatomic, assign) NSUInteger amountUsed;
 @property(nonatomic, assign) BOOL owned;
+
+- (id) initWithValues:(NSDictionary *) values;
+
+@end
+
+@interface PlayerTracker : NSObject
+
+@property(nonatomic, assign) NSUInteger eventCount;
+@property(nonatomic, assign) NSUInteger messageCount;
 
 - (id) initWithValues:(NSDictionary *) values;
 

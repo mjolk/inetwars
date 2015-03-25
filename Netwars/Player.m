@@ -21,7 +21,7 @@
 	static id _sharedPlayer = nil;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-	    _sharedPlayer = [[self alloc] initWithDefaults];
+	    _sharedPlayer = [[Player alloc] initWithDefaults];
 	});
     
 	return _sharedPlayer;
@@ -33,24 +33,13 @@
 	if (self) {
 		NSUserDefaults *data = [NSUserDefaults standardUserDefaults];
 		NSString *playerKey = [data objectForKey:@"playerKey"];
-        NSString *memberKey = [data objectForKey:@"memberKey"];
-        //playerKey = @"agtkZXZ-bjN0d2Fyc3IsCxIGUGxheWVyIiA1NTE5NTIwNjQwNDFlODI4ODA2ZjNjZTcwOTBlODIwZQw";
 		if (playerKey == nil || [playerKey length] < 5) {
-			self.notAuthenticated = YES;
+			self.authenticated = NO;
 		}
 		else {
-			self.notAuthenticated = NO;
+			self.authenticated = YES;
 			self.playerKey = playerKey;
 		}
-        
-        if (memberKey == nil || [memberKey length] < 4) {
-            NSLog(@"memberkey not nil %@ \n", memberKey);
-            self.notInClan = YES;
-        } else {
-            NSLog(@"memberkey not nil %@ \n", memberKey);
-            self.notInClan = NO;
-            self.memberKey = memberKey;
-        }
 	}
     
 	return self;
@@ -79,12 +68,10 @@
 - (void)persistKey {
 	NSUserDefaults *data = [NSUserDefaults standardUserDefaults];
 	[data setObject:self.playerKey forKey:@"playerKey"];
-    [data setObject:self.memberKey forKey:@"memberKey"];
 	[data synchronize];
 }
 
-- (void)update:(NSDictionary *)values {
-	NSDictionary *player = [values objectForKey:@"player"];
+- (void)update:(NSDictionary *)player {
 	self.cps = [[player objectForKey:@"cps"] integerValue];
 	self.aps = [[player objectForKey:@"aps"] integerValue];
 	self.bandwidth = [[player objectForKey:@"bandwidth"] integerValue];
@@ -94,21 +81,19 @@
 	self.activeMemory = [[player objectForKey:@"active_mem"] integerValue];
 	self.newLocals = [[player objectForKey:@"new_locals"] integerValue];
     self.publicKey = [player objectForKey:@"public_key"];
-    self.memberKey = [player objectForKey:@"clan_member"];
-    NSArray *pGroups = [values objectForKey:@"programs"];
+    self.tracker = [[PlayerTracker alloc] initWithValues:[player objectForKey:@"tracker"]];
+    NSArray *pGroups = [player objectForKey:@"programs"];
     self.programs = [[NSMutableArray alloc] initWithCapacity:[pGroups count]];
     for (NSDictionary *pGroup in pGroups) {
         [self.programs addObject:[[ProgramGroup alloc] initWithValues:pGroup]];
     }
-    
-	NSLog(@" updated : %d", self.memory);
 }
 
 + (NSURLSessionDataTask *) create:(NSString *)n email:(NSString *)e callback:(PlayerCreate)block {
     __weak Player *weakPlayer = [Player sharedPlayer];
     return [[AFNetClient sharedClient] POST:@"players/" parameters:@{@"nick":n, @"email":e} success:^(NSURLSessionDataTask *task, id responseObject) {
             weakPlayer.playerKey = [responseObject objectForKey:@"result"];
-            weakPlayer.notAuthenticated = NO;
+            weakPlayer.authenticated = YES;
             block(nil);
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         //errors
@@ -118,6 +103,7 @@
 - (NSURLSessionDataTask *) state:(PlayerState)block {
     __weak Player *wPlayer = self;
     return [[AFNetClient sharedClient] GET:@"players/status" parameters:@{@"pkey": self.playerKey} success:^(NSURLSessionDataTask *task, id responseObject) {
+        //NSLog(@"response: %@", responseObject);
             [wPlayer update:[responseObject objectForKey:@"result"]];
             block(NO);
     }
@@ -167,7 +153,7 @@
             aType = @"players/deallocation";
             break;
     }
-    return [[AFNetClient sharedClient] POST:aType parameters:@{@"pkey": self.playerKey, @"prgkey": prgKey, @"amount": [NSString stringWithFormat:@"%d", a]} success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [[AFNetClient sharedClient] POST:aType parameters:@{@"pkey": self.playerKey, @"prgkey": prgKey, @"amount": [NSString stringWithFormat:@"%lu", (unsigned long)a]} success:^(NSURLSessionDataTask *task, id responseObject) {
             block(NO);
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         //error

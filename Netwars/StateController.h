@@ -10,9 +10,11 @@
 
 #import "LoginController.h"
 #import "NavCell.h"
+#import "Event.h"
+#import "TrackerCell.h"
 
 
-@interface StateController : UITableViewController <LoginDelegate, MenuDelegate>
+@interface StateController : UITableViewController <MenuDelegate>
 
 @property (nonatomic, retain) UIActivityIndicatorView *activityIndicator;
 

@@ -22,7 +22,7 @@
         self.amountLabel = amountLabel;
         amountLabel.font = [UIFont systemFontOfSize:26.f];
         [amountLabel autoSetDimension:ALDimensionWidth toSize:44.f];
-         [amountLabel autoCenterInSuperviewAlongAxis:ALAxisHorizontal];
+         [amountLabel autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
          [amountLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.contentView withOffset:20.f];
         [self positionSlider:amountLabel];
         UILabel *progLabel = [[UILabel alloc] initForAutoLayout];

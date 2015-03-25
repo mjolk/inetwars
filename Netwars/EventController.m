@@ -35,6 +35,7 @@
     
 	// Uncomment the following line to display an Edit button in the navigation bar for this view controller.
 	// self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    [self.navigationController setNavigationBarHidden:NO];
 	self.cursor = @"";
 	[self.tableView registerClass:[EventCell class] forCellReuseIdentifier:@"EventCell"];
 	NSString *imageMapPath = [[NSBundle mainBundle] pathForResource:@"programgroupimg" ofType:@"plist"];
@@ -44,7 +45,7 @@
 
 - (void)load {
 	NSString *playerKey = [[Player sharedPlayer] playerKey];
-	NSURLSessionDataTask *task = [Event list:playerKey eventType:@"locals" cursor:self.cursor callback: ^(NSMutableArray *events, NSString *cursor) {
+	NSURLSessionDataTask *task = [Event list:playerKey eventType:@"Player" cursor:self.cursor callback: ^(NSMutableArray *events, NSString *cursor) {
 	    if ([self.cursor length] == 0) {
 	        self.events = events;
 		}

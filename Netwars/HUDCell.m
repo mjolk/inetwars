@@ -13,8 +13,6 @@
 
 - (void) setup;
 - (void) setupProgress;
-- (UIImageView *) createIcon:(NSString *) path;
-- (UILabel *) createLabel:(UIView *) container text:(NSString *) label fontSize:(CGFloat) size;
 
 @end
 
@@ -32,25 +30,17 @@
 - (void) setupProgress {
     UIView *progressContainer = [UIView newAutoLayoutView];
     [self.contentView addSubview:progressContainer];
+    self.progressContainer = progressContainer;
+    self.progressContainer.backgroundColor = [UIColor lightGrayColor];
     DACircularProgressView *memProgress = [[DACircularProgressView alloc] initForAutoLayout];
-    [memProgress setFrame:CGRectMake(-33.f, -33.f, 66.f, 66.f)];
-    [memProgress autoSetDimension:ALDimensionWidth toSize:66.0f];
-    [memProgress autoSetDimension:ALDimensionHeight toSize:66.0f];
     DACircularProgressView *bwProgress = [[DACircularProgressView alloc] initForAutoLayout];
     [progressContainer addSubview:bwProgress];
     [progressContainer addSubview:memProgress];
     self.bandwidthProgress = bwProgress;
     self.memoryProgress = memProgress;
-    [bwProgress setFrame:CGRectMake(-47, -47, 94.f, 94.f)];
-    [bwProgress autoSetDimension:ALDimensionWidth toSize:94.0f];
-    [bwProgress autoSetDimension:ALDimensionHeight toSize:94.0f];
-   [progressContainer autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:88.f];
-    [progressContainer autoCenterInSuperviewAlongAxis:ALAxisHorizontal];
-    
     memProgress.trackTintColor = [[UIColor alloc] initWithRed:244.0f/255.0f green:244.0f/255.0f blue:244.0f/255.0f alpha:1.0f];
     memProgress.progressTintColor = [[UIColor alloc] initWithRed:209.0f/255.0f green:86.0f/255.0f blue:62.0f/255.0f alpha:1.0f];
     memProgress.thicknessRatio = 1.0f;
-    
     bwProgress.roundedCorners = YES;
     bwProgress.trackTintColor = [[UIColor alloc] initWithRed:241.0f/255.0f green:196.0f/255.0f blue:15.0f/255.0f alpha:1.0f];
     bwProgress.progressTintColor = [[UIColor alloc] initWithRed:164.0f/255.0f green:246.0f/255.0f blue:181.0f/255.0f alpha:1.0f];
@@ -62,85 +52,126 @@
     [self setupProgress];
     
     self.contentView.backgroundColor = [[UIColor alloc] initWithRed:254.0f/255.0f green:255.0f/255.0f blue:254.0f/255.0f alpha:1.0f];
-    
-    UIView *hudContainer = [UIView newAutoLayoutView];
-    
-    [self.contentView addSubview:hudContainer];
-    
-    [hudContainer autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:10.f];
-    [hudContainer autoSetDimension:ALDimensionHeight toSize:200.f];
-    [hudContainer autoCenterInSuperviewAlongAxis:ALAxisHorizontal];
-           
+
     UIView *memoryContainer = [[UIView alloc] initForAutoLayout];
     UIView *activeMemoryContainer = [[UIView alloc] initForAutoLayout];
     UIView *cycleContainer = [[UIView alloc] initForAutoLayout];
     UIView *bandwidthContainer = [[UIView alloc] initForAutoLayout];
     
-    [hudContainer addSubview:memoryContainer];
-    [hudContainer addSubview:activeMemoryContainer];
-    [hudContainer addSubview:cycleContainer];
-    [hudContainer addSubview:bandwidthContainer];
+    [self.contentView addSubview:memoryContainer];
+    [self.contentView addSubview:activeMemoryContainer];
+    [self.contentView addSubview:cycleContainer];
+    [self.contentView addSubview:bandwidthContainer];
     
-    [cycleContainer autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:memoryContainer withOffset:50.0f];
-    [activeMemoryContainer autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:cycleContainer withOffset:60.f];
-    [bandwidthContainer autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:activeMemoryContainer withOffset:50.f];
+    self.memoryContainer = memoryContainer;
+    self.activeMemoryContainer = activeMemoryContainer;
+    self.cycleContainer = cycleContainer;
+    self.bandwidthContainer = bandwidthContainer;
     
-    UILabel *memoryLabel = [self createLabel:memoryContainer text:@"memory :" fontSize:10.0f];
-    [memoryLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:32.f];
-    self.memoryValue = [self createLabel:memoryContainer text:@"0" fontSize:26.0f];
-    [self.memoryValue autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:memoryLabel withOffset:2.f];
-    [self.memoryValue autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:memoryLabel withOffset:0.f];
-    UILabel *memoryMetric = [self createLabel:memoryContainer text:@"gb" fontSize:10.0f];
-    [memoryMetric autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.memoryValue withOffset:2.f];
-    [memoryMetric autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.memoryValue withOffset:-4.f];
-    
-    UILabel *cycleLabel = [self createLabel:cycleContainer text:@"cycles :" fontSize:10.0f];
-    [cycleLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:32.f];
-    self.cycleValue = [self createLabel:cycleContainer text:@"122345" fontSize:26.0f];
-    [self.cycleValue autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:cycleLabel withOffset:2.f];
-    [self.cycleValue autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:cycleLabel withOffset:0.f];
-    UILabel *cycleMetric = [self createLabel:cycleContainer text:@"cycles" fontSize:10.0f];
-    [cycleMetric autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.cycleValue withOffset:2.f];
-    [cycleMetric autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.cycleValue withOffset:-4.f];
-    
-    UILabel *activeMemoryLabel = [self createLabel:activeMemoryContainer text:@"active memory :" fontSize:10.0f];
-    [activeMemoryLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:32.f];
-    self.activeMemoryValue = [self createLabel:activeMemoryContainer text:@"0 / 10" fontSize:16.0f];
-    [self.activeMemoryValue autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:activeMemoryLabel withOffset:2.f];
-    [self.activeMemoryValue autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:activeMemoryLabel withOffset:0.f];
-    UILabel *activeMemoryMetric = [self createLabel:activeMemoryContainer text:@"gb" fontSize:10.0f];
-    [activeMemoryMetric autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.activeMemoryValue withOffset:4.f];
-    [activeMemoryMetric autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.activeMemoryValue withOffset:-2.f];
-    
-    UILabel *bandwidthLabel = [self createLabel:bandwidthContainer text:@"usage / bandwidth :" fontSize:10.0f];
-    [bandwidthLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:32.f];
-    self.bandwidthValue = [self createLabel:bandwidthContainer text:@"0 / 0" fontSize:16.0f];
-    [self.bandwidthValue autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:bandwidthLabel withOffset:2.f];
-    [self.bandwidthValue autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:bandwidthLabel withOffset:0.f];
-    UILabel *bandwidthMetric = [self createLabel:bandwidthContainer text:@"ghz" fontSize:10.0f];
-    [bandwidthMetric autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.bandwidthValue withOffset:4.f];
-    [bandwidthMetric autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.bandwidthValue withOffset:-2.f];
-    
-    
-    UIImageView *memoryIcon = [self createIcon:@"memory_22.png"];
-    UIImageView *cyclesIcon = [self createIcon:@"cyclesicon_22.png"];
-    UIImageView *activeMemoryIcon = [self createIcon:@"activememory_22.png"];
-    UIImageView *bandwidthIcon = [self createIcon:@"bandwidth_22.png"];
-    [bandwidthIcon setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [memoryIcon setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [cyclesIcon setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [activeMemoryIcon setTranslatesAutoresizingMaskIntoConstraints:NO];
+    UIImageView *memoryIcon = [Common createIcon:@"memory_22.png"];
+    UIImageView *cyclesIcon = [Common createIcon:@"cyclesicon_22.png"];
+    UIImageView *activeMemoryIcon = [Common createIcon:@"activememory_22.png"];
+    UIImageView *bandwidthIcon = [Common createIcon:@"bandwidth_22.png"];
     
     [memoryContainer addSubview:memoryIcon];
     [cycleContainer addSubview:cyclesIcon];
     [activeMemoryContainer addSubview:activeMemoryIcon];
     [bandwidthContainer addSubview:bandwidthIcon];
     
-    [memoryIcon autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:20.f];
-    [cyclesIcon autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:20.f];
-    [activeMemoryIcon autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:10.0f];
-    [bandwidthIcon autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:10.0f];
+    self.memoryIcon = memoryIcon;
+    self.cyclesIcon = cyclesIcon;
+    self.activeMemoryIcon = activeMemoryIcon;
+    self.bandwidthIcon = bandwidthIcon;
     
+    self.memoryLabel = [Common createLabel:memoryContainer text:@"memory :" fontSize:10.0f];
+    self.memoryValue = [Common createLabel:memoryContainer text:@"0" fontSize:26.0f];
+    self.memoryMetric = [Common createLabel:memoryContainer text:@"gb" fontSize:8.0f];
+    
+    self.cycleLabel = [Common createLabel:cycleContainer text:@"cycles :" fontSize:10.0f];
+    self.cycleValue = [Common createLabel:cycleContainer text:@"122345" fontSize:26.0f];
+    self.cycleMetric = [Common createLabel:cycleContainer text:@"cycles" fontSize:8.0f];
+    
+    self.activeMemoryLabel = [Common createLabel:activeMemoryContainer text:@"active memory :" fontSize:10.0f];
+    self.activeMemoryValue = [Common createLabel:activeMemoryContainer text:@"0 / 10" fontSize:16.0f];
+    self.activeMemoryMetric = [Common createLabel:activeMemoryContainer text:@"gb" fontSize:8.0f];
+    
+    self.bandwidthLabel = [Common createLabel:bandwidthContainer text:@"usage / bandwidth :" fontSize:10.0f];
+    self.bandwidthValue = [Common createLabel:bandwidthContainer text:@"0 / 0" fontSize:16.0f];
+    self.bandwidthMetric = [Common createLabel:bandwidthContainer text:@"ghz" fontSize:8.0f];
+}
+
+- (void)updateConstraints
+{
+    if (!self.didSetupConstraints) {
+        NSLog(@"setting constraints");
+        
+        
+        
+       [self.progressContainer autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.contentView withOffset:-66.0f];
+        [self.progressContainer autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.contentView];
+        [self.memoryProgress autoSetDimension:ALDimensionHeight toSize:66.0f];
+        [self.memoryProgress autoSetDimension:ALDimensionWidth toSize:66.0f];
+        [self.bandwidthProgress autoSetDimension:ALDimensionHeight toSize:86.0f];
+        [self.bandwidthProgress autoSetDimension:ALDimensionWidth toSize:86.0f];
+       [self.bandwidthProgress autoCenterInSuperview];
+        [self.memoryProgress autoCenterInSuperview];
+        
+        [self.memoryIcon autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.contentView withOffset:10.0f];
+        [self.activeMemoryIcon autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.contentView withOffset:10.0f];
+        [self.cyclesIcon autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.contentView withOffset:10.0f];
+        [self.bandwidthIcon autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.contentView withOffset:10.0f];
+        
+        [self.memoryIcon autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.memoryContainer];
+        [self.cyclesIcon autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.cycleContainer];
+        [self.activeMemoryIcon autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.activeMemoryContainer];
+        [self.bandwidthIcon autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.bandwidthContainer];
+        
+        [self.memoryLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.memoryIcon withOffset:5.0f];
+        [self.memoryLabel autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.memoryContainer];
+        
+        [self.memoryValue autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.memoryLabel withOffset:5.0f];
+        [self.memoryValue autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.memoryContainer];
+        
+        [self.memoryMetric autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.memoryValue withOffset:5.0f];
+        [self.memoryMetric autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.memoryContainer];
+        
+        [self.cycleLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.cyclesIcon withOffset:5.0f];
+        [self.cycleLabel autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.cycleContainer];
+        
+        [self.cycleValue autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.cycleLabel withOffset:5.0f];
+        [self.cycleValue autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.cycleContainer];
+        
+        [self.cycleMetric autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.cycleValue withOffset:5.0f];
+        [self.cycleMetric autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.cycleContainer];
+        
+        [self.activeMemoryLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.activeMemoryIcon withOffset:5.0f];
+        [self.activeMemoryLabel autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.activeMemoryContainer];
+        
+        [self.activeMemoryValue autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.activeMemoryLabel withOffset:5.0f];
+        [self.activeMemoryValue autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.activeMemoryContainer];
+        
+        [self.activeMemoryMetric autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.activeMemoryValue withOffset:5.0f];
+        [self.activeMemoryMetric autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.activeMemoryContainer];
+        
+        [self.bandwidthLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.bandwidthIcon withOffset:5.0f];
+        [self.bandwidthLabel autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.bandwidthContainer];
+        
+        [self.bandwidthValue autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.bandwidthLabel withOffset:5.0f];
+        [self.bandwidthValue autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.bandwidthContainer];
+        
+        [self.bandwidthMetric autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.bandwidthValue withOffset:5.0f];
+        [self.bandwidthMetric autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.bandwidthContainer];
+        
+        NSArray *left = @[self.memoryContainer, self.cycleContainer, self.activeMemoryContainer, self.bandwidthContainer];
+        [left autoDistributeViewsAlongAxis:ALAxisVertical alignedTo:ALAttributeVertical withFixedSpacing:5.0f];
+        
+        
+        
+        
+        self.didSetupConstraints = YES;
+    }
+    
+    [super updateConstraints];
 }
 
 - (void) setAmemProgress:(CGFloat)progress {
@@ -152,36 +183,24 @@
 }
 
 - (void) setActivememory:(NSUInteger)activeMemory {
-    self.activeMemoryValue.text = [NSString stringWithFormat:@"%d / 10", activeMemory];
+    self.activeMemoryValue.text = [NSString stringWithFormat:@"%lu / 10", (unsigned long)activeMemory];
 }
 
 - (void) setBandwidth:(CGFloat) usage bandwidth:(NSUInteger)bw {
-    self.bandwidthValue.text = [NSString stringWithFormat:@"%.2f / %d", usage, bw];
+    self.bandwidthValue.text = [NSString stringWithFormat:@"%.2f / %lu", usage, (unsigned long)bw];
 }
 
 - (void) setMemory:(NSUInteger)memory {
-    self.memoryValue.text = [NSString stringWithFormat:@"%d", memory];
+    self.memoryValue.text = [NSString stringWithFormat:@"%lu", (unsigned long)memory];
 }
 
 - (void) setCycles:(NSUInteger)cycles {
-    self.cycleValue.text = [NSString stringWithFormat:@"%d", cycles];
+    self.cycleValue.text = [NSString stringWithFormat:@"%lu", (unsigned long)cycles];
 }
 
 
 
-- (UILabel *) createLabel:(UIView *) container text:(NSString *)content fontSize:(CGFloat) size {
-    UILabel *label = [[UILabel alloc] initForAutoLayout];
-    label.font = [UIFont systemFontOfSize:size];
-    label.text = content;
-    label.backgroundColor = [UIColor whiteColor];
-    [container addSubview:label];
-    return label;
-}
 
-- (UIImageView *) createIcon:(NSString *) path {
-    return [[UIImageView alloc] initWithImage:[UIImage imageNamed:path]];
-    
-}
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {

@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Event.h"
 
 
 @class Player;
@@ -29,11 +30,10 @@ typedef void (^PlayerInvites)(NSMutableArray *invites);
 @property(nonatomic, assign) NSUInteger aps;
 @property(nonatomic, strong) NSString *playerKey;
 @property(nonatomic, strong) NSString *publicKey;
-@property(nonatomic, strong) NSString *memberKey;
 @property(nonatomic, strong) NSMutableArray *programs;
 @property(nonatomic, assign) NSUInteger newLocals;
-@property(nonatomic, assign) BOOL notAuthenticated;
-@property(nonatomic, assign) BOOL notInClan;
+@property(nonatomic, assign) BOOL authenticated;
+@property(nonatomic, assign) BOOL clanMember;
 @property(nonatomic, strong) NSString *nick;
 @property(nonatomic, strong) NSString *email;
 @property(nonatomic, strong) NSDate *updated;
@@ -42,6 +42,7 @@ typedef void (^PlayerInvites)(NSMutableArray *invites);
 @property(nonatomic, strong) NSString *clanTag;
 @property(nonatomic, strong) NSString *clan;
 @property(nonatomic, strong) NSString *status;
+@property(nonatomic, strong) PlayerTracker *tracker;
 
 + (id)sharedPlayer;
 + (NSURLSessionDataTask *) create:(NSString *)n email:(NSString *)e callback:(PlayerCreate) block;

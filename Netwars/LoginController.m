@@ -80,12 +80,12 @@
             input.name.delegate = self;
             input.name.tag = 1;
             input.field.delegate = self;
-            input.field.tag = 2;
-            break;}
-            case 3:{
+                input.field.tag = 2;}
+            break;
+            case 3:
             cell = [tableView dequeueReusableCellWithIdentifier:btnCell forIndexPath:indexPath];
             cell.textLabel.text = @"Create new account";
-                break;}
+            break;
 
     }
     return cell;
@@ -94,9 +94,10 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat height;
     CGFloat tableHeight = [self.tableView bounds].size.height;
+    CGFloat statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
     switch (indexPath.row) {
         case 1:
-            height = tableHeight - 216.0f;
+            height = tableHeight - (216.0f + statusBarHeight);
             break;
         case 2:
             height = 108.0f;
@@ -117,6 +118,7 @@
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
+    NSLog(@"text: %@", textField.text);
     switch (textField.tag) {
         case 1:
             self.nick = textField.text;
@@ -200,7 +202,7 @@
             //errors
             NSLog(@"errors %@", errors);
         } else {
-            [self.delegate userCreated:nil];
+            [self.delegate userCreated:self];
         }
     }];
     [UIAlertView showAlertViewForTaskWithErrorOnCompletion:task delegate:nil];

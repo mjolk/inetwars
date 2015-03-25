@@ -141,7 +141,7 @@
     UILabel *amountLabel = [[UILabel alloc] initForAutoLayout];
     [statsView addSubview:amountLabel];
     [amountValue autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:18.0f];
-    [amountValue autoCenterInSuperviewAlongAxis:ALAxisVertical];
+    [amountValue autoAlignAxisToSuperviewAxis:ALAxisVertical];
     [amountLabel autoAlignAxis:ALAxisVertical toSameAxisOfView:amountValue];
     [amountLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:amountValue withOffset:2.0f];
     amountLabel.text = @"amount";

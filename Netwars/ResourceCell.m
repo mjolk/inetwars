@@ -61,14 +61,14 @@
     self.memProgress = memProgress;
     self.bandwidthProgress = bandwidthProgress;
     self.cycleProgress = cyclesProgress;
-    [bandwidthImg autoCenterInSuperviewAlongAxis:ALAxisHorizontal];
+    [bandwidthImg autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
     [bandwidthImg autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:7.0f];
-    [memoryImg autoCenterInSuperviewAlongAxis:ALAxisHorizontal];
+    [memoryImg autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
     [memoryImg autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:7.f];
-    [cyclesImg autoCenterInSuperviewAlongAxis:ALAxisHorizontal];
+    [cyclesImg autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
     [cyclesImg autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:7.f];
     NSArray *subViews = @[memoryResource, cycleResource, bandwidthResource ];
-    [container autoDistributeSubviews:subViews alongAxis:ALAxisHorizontal withFixedSize:44.0f alignment:NSLayoutFormatAlignAllCenterY];
+    [subViews autoDistributeViewsAlongAxis:ALAxisHorizontal alignedTo:ALAttributeHorizontal withFixedSize:44.0f ];
     memProgress.roundedCorners = YES;
     memProgress.trackTintColor = [[UIColor alloc] initWithRed:241.0f/255.0f green:196.0f/255.0f blue:15.0f/255.0f alpha:1.0f];
     memProgress.progressTintColor = [[UIColor alloc] initWithRed:164.0f/255.0f green:246.0f/255.0f blue:181.0f/255.0f alpha:1.0f];

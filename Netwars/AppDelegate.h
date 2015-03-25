@@ -7,12 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LoginController.h"
 
 @class PageController;
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, LoginDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (nonatomic, strong) UINavigationController *navController;
+
+- (void)userCreated:(LoginController *)controller;
 
 @end

@@ -21,7 +21,16 @@
     
     [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
     
-    self.navController = [[UINavigationController alloc] initWithRootViewController:[[StateController alloc] initWithStyle:UITableViewStylePlain]];
+    if ([[Player sharedPlayer] authenticated]) {
+        self.navController = [[UINavigationController alloc] initWithRootViewController:[[StateController alloc]initWithStyle:UITableViewStylePlain]];
+        [self.navController setNavigationBarHidden:YES];
+    } else {
+        NSLog(@"player not authenticated");
+        LoginController *login = [[LoginController alloc] initWithStyle:UITableViewStylePlain];
+        self.navController = [[UINavigationController alloc] initWithRootViewController:login];
+        [self.navController setNavigationBarHidden:YES];
+        [login setDelegate:self];
+    }
     
     //self.navigationController.navigationBar.tintColor = [UIColor darkGrayColor];
     
@@ -32,6 +41,12 @@
     [self.window makeKeyAndVisible];
     
     return YES;
+}
+
+- (void)userCreated:(LoginController *)controller {
+    NSLog(@"user created");
+    StateController *main = [[StateController alloc]initWithStyle:UITableViewStylePlain];
+    [self.navController setViewControllers:@[main] animated:NO];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

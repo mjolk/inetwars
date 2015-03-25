@@ -22,7 +22,7 @@
         self.typeField = typeField;
         typeField.font = [UIFont systemFontOfSize:14.f];
         [self.typeField autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.contentView withOffset:6.f];
-        [self.typeField autoCenterInSuperviewAlongAxis:ALAxisVertical];
+        [self.typeField autoAlignAxisToSuperviewAxis:ALAxisVertical];
         self.typeField.inputView = picker;
        // picker.backgroundColor = [UIColor greenColor];
        // [picker autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.contentView];

@@ -24,7 +24,7 @@
         //[self setup];
         self.contentView.backgroundColor = [[UIColor alloc] initWithRed:254.0f/255.0f green:255.0f/255.0f blue:254.0f/255.0f alpha:1.0f];
         
-        UIScrollView *scroller = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.contentView.frame.size.width, 70.0)];
+        UIScrollView *scroller = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.contentView.bounds.size.width, 70.0)];
         [self.contentView addSubview:scroller];
         [scroller setPagingEnabled:YES];
         self.scroller = scroller;
@@ -42,7 +42,7 @@
 }
 
 - (void) initMenu:(NSArray *) enabled {
-    CGFloat cellWidth = self.contentView.frame.size.width;
+    CGFloat cellWidth = self.contentView.bounds.size.width;
     CGFloat btnWidth = cellWidth/ 4;
     int len = [enabled count];
     int slen = [self.active count];
@@ -73,7 +73,7 @@
     [self.contentView addSubview:container];
     
     [container autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.contentView];
-    [container autoCenterInSuperviewAlongAxis:ALAxisHorizontal];
+    [container autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
     [container autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.contentView];
     
     [container autoSetDimension:ALDimensionHeight toSize:70.0f];
@@ -103,7 +103,7 @@
     
     NSArray *subViews = @[localEventsBtn, programsBtn, listBtn, messageBtn];
     
-    [container autoDistributeSubviews:subViews alongAxis:ALAxisHorizontal withFixedSpacing:0.0f alignment:NSLayoutFormatAlignAllCenterY];
+    [subViews autoDistributeViewsAlongAxis:ALAxisHorizontal alignedTo:ALAttributeHorizontal withFixedSpacing:0.0f];
     
     
     

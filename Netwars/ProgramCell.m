@@ -69,7 +69,7 @@
     [self.contentView addSubview:alLabel];
     alLabel.font = [UIFont systemFontOfSize:12.0f];
     self.alLabel = alLabel;
-    [alLabel autoCenterInSuperviewAlongAxis:ALAxisHorizontal];
+    [alLabel autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
     [alLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:10.0f];
     
     UILabel *title = [[UILabel alloc] initForAutoLayout];
@@ -93,13 +93,13 @@
     [costIcon setImage:[UIImage imageNamed:@"cyclesicon_22.png"]];
     self.cycleIcon = costIcon;
     [costIcon autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:4.0f];
-    [costIcon autoCenterInSuperviewAlongAxis:ALAxisHorizontal];
+    [costIcon autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
     
     UILabel *cost = [[UILabel alloc] initForAutoLayout];
     [self.contentView addSubview:cost];
     cost.font = [UIFont systemFontOfSize:12.0f];
     self.costLabel = cost;
-    [cost autoCenterInSuperviewAlongAxis:ALAxisHorizontal];
+    [cost autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
     [cost autoPinEdge:ALEdgeRight toEdge:ALEdgeLeft ofView:costIcon withOffset:-4.0f];
     
     UIView *effectsView = [[UIView alloc]initForAutoLayout];

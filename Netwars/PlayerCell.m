@@ -19,15 +19,15 @@
         // Initialization code
         self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         self.imageView.translatesAutoresizingMaskIntoConstraints = NO;
-        [self.imageView autoCenterInSuperviewAlongAxis:ALAxisHorizontal];
+        [self.imageView autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
         [self.imageView autoSetDimension:ALDimensionWidth toSize:32.f];
         [self.imageView autoSetDimension:ALDimensionHeight toSize:32.f];
         [self.imageView autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:10.f];
         self.detailTextLabel.translatesAutoresizingMaskIntoConstraints = NO;
-        [self.detailTextLabel autoCenterInSuperviewAlongAxis:ALAxisHorizontal];
+        [self.detailTextLabel autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
         [self.detailTextLabel autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:20.f];
         self.textLabel.translatesAutoresizingMaskIntoConstraints = NO;
-        [self.textLabel autoCenterInSuperviewAlongAxis:ALAxisHorizontal];
+        [self.textLabel autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
         
         
     }

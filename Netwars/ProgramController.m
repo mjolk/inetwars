@@ -39,7 +39,7 @@
     
 	// Uncomment the following line to display an Edit button in the navigation bar for this view controller.
 	// self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
+    [self.navigationController setNavigationBarHidden:NO];
 	NSString *imageMapPath = [[NSBundle mainBundle] pathForResource:@"programgroupimg" ofType:@"plist"];
 	self.imgMap = [[NSDictionary alloc] initWithContentsOfFile:imageMapPath];
     

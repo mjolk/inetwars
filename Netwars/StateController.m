@@ -7,7 +7,6 @@
 //
 
 #import "StateController.h"
-#import "LoginController.h"
 #import "NavCell.h"
 #import "ProgramController.h"
 #import "Player.h"
@@ -68,30 +67,16 @@
     
 	[self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"RegularCell"];
     
+    [self.tableView registerClass:[TrackerCell class] forCellReuseIdentifier:@"TrackerCell"];
     
-	if ([[Player sharedPlayer] notAuthenticated]) {
-		LoginController *login = [[LoginController alloc] initWithStyle:UITableViewStylePlain];
-		login.modalPresentationStyle = UIModalPresentationFullScreen;
-		login.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-		[login setDelegate:self];
-		[self presentViewController:login animated:NO completion:nil];
-	}
-	else {
-		[self load];
-	}
+    [self load];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
-    
+    [self.navigationController setNavigationBarHidden:YES];
 	[self.tableView reloadData];
-}
-
-- (void)userCreated:(LoginController *)controller {
-	NSLog(@"user created");
-	[self dismissViewControllerAnimated:YES completion: ^(void) {
-	    [self load];
-	}];
 }
 
 - (void)load {
@@ -120,7 +105,7 @@
 #pragma mark - Table view data source
 
 - (UIView *)tableView:(UITableView *)aTableView viewForHeaderInSection:(NSInteger)section {
-	if (section < 2) {
+	if (section < 3) {
 		return nil;
 	}
 	ProgramGroup *group = [[[Player sharedPlayer] programs] objectAtIndex:section - 2];
@@ -132,7 +117,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-	if (section < 2) {
+	if (section < 3) {
 		return 0.f;
 	}
 	return 33.0f;
@@ -146,14 +131,14 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 	// Return the number of sections.
-	return [[[Player sharedPlayer] programs] count] + 2;
+	return [[[Player sharedPlayer] programs] count] + 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	if (section < 2) {
+	if (section < 3) {
 		return 1;
 	}
-	return [[[[[Player sharedPlayer] programs] objectAtIndex:section - 2] programs]count];
+	return [[[[[Player sharedPlayer] programs] objectAtIndex:section - 3] programs]count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -170,9 +155,19 @@
 		[hudCell setBandwidth:player.bandwidthUsage bandwidth:player.bandwidth];
 		[hudCell setActivememory:player.activeMemory];
 		[hudCell setCycles:player.cycles];
+        [hudCell setNeedsUpdateConstraints];
+        [hudCell updateConstraintsIfNeeded];
 		return hudCell;
 	}
-	else if (indexPath.section == 1) {
+    else if (indexPath.section == 1) {
+        TrackerCell *eventCell = [tableView dequeueReusableCellWithIdentifier:@"TrackerCell" forIndexPath:indexPath];
+        [eventCell setEventCount:player.tracker.eventCount];
+        [eventCell setMessageCount:player.tracker.eventCount];
+        [eventCell setNeedsUpdateConstraints];
+        [eventCell updateConstraintsIfNeeded];
+        return eventCell;
+    }
+	else if (indexPath.section == 2) {
 		NavCell *eventCell = [tableView dequeueReusableCellWithIdentifier:EVENTCELL forIndexPath:indexPath];
         [eventCell initMenu:@[@"players", @"globals", @"locals", @"programs", @"messages", @"clan"]];
 		eventCell.delegate = self;
@@ -180,8 +175,8 @@
 	}
 	else {
 		UITableViewCell *regCell = [tableView dequeueReusableCellWithIdentifier:@"RegularCell" forIndexPath:indexPath];
-		Program *program = [[[[[Player sharedPlayer] programs] objectAtIndex:indexPath.section - 2] programs] objectAtIndex:indexPath.row];
-		regCell.textLabel.text = [NSString stringWithFormat:@"%d", program.amount];
+		Program *program = [[[[player programs] objectAtIndex:indexPath.section - 2] programs] objectAtIndex:indexPath.row];
+		regCell.textLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)program.amount];
 		regCell.textLabel.backgroundColor = [UIColor clearColor];
 		regCell.detailTextLabel.backgroundColor = [UIColor clearColor];
 		regCell.detailTextLabel.text = program.name;
@@ -203,8 +198,11 @@
 		case 0:
 			height = 220.0f;
 			break;
+        case 1:
+            height = 22.0f;
+            break;
             
-		case 1:
+		case 2:
 			height = 70.0f;
 			break;
             
@@ -250,7 +248,7 @@
 
 - (void)showClan {
     
-    if ([[Player sharedPlayer] notInClan]) {
+    if (![[Player sharedPlayer] clanMember]) {
         NSLog(@"invite controller ----\n");
 		InviteController *invite = [[InviteController alloc] initWithStyle:UITableViewStylePlain];
         [self.navigationController pushViewController:invite animated:YES];
@@ -314,8 +312,8 @@
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
 	 */
-    if (indexPath.section > 1) {
-        Program *program = [[[[[Player sharedPlayer] programs] objectAtIndex:indexPath.section - 2] programs] objectAtIndex:indexPath.row];
+    if (indexPath.section > 2) {
+        Program *program = [[[[[Player sharedPlayer] programs] objectAtIndex:indexPath.section - 3] programs] objectAtIndex:indexPath.row];
         AllocController *allocController = [[AllocController alloc] initWithProgram:program];
         // ...
         // Pass the selected object to the new view controller.

@@ -15,4 +15,4 @@
     #import <MobileCoreServices/MobileCoreServices.h>
 #endif
 
-#import "UIView+AutoLayout.h"
+#import <PureLayout/PureLayout.h>
