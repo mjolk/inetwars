@@ -11,10 +11,8 @@
 
 @implementation Clan
 
-
-
-+ (NSURLSessionDataTask *) create:(NSString *) pkey name:(NSString *)n tag:(NSString *)t callback:(ClanCreate)block {
-    return [[AFNetClient sharedClient] POST:@"clans/" parameters:@{@"name":n, @"tag":t, @"pkey":pkey} success:^(NSURLSessionDataTask *task, id responseObject) {
++ (NSURLSessionDataTask *) create:(NSString *)n tag:(NSString *)t callback:(ClanCreate)block {
+    return [[AFNetClient authGET] POST:@"clans/" parameters:@{@"name":n, @"tag":t} success:^(NSURLSessionDataTask *task, id responseObject) {
         block(YES);
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         //errors

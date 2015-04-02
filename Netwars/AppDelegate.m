@@ -44,9 +44,8 @@
 }
 
 - (void)userCreated:(LoginController *)controller {
-    NSLog(@"user created");
     StateController *main = [[StateController alloc]initWithStyle:UITableViewStylePlain];
-    [self.navController setViewControllers:@[main] animated:NO];
+    [self.navController setViewControllers:@[main] animated:YES];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

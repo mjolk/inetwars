@@ -22,7 +22,9 @@ typedef void (^ClanCreate)(BOOL);
 @property(nonatomic, strong) NSString *avatar;
 @property(nonatomic, strong) NSString *message;
 @property(nonatomic, strong) NSString *site;
-@property(nonatomic, strong) NSString *description;
+@property(nonatomic, strong) NSString *descr;
 @property(nonatomic, strong) NSArray *players;
+
++ (NSURLSessionDataTask *) create:(NSString *)n tag:(NSString *)t callback:(ClanCreate)block;
 
 @end

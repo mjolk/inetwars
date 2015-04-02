@@ -7,6 +7,7 @@
 //
 
 #import "Invite.h"
+#import "AFNetClient.h"
 
 @implementation Invite
 
@@ -21,6 +22,19 @@
         
     }
     return self;
+}
+
++ (NSURLSessionDataTask *) invites:(PlayerInvites)block {
+    return [[AFNetClient authGET] GET:@"clans/invitations" parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        NSDictionary *dictInvites = [responseObject objectForKey:@"result"];
+        NSMutableArray *invites = [[NSMutableArray alloc] initWithCapacity:[dictInvites count]];
+        for( NSDictionary *inv in dictInvites) {
+            [invites addObject:[[Invite alloc] initWithValues:inv]];
+        }
+        block(invites);
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        //error
+    }];
 }
 
 @end

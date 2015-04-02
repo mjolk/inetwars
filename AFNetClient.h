@@ -10,6 +10,8 @@
 
 @interface AFNetClient : AFHTTPSessionManager
 
-+ (AFNetClient *)sharedClient;
++ (AFNetClient *)shared;
++ (AFNetClient *)authGET;
++ (AFNetClient *)authPOST;
 
 @end

@@ -7,17 +7,23 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Event.h"
 
 
 @class Player;
 
 typedef void (^PlayerCreate)(NSDictionary *errors);
 typedef void (^PlayerState)(BOOL);
-typedef void (^PlayerAllocate)(BOOL);
 typedef void (^PlayerProfile)(BOOL);
 typedef void (^PlayerList)(NSMutableArray *players, NSString *cursor);
-typedef void (^PlayerInvites)(NSMutableArray *invites);
+
+@interface PlayerTracker : NSObject
+
+@property(nonatomic, assign) NSUInteger eventCount;
+@property(nonatomic, assign) NSUInteger messageCount;
+
+- (id) initWithValues:(NSDictionary *) values;
+
+@end
 
 @interface Player : NSObject
 
@@ -29,7 +35,6 @@ typedef void (^PlayerInvites)(NSMutableArray *invites);
 @property(nonatomic, assign) NSUInteger cps;
 @property(nonatomic, assign) NSUInteger aps;
 @property(nonatomic, strong) NSString *playerKey;
-@property(nonatomic, strong) NSString *publicKey;
 @property(nonatomic, strong) NSMutableArray *programs;
 @property(nonatomic, assign) NSUInteger newLocals;
 @property(nonatomic, assign) BOOL authenticated;
@@ -45,12 +50,9 @@ typedef void (^PlayerInvites)(NSMutableArray *invites);
 @property(nonatomic, strong) PlayerTracker *tracker;
 
 + (id)sharedPlayer;
-+ (NSURLSessionDataTask *) create:(NSString *)n email:(NSString *)e callback:(PlayerCreate) block;
-- (NSURLSessionDataTask *) invites:(PlayerInvites) block;
++ (NSURLSessionDataTask *) create:(NSString *)n email:(NSString *)e password:(NSString *) pw callback:(PlayerCreate)block;
 - (NSURLSessionDataTask *) state:(PlayerState) block;
-- (NSURLSessionDataTask *) allocate:(NSUInteger) dir program:(NSString *) prgKey amount:(NSUInteger) a allocBlock:(PlayerAllocate)block;
-- (NSURLSessionDataTask *) profile:(PlayerProfile) block;
-+ (NSURLSessionDataTask *) list:(NSString *)playerKey range:(BOOL) rnge cursor:(NSString *) c callback:(PlayerList) block;
++ (NSURLSessionDataTask *) list:(BOOL) rnge cursor:(NSString *) c callback:(PlayerList) block;
 - (id) initWithDefaults;
 - (void) update:(NSDictionary *) values;
 - (id) initForPublic:(NSDictionary *) values;

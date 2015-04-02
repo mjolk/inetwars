@@ -15,5 +15,6 @@
 @property(nonatomic, weak) DACircularProgressView *bwUsageProgress;
 @property(nonatomic, weak) UILabel *programTypeLabel;
 @property(nonatomic, weak) UILabel *amountLabel;
+@property (nonatomic, assign) BOOL didSetupConstraints;
 
 @end

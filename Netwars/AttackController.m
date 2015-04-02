@@ -33,11 +33,11 @@
 	if (self) {
 		// Custom initialization
 		self.target = target;
-		AttackType *atpe = [[AttackType alloc] initWithNameAndTypes:@"Balanced" types:@[@"Mutator", @"Swarm", @"d0s", @"Hunter/Killer"]];
-		AttackType *btpe = [[AttackType alloc] initWithNameAndTypes:@"Bandwidth" types:@[@"d0s", @"Hunter/Killer"]];
-		AttackType *ctpe = [[AttackType alloc] initWithNameAndTypes:@"Memory" types:@[@"Mutator", @"Swarm"]];
-		AttackType *dtpe = [[AttackType alloc] initWithNameAndTypes:@"Ice" types:@[@"Ice"]];
-		AttackType *etpe = [[AttackType alloc] initWithNameAndTypes:@"Intelligence" types:@[@"Intelligence"]];
+        AttackType *atpe = [[AttackType alloc] initWithNameAndTypes:@"Balanced" intid:BAL types:@[@"Mutator", @"Swarm", @"d0s", @"Hunter/Killer"]];
+        AttackType *btpe = [[AttackType alloc] initWithNameAndTypes:@"Bandwidth" intid:BW types:@[@"d0s", @"Hunter/Killer"]];
+        AttackType *ctpe = [[AttackType alloc] initWithNameAndTypes:@"Memory" intid:MEM types:@[@"Mutator", @"Swarm"]];
+        AttackType *dtpe = [[AttackType alloc] initWithNameAndTypes:@"Ice" intid:AICE types:@[@"Ice"]];
+        AttackType *etpe = [[AttackType alloc] initWithNameAndTypes:@"Intelligence" intid:AINT types:@[@"Intelligence"]];
 		self.attackTypes = @[atpe, btpe, ctpe, dtpe, etpe];
 		self.selectedType = atpe;
 		//self.attacks = [[NSMutableArray alloc] initWithObjects:self.currentAttack, nil];
@@ -56,7 +56,7 @@
 	
 	NSMutableArray *indexPaths = [NSMutableArray array];
 	int i;
-	int count = [[[self.viewPrograms objectAtIndex:aSectionIndex - 1] programs] count];
+	NSUInteger count = [[[self.viewPrograms objectAtIndex:aSectionIndex - 1] programs] count];
 	for (i = 0; i < count; i++)
 	{
 		[indexPaths addObject:[NSIndexPath indexPathForRow:i inSection:aSectionIndex]];
@@ -75,15 +75,15 @@
 
 - (void) refreshPrograms {
     [self.tableView reloadData];
-    int len = [self.viewPrograms count];
+    NSUInteger len = [self.viewPrograms count];
     for (int r = 0; r < len; r++) {
         NSLog(@"empty section: %d", r);
         [self emptySectionAtIndex:r+1 withAnimation:UITableViewRowAnimationNone];
     }
     for(int i = 0; i<len;i++) {
         NSLog(@"insert program");
-        int plen = [[[self.filteredPrograms objectAtIndex:i] programs] count];
-        NSLog(@"insert program plen %d", plen);
+        NSUInteger plen = [[[self.filteredPrograms objectAtIndex:i] programs] count];
+        NSLog(@"insert program plen %lu", (unsigned long)plen);
         for (int j = 0; j<plen; j++) {
             [[[self.viewPrograms objectAtIndex:i] programs] addObject:[[[[self.filteredPrograms objectAtIndex:i] programs] objectAtIndex:j] copy]];
             [self.tableView insertRowsAtIndexPaths:
@@ -108,11 +108,11 @@
     self.filteredPrograms = [NSMutableArray arrayWithArray:filtered];
     self.viewPrograms = [[NSMutableArray alloc] init];
     for (ProgramGroup *pg in self.filteredPrograms){
-        NSLog(@"filtered group type : %@ , count: %d \n", pg.ptype, [pg.programs count]);
+        NSLog(@"filtered group type : %@ , count: %lu \n", pg.ptype, (unsigned long)[pg.programs count]);
         [self.viewPrograms addObject:[pg copy]];
     }
     for (ProgramGroup *pg in self.viewPrograms){
-        NSLog(@"group type : %@ , count: %d \n", pg.ptype, [pg.programs count]);
+        NSLog(@"group type : %@ , count: %lu \n", pg.ptype, (unsigned long)[pg.programs count]);
     }
     
 }
@@ -152,7 +152,7 @@
     if (section == [self.viewPrograms count] +1) {
         return 1;
     }
-    NSLog(@"indexpath section : %d rowcount: %d", section, [[[self.viewPrograms objectAtIndex:section -1] programs ]count]);
+    NSLog(@"indexpath section : %ld rowcount: %lu", (long)section, (unsigned long)[[[self.viewPrograms objectAtIndex:section -1] programs ]count]);
 	return [[[self.viewPrograms objectAtIndex:section -1] programs ]count];
 }
 
@@ -178,7 +178,7 @@
 		}
 	}
 	else if (indexPath.section < [self.viewPrograms count] +1){
-        NSLog(@"row: %d \n", indexPath.row);
+        NSLog(@"row: %ld \n", (long)indexPath.row);
         if ([[[self.viewPrograms objectAtIndex:(indexPath.section -1)] programs] count] > 0 ) {
             ProgramSliderCell *pscell = [tableView dequeueReusableCellWithIdentifier:sliderCell forIndexPath:indexPath];
             //  NSLog(@"pgroup : %@", [[[self.filteredPrograms objectAtIndex:(indexPath.section -1)] programs] objectAtIndex:indexPath.row]);
@@ -225,7 +225,7 @@
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
 	//selected attack type
-    NSLog(@"selcted row : %d selected type= %@", row, [self.attackTypes objectAtIndex:row]);
+    NSLog(@"selcted row : %ld selected type= %@", (long)row, [self.attackTypes objectAtIndex:row]);
 	self.selectedType = [self.attackTypes objectAtIndex:row];
 	[self.currentAttack setType:self.selectedType];
     [self.tableView endEditing:YES];
@@ -290,7 +290,7 @@
     if (indexPath.section == [self.viewPrograms count] +1) {
         [self.currentAttack.programs removeAllObjects];
         for (int i = 0; i < indexPath.section - 1; i++) {
-            int progCount = [[[self.viewPrograms objectAtIndex:i] programs] count];
+            NSUInteger progCount = [[[self.viewPrograms objectAtIndex:i] programs] count];
             for (int j = 0; j < progCount; j++) {
                 NSIndexPath *indexPath = [NSIndexPath indexPathForRow: j inSection: i + 1];
                 ProgramSliderCell *cell = (ProgramSliderCell *)[self.tableView cellForRowAtIndexPath:indexPath];

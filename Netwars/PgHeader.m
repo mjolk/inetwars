@@ -32,10 +32,7 @@
     DACircularProgressView *bwUsage = [DACircularProgressView newAutoLayoutView];
     [self addSubview:bwUsage];
     self.bwUsageProgress = bwUsage;
-    [bwUsage autoSetDimension:ALDimensionWidth toSize:22.f];
-    [bwUsage autoSetDimension:ALDimensionHeight toSize:22.f];
-    [bwUsage autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
-    [bwUsage autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:10.f];
+    
     
     bwUsage.trackTintColor = [[UIColor alloc] initWithRed:244.0f/255.0f green:244.0f/255.0f blue:244.0f/255.0f alpha:1.0f];
     bwUsage.progressTintColor = [[UIColor alloc] initWithRed:209.0f/255.0f green:86.0f/255.0f blue:62.0f/255.0f alpha:1.0f];
@@ -44,14 +41,31 @@
     UILabel *typeLabel = [[UILabel alloc]initForAutoLayout];
     [self addSubview:typeLabel];
     self.programTypeLabel = typeLabel;
-    [typeLabel autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
-    [typeLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:bwUsage withOffset:10.0f];
+    
     
   //  UILabel *amountLabel = [[UILabel alloc] initForAutoLayout];
   //  [self addSubview:amountLabel]
     
     
     
+}
+
+- (void)updateConstraints
+{
+    if (!self.didSetupConstraints) {
+        NSLog(@"setting constraints");
+        
+        [self.bwUsageProgress autoSetDimension:ALDimensionWidth toSize:22.f];
+        [self.bwUsageProgress autoSetDimension:ALDimensionHeight toSize:22.f];
+        [self.bwUsageProgress autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
+        [self.bwUsageProgress autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:10.f];
+        
+        [self.programTypeLabel autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
+        [self.programTypeLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.bwUsageProgress withOffset:10.0f];
+        
+        self.didSetupConstraints = YES;
+    }
+    [super updateConstraints];
 }
 
 /*

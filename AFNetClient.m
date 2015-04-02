@@ -8,13 +8,14 @@
 
 #import "AFNetClient.h"
 #import "JSONResponseSerializerWithErrorData.h"
+#import "Player.h"
 
 static NSString * const kAFAppNetwarsAPIBaseURLTestString = @"http://localhost:8080/";
 static NSString * const kAFAppNetwarsAPIBaseURLString = @"http://n3twars.appspot.com/";
 
 @implementation AFNetClient
 
-+ (AFNetClient *)sharedClient {
++ (AFNetClient *)shared{
     static AFNetClient *_sharedClient = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -31,11 +32,10 @@ static NSString * const kAFAppNetwarsAPIBaseURLString = @"http://n3twars.appspot
     }
     
     // Accept HTTP Header; see http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.1
-	[self.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+	[self.requestSerializer setValue:@"application/json; charset=UTF-8" forHTTPHeaderField:@"Accept"];
     
     [self setResponseSerializer:[JSONResponseSerializerWithErrorData serializer]];
     
-    // By default, the example ships with SSL pinning enabled for the app.net API pinned against the public key of adn.cer file included with the example. In order to make it easier for developers who are new to AFNetworking, SSL pinning is automatically disabled if the base URL has been changed. This will allow developers to hack around with the example, without getting tripped up by SSL pinning.
     /*if ([[url scheme] isEqualToString:@"https"] && [[url host] isEqualToString:@"n3twars.appspot.com"]) {
         self.defaultSSLPinningMode = AFSSLPinningModePublicKey;
     } else {
@@ -43,5 +43,19 @@ static NSString * const kAFAppNetwarsAPIBaseURLString = @"http://n3twars.appspot
     }
     */
     return self;
+}
+
++ (AFNetClient *) authGET {
+    AFNetClient *client = [AFNetClient shared];
+    [client setRequestSerializer:[[AFHTTPRequestSerializer alloc] init]];
+    [client.requestSerializer setValue:[NSString stringWithFormat:@"n3twars%@", [[Player sharedPlayer] playerKey]] forHTTPHeaderField:@"Authorization"];
+    return client;
+}
+
++ (AFNetClient *) authPOST {
+    AFNetClient *client = [AFNetClient shared];
+    [client setRequestSerializer:[[AFJSONRequestSerializer alloc] init]];
+    [client.requestSerializer setValue:[NSString stringWithFormat:@"n3twars%@", [[Player sharedPlayer] playerKey]] forHTTPHeaderField:@"Authorization"];
+    return client;
 }
 @end

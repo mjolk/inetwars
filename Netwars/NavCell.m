@@ -10,8 +10,6 @@
 
 @interface NavCell()
 
--(void) setup;
-
 @end
 
 @implementation NavCell
@@ -21,10 +19,9 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         // Initialization code
-        //[self setup];
-        self.contentView.backgroundColor = [[UIColor alloc] initWithRed:254.0f/255.0f green:255.0f/255.0f blue:254.0f/255.0f alpha:1.0f];
+        //self.contentView.backgroundColor = [[UIColor alloc] initWithRed:254.0f/255.0f green:255.0f/255.0f blue:255.0f/255.0f alpha:1.0f];
         
-        UIScrollView *scroller = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.contentView.bounds.size.width, 70.0)];
+        UIScrollView *scroller = [[UIScrollView alloc] initForAutoLayout];
         [self.contentView addSubview:scroller];
         [scroller setPagingEnabled:YES];
         self.scroller = scroller;
@@ -35,6 +32,7 @@
                       @"globals": @[[NSValue valueWithPointer:@selector(globalsSelected:)], @"events_44.png"],
                       @"clan": @[[NSValue valueWithPointer:@selector(clanSelected:)], @"events_44.png"],
                       @"messages": @[[NSValue valueWithPointer:@selector(messagesSelected:)], @"messages_44.png"]};
+        
                       
         
     }
@@ -42,20 +40,17 @@
 }
 
 - (void) initMenu:(NSArray *) enabled {
-    CGFloat cellWidth = self.contentView.bounds.size.width;
-    CGFloat btnWidth = cellWidth/ 4;
-    int len = [enabled count];
-    int slen = [self.active count];
+    int len = (int)[enabled count];
+    int slen = (int)[self.active count];
     if (len != slen) {
         NSLog(@"reloading menu len: %d slen: %d\n", len, slen);
         self.active = [NSArray arrayWithArray:enabled];
         for(UIView *remove in [self.scroller subviews]) {
             [remove removeFromSuperview];
         }
-        [self.scroller setContentSize:CGSizeMake(len*btnWidth, [self.scroller bounds].size.height)];
         for(int i = 0; i < len; i++) {
-            UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(i * btnWidth, 0.0, btnWidth, 70.0)];
-            NSArray *opts = [self.btns objectForKey:[self.active objectAtIndex:i]];
+            UIButton *btn = [[UIButton alloc] initForAutoLayout];
+            NSArray *opts = [self.btns objectForKey:[enabled objectAtIndex:i]];
             [btn setImage:[UIImage imageNamed:[opts objectAtIndex:1]] forState:UIControlStateNormal];
             [btn addTarget:self action:[[opts objectAtIndex:0] pointerValue] forControlEvents:UIControlEventTouchUpInside];
             [self.scroller addSubview:btn];
@@ -65,48 +60,23 @@
     
 }
 
-- (void) setup {
-    self.contentView.backgroundColor = [[UIColor alloc] initWithRed:254.0f/255.0f green:255.0f/255.0f blue:254.0f/255.0f alpha:1.0f];
+- (void)updateConstraints
+{
+    if (!self.didSetupConstraints) {
+        for( UIButton *btn in [self.scroller subviews]) {
+            [btn autoSetDimension:ALDimensionWidth toSize:60.0f];
+            [btn autoSetDimension:ALDimensionHeight toSize:60.0f];
+            [btn autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.scroller];
+        }
+        [[self.scroller subviews] autoDistributeViewsAlongAxis:ALAxisHorizontal alignedTo:ALAttributeHorizontal withFixedSpacing:44.0f insetSpacing:NO];
+        [self.scroller autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.contentView];
+        [self.scroller autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.contentView];
+        [self.scroller autoSetDimension:ALDimensionHeight toSize:self.contentView.bounds.size.height];
+        
+        self.didSetupConstraints = YES;
+    }
     
-    UIView *container = [UIView newAutoLayoutView];//[[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
-    
-    [self.contentView addSubview:container];
-    
-    [container autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.contentView];
-    [container autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
-    [container autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.contentView];
-    
-    [container autoSetDimension:ALDimensionHeight toSize:70.0f];
-    
-    UIButton *localEventsBtn = [[UIButton alloc] initForAutoLayout];
-    [localEventsBtn setImage:[UIImage imageNamed:@"events_44.png" ] forState:UIControlStateNormal];
-    [localEventsBtn addTarget:self action:@selector(localsSelected:) forControlEvents:UIControlEventTouchUpInside];
-    UIButton *programsBtn = [[UIButton alloc] initForAutoLayout];
-    [programsBtn setImage:[UIImage imageNamed:@"programs_44.png"] forState:UIControlStateNormal];
-    [programsBtn addTarget:self action:@selector(programsSelected:) forControlEvents:UIControlEventTouchUpInside];
-    UIButton *listBtn = [[UIButton alloc] initForAutoLayout];
-    [listBtn setImage:[UIImage imageNamed:@"list_44.png"] forState:UIControlStateNormal];
-    [listBtn addTarget:self action:@selector(listSelected:) forControlEvents:UIControlEventTouchUpInside];
-    UIButton *messageBtn = [[UIButton alloc]initForAutoLayout];
-    [messageBtn setImage:[UIImage imageNamed:@"messages_44.png"] forState:UIControlStateNormal];
-    [messageBtn addTarget:self action:@selector(messagesSelected:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [container addSubview:localEventsBtn];
-    [container addSubview:programsBtn];
-    [container addSubview:listBtn];
-    [container addSubview:messageBtn];
-    
-    [localEventsBtn autoSetDimension:ALDimensionHeight toSize:70.0f];
-    [programsBtn autoSetDimension:ALDimensionHeight toSize:70.0f];
-    [listBtn autoSetDimension:ALDimensionHeight toSize:70.0f];
-    [messageBtn autoSetDimension:ALDimensionHeight toSize:70.0f];
-    
-    NSArray *subViews = @[localEventsBtn, programsBtn, listBtn, messageBtn];
-    
-    [subViews autoDistributeViewsAlongAxis:ALAxisHorizontal alignedTo:ALAttributeHorizontal withFixedSpacing:0.0f];
-    
-    
-    
+    [super updateConstraints];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

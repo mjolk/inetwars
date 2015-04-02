@@ -7,25 +7,35 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Program.h"
 
 @class Event;
 @class Player;
 @class Attack;
+
+typedef enum {
+    BAL = MUT | HUK | DOS | SW,
+    MEM = MUT | HUK,
+    BW = DOS | SW,
+    AINT = INT,
+    AINF = INF,
+    AICE = ICE,
+} AttackTpe;
 
 typedef void (^AttackBlock)(Event *attackEvent);
 
 @interface AttackType : NSObject
 
 @property(nonatomic, strong) NSString *name;
+@property(nonatomic, assign) AttackTpe intId;
 @property(nonatomic, strong) NSArray *ptypes;
 
--(id) initWithNameAndTypes:(NSString *) name types:(NSArray *) ptypes;
+-(id) initWithNameAndTypes:(NSString *) name intid:(AttackTpe) tpe types:(NSArray *) ptypes;
 
 @end
 
 @interface Attack : NSObject
 
-@property(nonatomic, strong) NSString *playerKey;
 @property(nonatomic, strong) Event *result;
 @property(nonatomic, strong) AttackType *type;
 @property(nonatomic, strong) NSMutableArray *programs;

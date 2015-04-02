@@ -50,8 +50,8 @@
 }
 
 - (void) loadInvites {
-    InviteController *weakCtrl = self;
-    [[Player sharedPlayer] invites:^(NSMutableArray *invites) {
+    __weak InviteController *weakCtrl = self;
+    [Invite invites:^(NSMutableArray *invites) {
         weakCtrl.invites = invites;
         [weakCtrl.tableView reloadData];
     }];
@@ -83,10 +83,10 @@
     static NSString *inputCell = @"InputCell";
     if (indexPath.row == 0) {
         InputCell *input = [tableView dequeueReusableCellWithIdentifier:inputCell forIndexPath:indexPath];
-        input.name.delegate = self;
-        input.name.tag = 1;
-        input.field.delegate = self;
-        input.field.tag = 2;
+        input.nick.delegate = self;
+        input.nick.tag = 1;
+        input.email.delegate = self;
+        input.email.tag = 2;
         return input;
     } else if ( indexPath.row == 1) {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:btnCell forIndexPath:indexPath];

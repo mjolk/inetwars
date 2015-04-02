@@ -59,8 +59,12 @@
     return self;
 }
 
-+ (NSURLSessionDataTask *) list:(NSString *)playerKey eventType:(NSString *) tpe cursor:(NSString *) c callback:(EventList) block {
-    return [[AFNetClient sharedClient] GET:@"players/events" parameters:@{@"pkey":playerKey, @"c":c, @"loc":tpe} success:^(NSURLSessionDataTask *task, id responseObject) {
++ (NSURLSessionDataTask *) list:(NSString *) tpe cursor:(NSString *) c callback:(EventList) block {
+    NSString *path = [NSString stringWithFormat:@"players/%@events", tpe];
+    if ([c length] > 0) {
+        path = [NSString stringWithFormat:@"%@/%@", path, c];
+    }
+    return [[AFNetClient authGET] GET:path parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
             NSDictionary *listObj = [responseObject objectForKey:@"result"];
             NSString *cursor = [listObj objectForKey:@"c"];
             NSArray *eventDicts = [listObj objectForKey:@"events"];
@@ -70,16 +74,6 @@
             }
             block(events, cursor);
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        //error
-    }];
-}
-
-+ (NSURLSessionDataTask *) tracker:(NSString *)playerKey clan:(NSString *) clanKey callback:(Tracker)block {
-    return [[AFNetClient sharedClient] GET:@"players/trackers" parameters:@{@"pkey":playerKey, @"ckey":clanKey} success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSDictionary *tr = [responseObject objectForKey:@"result"];
-        PlayerTracker *tracker = [[PlayerTracker alloc] initWithValues:tr];
-        block(tracker);
-    } failure:^(NSURLSessionDataTask *task, NSError *error){
         //error
     }];
 }
@@ -97,19 +91,6 @@
         self.owned = [[values objectForKey:@"owned"] boolValue];
         self.typeName = [values objectForKey:@"type_name"];
         self.children = [[NSMutableArray alloc] init];
-    }
-    return self;
-}
-
-@end
-
-@implementation PlayerTracker
-
-- (id) initWithValues:(NSDictionary *)values {
-    self = [super init];
-    if (self) {
-        self.eventCount = [[values objectForKey:@"event_count"] integerValue];
-        self.messageCount = [[values objectForKey:@"message_count"] integerValue];
     }
     return self;
 }

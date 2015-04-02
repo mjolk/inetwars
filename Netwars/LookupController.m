@@ -33,10 +33,11 @@
     
 	// Uncomment the following line to preserve selection between presentations.
 	// self.clearsSelectionOnViewWillAppear = NO;
-    
+    [self.navigationController setNavigationBarHidden:NO];
 	// Uncomment the following line to display an Edit button in the navigation bar for this view controller.
 	// self.navigationItem.rightBarButtonItem = self.editButtonItem;
 	[self.tableView registerClass:[PlayerCell class] forCellReuseIdentifier:@"PlayerCell"];
+    self.players = [[NSMutableArray alloc] init];
 	self.range = NO;
 	self.cursor = @"";
 	[self load];
@@ -44,11 +45,9 @@
 
 - (void)load {
 	__weak LookupController *lookup = self;
-	NSURLSessionDataTask *task = [Player list:[[Player sharedPlayer] playerKey] range:self.range cursor:self.cursor
+	NSURLSessionDataTask *task = [Player list:self.range cursor:self.cursor
 	    callback: ^(NSMutableArray *players, NSString *cursor) {
-            if ([self.cursor length] == 0) {
-                lookup.players = players;
-            }
+            [lookup.players addObjectsFromArray:players];
             lookup.cursor = cursor;
             [lookup.tableView reloadData];
         }];
@@ -69,7 +68,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	// Return the number of rows in the section.
-	NSLog(@"count : %d", [self.players count]);
+	NSLog(@"count : %lu", (unsigned long)[self.players count]);
 	return [self.players count];
 }
 

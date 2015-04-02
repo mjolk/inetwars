@@ -15,7 +15,6 @@
                           error:(NSError *__autoreleasing *)error
 {
     id JSONObject = [super responseObjectForResponse:response data:data error:error]; // may mutate `error`
-    
     if (*error) {
         NSMutableDictionary *mutableUserInfo = [(*error).userInfo mutableCopy];
         [mutableUserInfo setObject:[JSONObject objectForKey:@"error"] forKey:@"NSLocalizedDescription"];

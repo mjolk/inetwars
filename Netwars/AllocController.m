@@ -297,7 +297,7 @@
     __weak AllocController *alloc = self;
 	if (indexPath.row > 2) {
         NSLog(@"program selected : %@", self.program.programKey);
-		NSURLSessionDataTask *allocTask = [player allocate:self.at program:self.program.programKey amount:self.amount allocBlock: ^(BOOL failed) {
+		NSURLSessionDataTask *allocTask = [Program allocate:self.at program:self.program.programKey amount:self.amount allocBlock: ^(BOOL failed) {
             BOOL notExists = YES;
 		    if (failed) {
 		        NSLog(@"error!!!!");
@@ -310,7 +310,7 @@
                         notExists = NO;
                     }
                 }
-                NSLog(@"notextists %hhd", notExists);
+                NSLog(@"notextists %d", notExists);
                 if (notExists) {
                     NSLog(@"effector-- : %@ \n", self.program.effectors[0]);
                     ProgramGroup *newGroup = [[ProgramGroup alloc] initForType:@"Connection"];

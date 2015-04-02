@@ -37,9 +37,7 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    [self.tableView registerNib:[UINib nibWithNibName:@"InputCell"
-                                               bundle:[NSBundle mainBundle]]
-         forCellReuseIdentifier:@"InputCell"];
+    [self.tableView registerClass:[InputCell class] forCellReuseIdentifier:@"InputCell"];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"RegularCell"];
 }
 
@@ -77,11 +75,12 @@
             case 2:{
             cell = [tableView dequeueReusableCellWithIdentifier:inputCell forIndexPath:indexPath];
             InputCell *input = (InputCell *)cell;
-            input.name.delegate = self;
-            input.name.tag = 1;
-            input.field.delegate = self;
-                input.field.tag = 2;}
-            break;
+            input.nick.delegate = self;
+            input.email.delegate = self;
+            input.password.delegate = self;
+                [input setNeedsUpdateConstraints];
+                [input updateConstraintsIfNeeded];
+                break;}
             case 3:
             cell = [tableView dequeueReusableCellWithIdentifier:btnCell forIndexPath:indexPath];
             cell.textLabel.text = @"Create new account";
@@ -97,10 +96,10 @@
     CGFloat statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
     switch (indexPath.row) {
         case 1:
-            height = tableHeight - (216.0f + statusBarHeight);
+            height = tableHeight - (276.0f + statusBarHeight);
             break;
         case 2:
-            height = 108.0f;
+            height = 168.0f;
             break;
         default:
             height = 54.0f;
@@ -118,14 +117,15 @@
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-    NSLog(@"text: %@", textField.text);
     switch (textField.tag) {
-        case 1:
+        case 0:
             self.nick = textField.text;
             break;
-            
-        case 2:
+        case 1:
             self.email = textField.text;
+            break;
+        case 2:
+            self.password = textField.text;
             break;
     }
 }
@@ -181,8 +181,8 @@
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
     if (indexPath.row == 3) {
-        NSLog(@"email: %@ nickname: %@", self.email, self.nick);
-        if ([self.email length] == 0 || [self.nick length] == 0) {
+        NSLog(@"email: %@ \n nickname: %@ \n password: %@", self.email, self.nick, self.password);
+        if ([self.email length] == 0 || [self.nick length] == 0 || [self.password length] == 0) {
             //error
         } else {
             
@@ -197,7 +197,7 @@
 
 - (void) createPlayer {
     //__weak LoginViewController *sself = self;
-    NSURLSessionDataTask *task = [Player create:self.nick email:self.email callback:^(NSDictionary *errors) {
+    NSURLSessionDataTask *task = [Player create:self.nick email:self.email password:self.password callback:^(NSDictionary *errors) {
         if(errors) {
             //errors
             NSLog(@"errors %@", errors);

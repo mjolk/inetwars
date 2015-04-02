@@ -83,7 +83,7 @@
     IndexedNavController *currentNav;
     StateController *stateController;
     ClanController *clanController;
-    NSLog(@"index requested %d", index);
+    NSLog(@"index requested %lu", (unsigned long)index);
     switch (index) {
         case 0:
             stateController = [[StateController alloc] initWithStyle:UITableViewStylePlain];

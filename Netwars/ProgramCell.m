@@ -39,15 +39,15 @@
     self.titleLabel.text = program.name;
     self.descriptionLabel.text = program.pdescription;
     //self.detailTextLabel.text = program.description;
-    self.costLabel.text = [NSString stringWithFormat:@"%d", program.cycles ];
-    self.alLabel.text = [NSString stringWithFormat:@"%d / %d", program.attack, program.life];
+    self.costLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)program.cycles ];
+    self.alLabel.text = [NSString stringWithFormat:@"%lu / %lu", (unsigned long)program.attack, (unsigned long)program.life];
     
     int i;
     for(i = 0; i < 3; i++) {
         
         EffectorView *effectView = [[self.effectsView subviews] objectAtIndex:i];
         NSString *tpe;
-        int len = [program.effectors count];
+        int len = (int)[program.effectors count];
         if (i < len) {
             tpe = [program.effectors[i] substringToIndex:2];
         } else {

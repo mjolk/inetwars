@@ -27,6 +27,14 @@
 	return self;
 }
 
+- (id)initForEventType:(NSString *) tpe {
+    self = [super initWithStyle:UITableViewStylePlain];
+    if (self) {
+        self.eventType = tpe;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
 	[super viewDidLoad];
     
@@ -44,8 +52,7 @@
 }
 
 - (void)load {
-	NSString *playerKey = [[Player sharedPlayer] playerKey];
-	NSURLSessionDataTask *task = [Event list:playerKey eventType:@"Player" cursor:self.cursor callback: ^(NSMutableArray *events, NSString *cursor) {
+	NSURLSessionDataTask *task = [Event list:self.eventType cursor:self.cursor callback: ^(NSMutableArray *events, NSString *cursor) {
 	    if ([self.cursor length] == 0) {
 	        self.events = events;
 		}

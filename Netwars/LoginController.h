@@ -19,6 +19,7 @@
 
 @property(nonatomic, strong) NSString *email;
 @property(nonatomic, strong) NSString *nick;
+@property(nonatomic, strong) NSString *password;
 @property(nonatomic, weak) id <LoginDelegate> delegate;
 
 @end

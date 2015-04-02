@@ -21,6 +21,7 @@
 #import "AllocController.h"
 #import "ClanController.h"
 #import "InviteController.h"
+#import "DetailTextCell.h"
 
 @interface StateController ()
 
@@ -63,9 +64,9 @@
     
 	[self.tableView registerClass:[HUDCell class] forCellReuseIdentifier:@"HUDCell"];
     
-	[self.tableView registerClass:[NavCell class] forCellReuseIdentifier:@"EventCell"];
+	[self.tableView registerClass:[NavCell class] forCellReuseIdentifier:@"NavCell"];
     
-	[self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"RegularCell"];
+	[self.tableView registerClass:[DetailTextCell class] forCellReuseIdentifier:@"RegularCell"];
     
     [self.tableView registerClass:[TrackerCell class] forCellReuseIdentifier:@"TrackerCell"];
     
@@ -86,8 +87,7 @@
 	    if (failed) {
 	        [state.refreshControl endRefreshing];
 	        return;
-		}
-	    NSLog(@"tableView reload");
+		} 
 	    [state.tableView reloadData];
 	    [state.refreshControl endRefreshing];
         //        [self refreshPrograms];
@@ -108,11 +108,13 @@
 	if (section < 3) {
 		return nil;
 	}
-	ProgramGroup *group = [[[Player sharedPlayer] programs] objectAtIndex:section - 2];
+	ProgramGroup *group = [[[Player sharedPlayer] programs] objectAtIndex:section - 3];
 	PgHeader *header = [[PgHeader alloc] initWithFrame:CGRectMake(0.f, 0.f, 44.f, 44.f)];
 	CGFloat progress = group.usage / group.yield;
 	[header.bwUsageProgress setProgress:progress animated:YES];
 	header.programTypeLabel.text = group.ptype;
+    [header setNeedsUpdateConstraints];
+    [header updateConstraintsIfNeeded];
 	return header;
 }
 
@@ -124,7 +126,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-	if (indexPath.section > 1) {
+	if (indexPath.section > 3) {
 		cell.contentView.backgroundColor = [[UIColor alloc] initWithRed:164.0f / 255.0f green:246.0f / 255.0f blue:181.0f / 255.0f alpha:1.0f];
 	}
 }
@@ -143,7 +145,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	static NSString *HUDCELL = @"HUDCell";
-	static NSString *EVENTCELL = @"EventCell";
+	static NSString *NAVCELL = @"NavCell";
 	Player *player = [Player sharedPlayer];
 	UITableViewCell *cell;
     
@@ -162,24 +164,28 @@
     else if (indexPath.section == 1) {
         TrackerCell *eventCell = [tableView dequeueReusableCellWithIdentifier:@"TrackerCell" forIndexPath:indexPath];
         [eventCell setEventCount:player.tracker.eventCount];
-        [eventCell setMessageCount:player.tracker.eventCount];
+        [eventCell setMessageCount:player.tracker.messageCount];
         [eventCell setNeedsUpdateConstraints];
         [eventCell updateConstraintsIfNeeded];
         return eventCell;
     }
 	else if (indexPath.section == 2) {
-		NavCell *eventCell = [tableView dequeueReusableCellWithIdentifier:EVENTCELL forIndexPath:indexPath];
-        [eventCell initMenu:@[@"players", @"globals", @"locals", @"programs", @"messages", @"clan"]];
-		eventCell.delegate = self;
-		return eventCell;
+        NavCell *navCell = [tableView dequeueReusableCellWithIdentifier:NAVCELL forIndexPath:indexPath];
+        [navCell initMenu:@[@"players", @"globals", @"locals", @"programs", @"messages", @"clan"]];
+		navCell.delegate = self;
+        [navCell setNeedsUpdateConstraints];
+        [navCell updateConstraintsIfNeeded];
+		return navCell;
 	}
 	else {
 		UITableViewCell *regCell = [tableView dequeueReusableCellWithIdentifier:@"RegularCell" forIndexPath:indexPath];
-		Program *program = [[[[player programs] objectAtIndex:indexPath.section - 2] programs] objectAtIndex:indexPath.row];
+		Program *program = [[[[player programs] objectAtIndex:indexPath.section - 3] programs] objectAtIndex:indexPath.row];
 		regCell.textLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)program.amount];
 		regCell.textLabel.backgroundColor = [UIColor clearColor];
 		regCell.detailTextLabel.backgroundColor = [UIColor clearColor];
+        
 		regCell.detailTextLabel.text = program.name;
+        NSLog(@"program name: %@", regCell.detailTextLabel.text);
 		return regCell;
 	}
     
@@ -233,14 +239,14 @@
 }
 
 - (void)showLocals {
-	EventController *eventController = [[EventController alloc] initWithStyle:UITableViewStylePlain];
+	EventController *eventController = [[EventController alloc] initForEventType:@"local"];
 	// ...
 	// Pass the selected object to the new view controller.
 	[self.navigationController pushViewController:eventController animated:YES];
 }
 
 - (void)showGlobals {
-	EventController *eventController = [[EventController alloc] initWithStyle:UITableViewStylePlain];
+	EventController *eventController = [[EventController alloc] initForEventType:@"global"];
 	// ...
 	// Pass the selected object to the new view controller.
 	[self.navigationController pushViewController:eventController animated:YES];

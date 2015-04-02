@@ -22,6 +22,9 @@
 @property (strong, nonatomic) NSDictionary *btns;
 @property (weak, nonatomic) UIScrollView *scroller;
 @property (strong, nonatomic) NSArray *active;
+@property (nonatomic, assign) BOOL didSetupConstraints;
+
+
 - (void)messagesSelected:(id)sender;
 - (void)localsSelected:(id)sender;
 - (void)globalsSelected:(id)sender;

@@ -10,7 +10,9 @@
 
 @interface InputCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UITextField *name;
-@property (weak, nonatomic) IBOutlet UITextField *field;
+@property(nonatomic, weak) UITextField *nick;
+@property(nonatomic, weak) UITextField *email;
+@property(nonatomic, weak) UITextField *password;
+@property (nonatomic, assign) BOOL didSetupConstraints;
 
 @end

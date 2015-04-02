@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+typedef void (^PlayerInvites)(NSMutableArray *invites);
+
 @interface Invite : NSObject
 
 @property (nonatomic, strong) NSString *clan;
@@ -17,5 +19,6 @@
 @property (nonatomic, strong) NSDate *invited;
 
 - (id) initWithValues:(NSDictionary *) values;
++ (NSURLSessionDataTask *) invites:(PlayerInvites) block;
 
 @end

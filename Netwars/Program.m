@@ -51,7 +51,7 @@
 }
 
 + (NSURLSessionDataTask *) list:(ProgramList) block {
-    return [[AFNetClient sharedClient] GET:@"programs/" parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+    return [[AFNetClient authGET] GET:@"programs/" parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
             NSMutableArray *programs = [[NSMutableArray alloc] init];
             NSDictionary *dictProgs = [responseObject objectForKey:@"result"];
             for(NSString *tpe in dictProgs) {
@@ -64,6 +64,24 @@
                 [programs addObject:pGroup];
             }
             block(programs);
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        //error
+    }];
+}
+
++ (NSURLSessionDataTask *) allocate:(NSUInteger) dir program:(NSString *) prgKey amount:(NSUInteger) a allocBlock:(PlayerAllocate)block {
+    NSString *aType = @"";
+    switch (dir) {
+        case 0:
+            aType = @"players/allocation";
+            break;
+            
+        case 1:
+            aType = @"players/deallocation";
+            break;
+    }
+    return [[AFNetClient authPOST] POST:aType parameters:@{@"prgkey": prgKey, @"amount": [NSNumber numberWithUnsignedInteger:a]} success:^(NSURLSessionDataTask *task, id responseObject) {
+        block(NO);
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         //error
     }];
