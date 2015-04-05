@@ -65,14 +65,18 @@
         path = [NSString stringWithFormat:@"%@/%@", path, c];
     }
     return [[AFNetClient authGET] GET:path parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        NSLog(@"events response %@", responseObject);
             NSDictionary *listObj = [responseObject objectForKey:@"result"];
             NSString *cursor = [listObj objectForKey:@"c"];
             NSArray *eventDicts = [listObj objectForKey:@"events"];
-            NSMutableArray *events = [[NSMutableArray alloc] initWithCapacity:[eventDicts count]];
+        NSMutableArray *events = [[NSMutableArray alloc] init];
+        if (eventDicts != (id)[NSNull null]) {
+            events = [[NSMutableArray alloc] initWithCapacity:[eventDicts count]];
             for(NSDictionary *eDict in eventDicts) {
                 [events addObject:[[Event alloc] initWithValues:eDict]];
             }
-            block(events, cursor);
+        }
+        block(events, cursor);
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         //error
     }];
