@@ -13,18 +13,18 @@ typedef void (^ClanCreate)(BOOL);
 
 @interface Clan : NSObject
 
-@property(nonatomic, strong) NSString *name;
-@property(nonatomic, strong) NSString *tag;
-@property(nonatomic, assign) NSUInteger ID;
-@property(nonatomic, assign) CGFloat bandwidthUsage;
-@property(nonatomic, assign) NSUInteger clanPoints;
-@property(nonatomic, assign) NSUInteger amountPlayers;
-@property(nonatomic, strong) NSString *avatar;
-@property(nonatomic, strong) NSString *message;
-@property(nonatomic, strong) NSString *site;
-@property(nonatomic, strong) NSString *descr;
-@property(nonatomic, strong) NSArray *players;
+@property (nonatomic, strong) NSString *name;
+@property (nonatomic, strong) NSString *tag;
+@property (nonatomic, assign) NSUInteger ID;
+@property (nonatomic, assign) CGFloat bandwidthUsage;
+@property (nonatomic, assign) NSUInteger clanPoints;
+@property (nonatomic, assign) NSUInteger amountPlayers;
+@property (nonatomic, strong) NSString *avatar;
+@property (nonatomic, strong) NSString *message;
+@property (nonatomic, strong) NSString *site;
+@property (nonatomic, strong) NSString *descr;
+@property (nonatomic, strong) NSArray *players;
 
-+ (NSURLSessionDataTask *) create:(NSString *)n tag:(NSString *)t callback:(ClanCreate)block;
++ (NSURLSessionDataTask *)create:(NSString *)n tag:(NSString *)t callback:(ClanCreate)block;
 
 @end

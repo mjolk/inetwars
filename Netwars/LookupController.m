@@ -30,14 +30,14 @@
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
-    
+
 	// Uncomment the following line to preserve selection between presentations.
 	// self.clearsSelectionOnViewWillAppear = NO;
-    [self.navigationController setNavigationBarHidden:NO];
+	[self.navigationController setNavigationBarHidden:NO];
 	// Uncomment the following line to display an Edit button in the navigation bar for this view controller.
 	// self.navigationItem.rightBarButtonItem = self.editButtonItem;
 	[self.tableView registerClass:[PlayerCell class] forCellReuseIdentifier:@"PlayerCell"];
-    self.players = [[NSMutableArray alloc] init];
+	self.players = [[NSMutableArray alloc] init];
 	self.range = NO;
 	self.cursor = @"";
 	[self load];
@@ -46,12 +46,12 @@
 - (void)load {
 	__weak LookupController *lookup = self;
 	NSURLSessionDataTask *task = [Player list:self.range cursor:self.cursor
-	    callback: ^(NSMutableArray *players, NSString *cursor) {
-            [lookup.players addObjectsFromArray:players];
-            lookup.cursor = cursor;
-            [lookup.tableView reloadData];
-        }];
-    [UIAlertView showAlertViewForTaskWithErrorOnCompletion:task delegate:nil];
+	                                 callback   : ^(NSMutableArray *players, NSString *cursor) {
+	    [lookup.players addObjectsFromArray:players];
+	    lookup.cursor = cursor;
+	    [lookup.tableView reloadData];
+	}];
+	[UIAlertView showAlertViewForTaskWithErrorOnCompletion:task delegate:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -77,8 +77,8 @@
 	PlayerCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
 	Player *player = [self.players objectAtIndex:indexPath.row];
 	[cell setPlayer:player];
-    
-    
+
+
 	return cell;
 }
 
@@ -88,57 +88,57 @@
 
 /*- (void)    tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell
     forRowAtIndexPath:(NSIndexPath *)indexPath {
-}*/
+   }*/
 
 /*
- // Override to support conditional editing of the table view.
- - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the specified item to be editable.
- return YES;
- }
+   // Override to support conditional editing of the table view.
+   - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+   {
+   // Return NO if you do not want the specified item to be editable.
+   return YES;
+   }
  */
 
 /*
- // Override to support editing the table view.
- - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
- {
- if (editingStyle == UITableViewCellEditingStyleDelete) {
- // Delete the row from the data source
- [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
- }
- else if (editingStyle == UITableViewCellEditingStyleInsert) {
- // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
- }
- }
+   // Override to support editing the table view.
+   - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+   {
+   if (editingStyle == UITableViewCellEditingStyleDelete) {
+   // Delete the row from the data source
+   [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+   }
+   else if (editingStyle == UITableViewCellEditingStyleInsert) {
+   // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+   }
+   }
  */
 
 /*
- // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
- {
- }
+   // Override to support rearranging the table view.
+   - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
+   {
+   }
  */
 
 /*
- // Override to support conditional rearranging of the table view.
- - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the item to be re-orderable.
- return YES;
- }
+   // Override to support conditional rearranging of the table view.
+   - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+   {
+   // Return NO if you do not want the item to be re-orderable.
+   return YES;
+   }
  */
 
 /*
- #pragma mark - Navigation
- 
- // In a story board-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
- {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- 
+   #pragma mark - Navigation
+
+   // In a story board-based application, you will often want to do a little preparation before navigation
+   - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+   {
+   // Get the new view controller using [segue destinationViewController].
+   // Pass the selected object to the new view controller.
+   }
+
  */
 
 #pragma mark - Table view delegate
@@ -146,17 +146,16 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	// Navigation logic may go here. Create and push another view controller.
 	/*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
+	   <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
+	   // ...
+	   // Pass the selected object to the new view controller.
+	   [self.navigationController pushViewController:detailViewController animated:YES];
 	 */
-	
+
 	AttackController *attackController = [[AttackController alloc] initWithTarget:[self.players objectAtIndex:indexPath.row]];
 	// ...
 	// Pass the selected object to the new view controller.
 	[self.navigationController pushViewController:attackController animated:YES];
 }
-
 
 @end

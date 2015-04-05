@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface PageController : UIPageViewController <UIPageViewControllerDataSource, UIPageViewControllerDelegate>
-- (id) initWithDefaults;
+- (id)initWithDefaults;
 @end

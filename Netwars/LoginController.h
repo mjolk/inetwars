@@ -12,14 +12,14 @@
 @class LoginController;
 
 @protocol LoginDelegate <NSObject>
-- (void) userCreated:(LoginController *) controller;
+- (void)userCreated:(LoginController *)controller;
 @end
 
 @interface LoginController : UITableViewController <UITextFieldDelegate>
 
-@property(nonatomic, strong) NSString *email;
-@property(nonatomic, strong) NSString *nick;
-@property(nonatomic, strong) NSString *password;
-@property(nonatomic, weak) id <LoginDelegate> delegate;
+@property (nonatomic, strong) NSString *email;
+@property (nonatomic, strong) NSString *nick;
+@property (nonatomic, strong) NSString *password;
+@property (nonatomic, weak) id <LoginDelegate> delegate;
 
 @end

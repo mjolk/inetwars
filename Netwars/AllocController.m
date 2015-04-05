@@ -46,7 +46,7 @@
 			self.at = Allocate;
 			self.btnLabel.text = @"Allocate";
 			break;
-            
+
 		case 1:
 			self.at = Deallocate;
 			self.btnLabel.text = @"Deallocate";
@@ -86,7 +86,7 @@
 				usagep = (usage + ((self.program.cycles * self.program.memory / 10) * a)) / (float)yield;
 				// }
 				break;
-                
+
 			case Deallocate:
 				memp = (self.program.memory * a) / (self.program.memory * (float)ow);
 				cycp = ((float)self.program.cycles * a) / (float)(self.program.cycles * ow);
@@ -103,13 +103,13 @@
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
-    
+
 	// Uncomment the following line to preserve selection between presentations.
 	// self.clearsSelectionOnViewWillAppear = NO;
-    
+
 	// Uncomment the following line to display an Edit button in the navigation bar for this view controller.
 	// self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    [self.navigationController setNavigationBarHidden:NO];
+	[self.navigationController setNavigationBarHidden:NO];
 	UISegmentedControl *cntrl = [[UISegmentedControl alloc] initWithItems:@[@"Allocate", @"Deallocate"]];
 	[cntrl setSelectedSegmentIndex:0];
 	self.btnLabel.text = @"Allocate";
@@ -135,19 +135,19 @@
 		case 0:
 			height = 60.f;
 			break;
-            
+
 		case 1:
 			height = 320.f;
 			break;
-            
+
 		case 2:
 			height = 60.f;
 			break;
-            
+
 		case 3:
 			height = 65.f;
 			break;
-            
+
 		default:
 			height = 44.f;
 			break;
@@ -180,13 +180,13 @@
 			rcell = [tableView dequeueReusableCellWithIdentifier:resource forIndexPath:indexPath];
 			self.resourceInfo = rcell;
 			return rcell;
-            
+
 		case 1:
 			pcell = [tableView dequeueReusableCellWithIdentifier:info forIndexPath:indexPath];
 			self.programInfo = pcell;
 			[self.programInfo setProgram:self.program];
 			return pcell;
-            
+
 		case 2:
 			scell = [tableView dequeueReusableCellWithIdentifier:slider];
 			[scell positionSlider:nil];
@@ -207,7 +207,7 @@
 					[self.slider setMaximumValue:maxam];
 					[self.slider setMinimumValue:0];
 					break;
-                    
+
 				case Deallocate:
 					for (ProgramGroup *pg in player.programs) {
 						if ([pg.ptype isEqualToString:self.program.type]) {
@@ -226,9 +226,9 @@
 					[self.slider setMaximumValue:pAmount];
 					break;
 			}
-            
+
 			return scell;
-            
+
 		default:
 			cell = [tableView dequeueReusableCellWithIdentifier:btn forIndexPath:indexPath];
 			cell.textLabel.text = @"Allocate";
@@ -243,42 +243,42 @@
 }
 
 /*
- // Override to support conditional editing of the table view.
- - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the specified item to be editable.
- return YES;
- }
+   // Override to support conditional editing of the table view.
+   - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+   {
+   // Return NO if you do not want the specified item to be editable.
+   return YES;
+   }
  */
 
 /*
- // Override to support editing the table view.
- - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
- {
- if (editingStyle == UITableViewCellEditingStyleDelete) {
- // Delete the row from the data source
- [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
- }
- else if (editingStyle == UITableViewCellEditingStyleInsert) {
- // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
- }
- }
+   // Override to support editing the table view.
+   - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+   {
+   if (editingStyle == UITableViewCellEditingStyleDelete) {
+   // Delete the row from the data source
+   [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+   }
+   else if (editingStyle == UITableViewCellEditingStyleInsert) {
+   // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+   }
+   }
  */
 
 /*
- // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
- {
- }
+   // Override to support rearranging the table view.
+   - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
+   {
+   }
  */
 
 /*
- // Override to support conditional rearranging of the table view.
- - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the item to be re-orderable.
- return YES;
- }
+   // Override to support conditional rearranging of the table view.
+   - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+   {
+   // Return NO if you do not want the item to be re-orderable.
+   return YES;
+   }
  */
 
 - (void)sliderChange:(id)sender {
@@ -294,46 +294,45 @@
 	// Navigation logic may go here. Create and push another view controller.
 	//__weak AllocController *this = self;
 	__weak Player *player = [Player sharedPlayer];
-    __weak AllocController *alloc = self;
+	__weak AllocController *alloc = self;
 	if (indexPath.row > 2) {
-        NSLog(@"program selected : %@", self.program.programKey);
+		NSLog(@"program selected : %@", self.program.programKey);
 		NSURLSessionDataTask *allocTask = [Program allocate:self.at program:self.program.programKey amount:self.amount allocBlock: ^(BOOL failed) {
-            BOOL notExists = YES;
+		    BOOL notExists = YES;
 		    if (failed) {
 		        NSLog(@"error!!!!");
 		        return;
 			}
-            if ([self.program.type isEqualToString:@"Connection"]) {
-                
-                for (ProgramGroup *pg in player.programs) {
-                    if([pg.ptype isEqualToString:alloc.program.effectors[0]]) {
-                        notExists = NO;
-                    }
-                }
-                NSLog(@"notextists %d", notExists);
-                if (notExists) {
-                    NSLog(@"effector-- : %@ \n", self.program.effectors[0]);
-                    ProgramGroup *newGroup = [[ProgramGroup alloc] initForType:@"Connection"];
-                    alloc.program.amount = alloc.amount;
-                    alloc.program.effectors = [[NSArray alloc] initWithObjects:self.program.effectors[0], nil];
-                    [newGroup.programs addObject:alloc.program];
-                    [player.programs addObject:newGroup];
-                }
-            }
-            [alloc.navigationController popViewControllerAnimated:YES];
-            
+		    if ([self.program.type isEqualToString:@"Connection"]) {
+		        for (ProgramGroup *pg in player.programs) {
+		            if ([pg.ptype isEqualToString:alloc.program.effectors[0]]) {
+		                notExists = NO;
+					}
+				}
+		        NSLog(@"notextists %d", notExists);
+		        if (notExists) {
+		            NSLog(@"effector-- : %@ \n", self.program.effectors[0]);
+		            ProgramGroup *newGroup = [[ProgramGroup alloc] initForType:@"Connection"];
+		            alloc.program.amount = alloc.amount;
+		            alloc.program.effectors = [[NSArray alloc] initWithObjects:self.program.effectors[0], nil];
+		            [newGroup.programs addObject:alloc.program];
+		            [player.programs addObject:newGroup];
+				}
+			}
+		    [alloc.navigationController popViewControllerAnimated:YES];
+
 		    //state.navigationItem.rightBarButtonItem.enabled = YES;
-		   // NSLog(@"tableView reload");
+		    // NSLog(@"tableView reload");
 		    //[.tableView reloadData];
 		    //        [self refreshPrograms];
 		}];
 		[UIAlertView showAlertViewForTaskWithErrorOnCompletion:allocTask delegate:nil];
 	}
 	/*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
+	   <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
+	   // ...
+	   // Pass the selected object to the new view controller.
+	   [self.navigationController pushViewController:detailViewController animated:YES];
 	 */
 }
 

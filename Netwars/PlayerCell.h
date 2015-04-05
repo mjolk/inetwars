@@ -12,6 +12,6 @@
 
 @interface PlayerCell : UITableViewCell
 
--(void) setPlayer:(Player *) player;
+- (void)setPlayer:(Player *)player;
 
 @end

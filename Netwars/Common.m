@@ -10,18 +10,17 @@
 
 @implementation Common
 
-+ (UILabel *) createLabel:(UIView *) container text:(NSString *)content fontSize:(CGFloat) size {
-    UILabel *label = [[UILabel alloc] initForAutoLayout];
-    label.font = [UIFont systemFontOfSize:size];
-    label.text = content;
-    label.backgroundColor = [UIColor whiteColor];
-    [container addSubview:label];
-    return label;
++ (UILabel *)createLabel:(UIView *)container text:(NSString *)content fontSize:(CGFloat)size {
+	UILabel *label = [[UILabel alloc] initForAutoLayout];
+	label.font = [UIFont systemFontOfSize:size];
+	label.text = content;
+	label.backgroundColor = [UIColor whiteColor];
+	[container addSubview:label];
+	return label;
 }
 
-+ (UIImageView *) createIcon:(NSString *) path {
-    return [[UIImageView alloc] initWithImage:[UIImage imageNamed:path]];
-    
++ (UIImageView *)createIcon:(NSString *)path {
+	return [[UIImageView alloc] initWithImage:[UIImage imageNamed:path]];
 }
 
 @end

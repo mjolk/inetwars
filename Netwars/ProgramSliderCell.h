@@ -12,9 +12,9 @@
 
 @interface ProgramSliderCell : SliderCell
 
-@property(nonatomic, weak) UILabel *amountLabel;
-@property(nonatomic, weak) UILabel *programName;
-@property(nonatomic, strong) NSString *programKey;
+@property (nonatomic, weak) UILabel *amountLabel;
+@property (nonatomic, weak) UILabel *programName;
+@property (nonatomic, strong) NSString *programKey;
 
--(void) setProgram:(Program *) prg;
+- (void)setProgram:(Program *)prg;
 @end

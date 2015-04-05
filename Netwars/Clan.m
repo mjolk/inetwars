@@ -11,14 +11,12 @@
 
 @implementation Clan
 
-+ (NSURLSessionDataTask *) create:(NSString *)n tag:(NSString *)t callback:(ClanCreate)block {
-    return [[AFNetClient authGET] POST:@"clans/" parameters:@{@"name":n, @"tag":t} success:^(NSURLSessionDataTask *task, id responseObject) {
-        block(YES);
-    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        //errors
-    }];
++ (NSURLSessionDataTask *)create:(NSString *)n tag:(NSString *)t callback:(ClanCreate)block {
+	return [[AFNetClient authGET] POST:@"clans/" parameters:@{ @"name":n, @"tag":t } success: ^(NSURLSessionDataTask *task, id responseObject) {
+	    block(YES);
+	} failure: ^(NSURLSessionDataTask *task, NSError *error) {
+	    //errors
+	}];
 }
-
-
 
 @end

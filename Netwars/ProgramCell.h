@@ -13,12 +13,12 @@
 
 @interface ProgramCell : UITableViewCell
 
-@property(nonatomic, weak) UILabel *alLabel;
-@property(nonatomic, weak) UILabel *titleLabel;
-@property(nonatomic, weak) UILabel *descriptionLabel;
-@property(nonatomic, weak) UILabel *costLabel;
-@property(nonatomic, weak) UIImageView *cycleIcon;
-@property(nonatomic, weak) UIView *effectsView;
--(void) setProgram:(Program *) program;
+@property (nonatomic, weak) UILabel *alLabel;
+@property (nonatomic, weak) UILabel *titleLabel;
+@property (nonatomic, weak) UILabel *descriptionLabel;
+@property (nonatomic, weak) UILabel *costLabel;
+@property (nonatomic, weak) UIImageView *cycleIcon;
+@property (nonatomic, weak) UIView *effectsView;
+- (void)setProgram:(Program *)program;
 
 @end

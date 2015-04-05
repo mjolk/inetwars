@@ -287,7 +287,6 @@
 			isa = PBXGroup;
 			children = (
 				30F872A6183526C500EC7308 /* Images.xcassets */,
-				3011ABA717E5415C00B45374 /* Networking */,
 				3011AB3A17E52D1E00B45374 /* Classes */,
 				3011AB5817E52D1E00B45374 /* NetwarsTests */,
 				3011AB3317E52D1E00B45374 /* Frameworks */,
@@ -324,6 +323,7 @@
 		3011AB3A17E52D1E00B45374 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				3011ABA717E5415C00B45374 /* Networking */,
 				3011ABA617E5413000B45374 /* Views */,
 				3011ABA517E5412500B45374 /* Controllers */,
 				3011ABA417E5411800B45374 /* Models */,
@@ -504,6 +504,7 @@
 				30F872A41835201D00EC7308 /* JSONResponseSerializerWithErrorData.m */,
 			);
 			name = Networking;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		39BEFB421973AFFCC3EC4143 /* Pods */ = {

@@ -10,7 +10,7 @@
 
 @interface PickerCell : UITableViewCell
 
-@property(nonatomic, weak) UIPickerView *picker;
-@property(nonatomic, weak) UITextField *typeField;
+@property (nonatomic, weak) UIPickerView *picker;
+@property (nonatomic, weak) UITextField *typeField;
 
 @end

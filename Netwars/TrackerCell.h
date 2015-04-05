@@ -12,14 +12,14 @@
 @interface TrackerCell : UITableViewCell
 
 
-@property(nonatomic, weak) UILabel *eventLabel;
-@property(nonatomic, weak) UILabel *messageLabel;
-@property(nonatomic, weak) UILabel *eCount;
-@property(nonatomic, weak) UILabel *mCount;
+@property (nonatomic, weak) UILabel *eventLabel;
+@property (nonatomic, weak) UILabel *messageLabel;
+@property (nonatomic, weak) UILabel *eCount;
+@property (nonatomic, weak) UILabel *mCount;
 
 @property (nonatomic, assign) BOOL didSetupConstraints;
 
--(void) setMessageCount:(NSUInteger) count;
--(void) setEventCount:(NSUInteger) count;
+- (void)setMessageCount:(NSUInteger)count;
+- (void)setEventCount:(NSUInteger)count;
 
 @end

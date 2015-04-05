@@ -10,8 +10,8 @@
 
 @interface SliderCell : UITableViewCell
 
-@property(nonatomic, weak) UISlider *slider;
+@property (nonatomic, weak) UISlider *slider;
 
--(void) positionSlider:(UIView *) view;
+- (void)positionSlider:(UIView *)view;
 
 @end

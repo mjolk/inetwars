@@ -10,11 +10,11 @@
 
 @interface EventController : UITableViewController
 
-@property(nonatomic, strong) NSDictionary *imgMap;
-@property(nonatomic, strong) NSString *cursor;
-@property(nonatomic, strong) NSMutableArray *events;
-@property(nonatomic, strong) NSString *eventType;
+@property (nonatomic, strong) NSDictionary *imgMap;
+@property (nonatomic, strong) NSString *cursor;
+@property (nonatomic, strong) NSMutableArray *events;
+@property (nonatomic, strong) NSString *eventType;
 
-- (id)initForEventType:(NSString *) tpe;
+- (id)initForEventType:(NSString *)tpe;
 
 @end

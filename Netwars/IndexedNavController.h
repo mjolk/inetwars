@@ -11,5 +11,5 @@
 @interface IndexedNavController : UINavigationController
 
 @property (nonatomic, assign) NSUInteger index;
-- (id)initWithRootViewController:(UIViewController *)rootViewController index:(NSUInteger) index;
+- (id)initWithRootViewController:(UIViewController *)rootViewController index:(NSUInteger)index;
 @end

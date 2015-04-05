@@ -18,7 +18,7 @@ typedef void (^PlayerInvites)(NSMutableArray *invites);
 @property (nonatomic, strong) NSDate *expires;
 @property (nonatomic, strong) NSDate *invited;
 
-- (id) initWithValues:(NSDictionary *) values;
-+ (NSURLSessionDataTask *) invites:(PlayerInvites) block;
+- (id)initWithValues:(NSDictionary *)values;
++ (NSURLSessionDataTask *)invites:(PlayerInvites)block;
 
 @end

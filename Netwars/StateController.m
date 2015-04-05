@@ -41,42 +41,41 @@
 
 - (void)loadView {
 	[super loadView];
-    
+
 	self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
 	self.activityIndicator.hidesWhenStopped = YES;
 }
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
-    
+
 	// Uncomment the following line to preserve selection between presentations.
 	// self.clearsSelectionOnViewWillAppear = NO;
-    
+
 	// Uncomment the following line to display an Edit button in the navigation bar for this view controller.
 	// self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
+
 	UIRefreshControl *refreshControl = [[UIRefreshControl alloc]
 	                                    init];
-    
+
 	[refreshControl addTarget:self action:@selector(load) forControlEvents:UIControlEventValueChanged];
 	refreshControl.tintColor = [UIColor magentaColor];
 	self.refreshControl = refreshControl;
-    
+
 	[self.tableView registerClass:[HUDCell class] forCellReuseIdentifier:@"HUDCell"];
-    
+
 	[self.tableView registerClass:[NavCell class] forCellReuseIdentifier:@"NavCell"];
-    
+
 	[self.tableView registerClass:[DetailTextCell class] forCellReuseIdentifier:@"RegularCell"];
-    
-    [self.tableView registerClass:[TrackerCell class] forCellReuseIdentifier:@"TrackerCell"];
-    
-    [self load];
-    
+
+	[self.tableView registerClass:[TrackerCell class] forCellReuseIdentifier:@"TrackerCell"];
+
+	[self load];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
-    [self.navigationController setNavigationBarHidden:YES];
+	[self.navigationController setNavigationBarHidden:YES];
 	[self.tableView reloadData];
 }
 
@@ -87,14 +86,13 @@
 	    if (failed) {
 	        [state.refreshControl endRefreshing];
 	        return;
-		} 
+		}
 	    [state.tableView reloadData];
 	    [state.refreshControl endRefreshing];
-        //        [self refreshPrograms];
+	    //        [self refreshPrograms];
 	}];
 	[UIAlertView showAlertViewForTaskWithErrorOnCompletion:task delegate:nil];
 	[self.activityIndicator setAnimatingWithStateOfTask:task];
-    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -113,8 +111,8 @@
 	CGFloat progress = group.usage / group.yield;
 	[header.bwUsageProgress setProgress:progress animated:YES];
 	header.programTypeLabel.text = group.ptype;
-    [header setNeedsUpdateConstraints];
-    [header updateConstraintsIfNeeded];
+	[header setNeedsUpdateConstraints];
+	[header updateConstraintsIfNeeded];
 	return header;
 }
 
@@ -148,7 +146,7 @@
 	static NSString *NAVCELL = @"NavCell";
 	Player *player = [Player sharedPlayer];
 	UITableViewCell *cell;
-    
+
 	if (indexPath.section == 0) {
 		HUDCell *hudCell = [tableView dequeueReusableCellWithIdentifier:HUDCELL forIndexPath:indexPath];
 		[hudCell setUsageProgress:(player.bandwidthUsage / player.bandwidth)];
@@ -157,24 +155,24 @@
 		[hudCell setBandwidth:player.bandwidthUsage bandwidth:player.bandwidth];
 		[hudCell setActivememory:player.activeMemory];
 		[hudCell setCycles:player.cycles];
-        [hudCell setNeedsUpdateConstraints];
-        [hudCell updateConstraintsIfNeeded];
+		[hudCell setNeedsUpdateConstraints];
+		[hudCell updateConstraintsIfNeeded];
 		return hudCell;
 	}
-    else if (indexPath.section == 1) {
-        TrackerCell *eventCell = [tableView dequeueReusableCellWithIdentifier:@"TrackerCell" forIndexPath:indexPath];
-        [eventCell setEventCount:player.tracker.eventCount];
-        [eventCell setMessageCount:player.tracker.messageCount];
-        [eventCell setNeedsUpdateConstraints];
-        [eventCell updateConstraintsIfNeeded];
-        return eventCell;
-    }
+	else if (indexPath.section == 1) {
+		TrackerCell *eventCell = [tableView dequeueReusableCellWithIdentifier:@"TrackerCell" forIndexPath:indexPath];
+		[eventCell setEventCount:player.tracker.eventCount];
+		[eventCell setMessageCount:player.tracker.messageCount];
+		[eventCell setNeedsUpdateConstraints];
+		[eventCell updateConstraintsIfNeeded];
+		return eventCell;
+	}
 	else if (indexPath.section == 2) {
-        NavCell *navCell = [tableView dequeueReusableCellWithIdentifier:NAVCELL forIndexPath:indexPath];
-        [navCell initMenu:@[@"players", @"globals", @"locals", @"programs", @"messages", @"clan"]];
+		NavCell *navCell = [tableView dequeueReusableCellWithIdentifier:NAVCELL forIndexPath:indexPath];
+		[navCell initMenu:@[@"players", @"globals", @"locals", @"programs", @"messages", @"clan"]];
 		navCell.delegate = self;
-        [navCell setNeedsUpdateConstraints];
-        [navCell updateConstraintsIfNeeded];
+		[navCell setNeedsUpdateConstraints];
+		[navCell updateConstraintsIfNeeded];
 		return navCell;
 	}
 	else {
@@ -183,18 +181,18 @@
 		regCell.textLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)program.amount];
 		regCell.textLabel.backgroundColor = [UIColor clearColor];
 		regCell.detailTextLabel.backgroundColor = [UIColor clearColor];
-        
+
 		regCell.detailTextLabel.text = program.name;
-        NSLog(@"program name: %@", regCell.detailTextLabel.text);
+		NSLog(@"program name: %@", regCell.detailTextLabel.text);
 		return regCell;
 	}
-    
-    
-    
-    
+
+
+
+
 	// Configure the cell...
-    
-    
+
+
 	return cell;
 }
 
@@ -204,14 +202,15 @@
 		case 0:
 			height = 220.0f;
 			break;
-        case 1:
-            height = 22.0f;
-            break;
-            
+
+		case 1:
+			height = 22.0f;
+			break;
+
 		case 2:
 			height = 70.0f;
 			break;
-            
+
 		default:
 			height = 44.0f;
 			break;
@@ -253,59 +252,56 @@
 }
 
 - (void)showClan {
-    
-    if (![[Player sharedPlayer] clanMember]) {
-        NSLog(@"invite controller ----\n");
+	if (![[Player sharedPlayer] clanMember]) {
+		NSLog(@"invite controller ----\n");
 		InviteController *invite = [[InviteController alloc] initWithStyle:UITableViewStylePlain];
-        [self.navigationController pushViewController:invite animated:YES];
+		[self.navigationController pushViewController:invite animated:YES];
 	}
 	else {
 		ClanController *clanController = [[ClanController alloc] initWithStyle:UITableViewStylePlain];
-        // ...
-        // Pass the selected object to the new view controller.
-        [self.navigationController pushViewController:clanController animated:YES];
+		// ...
+		// Pass the selected object to the new view controller.
+		[self.navigationController pushViewController:clanController animated:YES];
 	}
-
-	
 }
 
 /*
- // Override to support conditional editing of the table view.
- - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the specified item to be editable.
- return YES;
- }
+   // Override to support conditional editing of the table view.
+   - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+   {
+   // Return NO if you do not want the specified item to be editable.
+   return YES;
+   }
  */
 
 /*
- // Override to support editing the table view.
- - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
- {
- if (editingStyle == UITableViewCellEditingStyleDelete) {
- // Delete the row from the data source
- [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
- }
- else if (editingStyle == UITableViewCellEditingStyleInsert) {
- // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
- }
- }
+   // Override to support editing the table view.
+   - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+   {
+   if (editingStyle == UITableViewCellEditingStyleDelete) {
+   // Delete the row from the data source
+   [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+   }
+   else if (editingStyle == UITableViewCellEditingStyleInsert) {
+   // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+   }
+   }
  */
 
 /*
- // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
- {
- }
+   // Override to support rearranging the table view.
+   - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
+   {
+   }
  */
 
 /*
- // Override to support conditional rearranging of the table view.
- - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
- {
- // Return NO if you do not want the item to be re-orderable.
- return YES;
- }
+   // Override to support conditional rearranging of the table view.
+   - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+   {
+   // Return NO if you do not want the item to be re-orderable.
+   return YES;
+   }
  */
 
 #pragma mark - Table view delegate
@@ -313,18 +309,18 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	// Navigation logic may go here. Create and push another view controller.
 	/*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
+	   <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
+	   // ...
+	   // Pass the selected object to the new view controller.
+	   [self.navigationController pushViewController:detailViewController animated:YES];
 	 */
-    if (indexPath.section > 2) {
-        Program *program = [[[[[Player sharedPlayer] programs] objectAtIndex:indexPath.section - 3] programs] objectAtIndex:indexPath.row];
-        AllocController *allocController = [[AllocController alloc] initWithProgram:program];
-        // ...
-        // Pass the selected object to the new view controller.
-        [self.navigationController pushViewController:allocController animated:YES];
-    }
+	if (indexPath.section > 2) {
+		Program *program = [[[[[Player sharedPlayer] programs] objectAtIndex:indexPath.section - 3] programs] objectAtIndex:indexPath.row];
+		AllocController *allocController = [[AllocController alloc] initWithProgram:program];
+		// ...
+		// Pass the selected object to the new view controller.
+		[self.navigationController pushViewController:allocController animated:YES];
+	}
 }
 
 @end

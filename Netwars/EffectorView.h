@@ -9,22 +9,22 @@
 #import <UIKit/UIKit.h>
 
 typedef enum Orientation {
-    TopDownOrientation = 0,
-    TopUpOrientation,
+	TopDownOrientation = 0,
+	TopUpOrientation,
 } Orientation;
 
 typedef enum Layout {
-    HorizontalLayout = 0,
-    VerticalLayout,
+	HorizontalLayout = 0,
+	VerticalLayout,
 } Layout;
 
 @interface EffectorView : UIView
 
 @property (nonatomic, strong) UIBezierPath *triPath;
-@property(nonatomic, weak) UILabel *effectLabel;
-@property(nonatomic, strong) UIColor *color;
+@property (nonatomic, weak) UILabel *effectLabel;
+@property (nonatomic, strong) UIColor *color;
 
--(void) forEffect:(NSString *) effect;
-- (id)initWithFrame:(CGRect)frame orientation:(Orientation) or layout:(Layout) l;
+- (void)forEffect:(NSString *)effect;
+- (id)initWithFrame:(CGRect)frame orientation:(Orientation)or layout:(Layout)l;
 
 @end

@@ -10,9 +10,9 @@
 
 @interface InputCell : UITableViewCell
 
-@property(nonatomic, weak) UITextField *nick;
-@property(nonatomic, weak) UITextField *email;
-@property(nonatomic, weak) UITextField *password;
+@property (nonatomic, weak) UITextField *nick;
+@property (nonatomic, weak) UITextField *email;
+@property (nonatomic, weak) UITextField *password;
 @property (nonatomic, assign) BOOL didSetupConstraints;
 
 @end

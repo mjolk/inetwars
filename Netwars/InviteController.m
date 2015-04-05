@@ -13,216 +13,206 @@
 
 @interface InviteController ()
 
--(void) loadInvites;
--(void) createClan;
+- (void)loadInvites;
+- (void)createClan;
 
 @end
 
 @implementation InviteController
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
+- (id)initWithStyle:(UITableViewStyle)style {
+	self = [super initWithStyle:style];
+	if (self) {
+		// Custom initialization
+	}
+	return self;
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
+- (void)viewDidLoad {
+	[super viewDidLoad];
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
-    [self.tableView registerNib:[UINib nibWithNibName:@"InputCell"
-                                               bundle:[NSBundle mainBundle]]
-         forCellReuseIdentifier:@"InputCell"];
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"RegularCell"];
-    
-    [self loadInvites];
-    
-    
+	// Uncomment the following line to preserve selection between presentations.
+	// self.clearsSelectionOnViewWillAppear = NO;
+
+	// Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+	// self.navigationItem.rightBarButtonItem = self.editButtonItem;
+
+	[self.tableView registerNib:[UINib nibWithNibName:@"InputCell"
+	                                           bundle:[NSBundle mainBundle]]
+	     forCellReuseIdentifier:@"InputCell"];
+	[self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"RegularCell"];
+
+	[self loadInvites];
 }
 
-- (void) loadInvites {
-    __weak InviteController *weakCtrl = self;
-    [Invite invites:^(NSMutableArray *invites) {
-        weakCtrl.invites = invites;
-        [weakCtrl.tableView reloadData];
-    }];
+- (void)loadInvites {
+	__weak InviteController *weakCtrl = self;
+	[Invite invites: ^(NSMutableArray *invites) {
+	    weakCtrl.invites = invites;
+	    [weakCtrl.tableView reloadData];
+	}];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)didReceiveMemoryWarning {
+	[super didReceiveMemoryWarning];
+	// Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    // Return the number of sections.
-    return 1;
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+	// Return the number of sections.
+	return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    // Return the number of rows in the section.
-    return 3 + [self.invites count];
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+	// Return the number of rows in the section.
+	return 3 + [self.invites count];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *btnCell = @"RegularCell";
-    static NSString *inputCell = @"InputCell";
-    if (indexPath.row == 0) {
-        InputCell *input = [tableView dequeueReusableCellWithIdentifier:inputCell forIndexPath:indexPath];
-        input.nick.delegate = self;
-        input.nick.tag = 1;
-        input.email.delegate = self;
-        input.email.tag = 2;
-        return input;
-    } else if ( indexPath.row == 1) {
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:btnCell forIndexPath:indexPath];
-        cell.textLabel.text = @"Create clan";
-        return cell;
-    } else if ( indexPath.row == 2) {
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:btnCell forIndexPath:indexPath];
-        cell.textLabel.text = @"Invites";
-        return cell;
-    } else if ( indexPath.row > 2) {
-        if ([self.invites count] > 0) {
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:btnCell forIndexPath:indexPath];
-            cell.textLabel.text = [[self.invites objectAtIndex:indexPath.row - 2] clan];
-           // cell.detailTextLabel.text = [[[self.invites objectAtIndex:indexPath.row - 2] expires];
-            return cell;
-        }
-        
-    }
-    return nil;
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+	static NSString *btnCell = @"RegularCell";
+	static NSString *inputCell = @"InputCell";
+	if (indexPath.row == 0) {
+		InputCell *input = [tableView dequeueReusableCellWithIdentifier:inputCell forIndexPath:indexPath];
+		input.nick.delegate = self;
+		input.nick.tag = 1;
+		input.email.delegate = self;
+		input.email.tag = 2;
+		return input;
+	}
+	else if (indexPath.row == 1) {
+		UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:btnCell forIndexPath:indexPath];
+		cell.textLabel.text = @"Create clan";
+		return cell;
+	}
+	else if (indexPath.row == 2) {
+		UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:btnCell forIndexPath:indexPath];
+		cell.textLabel.text = @"Invites";
+		return cell;
+	}
+	else if (indexPath.row > 2) {
+		if ([self.invites count] > 0) {
+			UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:btnCell forIndexPath:indexPath];
+			cell.textLabel.text = [[self.invites objectAtIndex:indexPath.row - 2] clan];
+			// cell.detailTextLabel.text = [[[self.invites objectAtIndex:indexPath.row - 2] expires];
+			return cell;
+		}
+	}
+	return nil;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    CGFloat height;
-    switch (indexPath.row) {
-        case 0:
-            height = 108.0f;
-            break;
-        default:
-            height = 44.0f;
-            break;
-    }
-    return height;
+	CGFloat height;
+	switch (indexPath.row) {
+		case 0:
+			height = 108.0f;
+			break;
+
+		default:
+			height = 44.0f;
+			break;
+	}
+	return height;
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
 	// the user pressed the "Done" button, so dismiss the keyboard
 	[textField resignFirstResponder];
 	return YES;
 }
 
-- (void)textFieldDidEndEditing:(UITextField *)textField
-{
-    switch (textField.tag) {
-        case 1:
-            self.name = textField.text;
-            break;
-            
-        case 2:
-            self.tag = textField.text;
-            break;
-    }
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+	switch (textField.tag) {
+		case 1:
+			self.name = textField.text;
+			break;
+
+		case 2:
+			self.tag = textField.text;
+			break;
+	}
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
-    if (indexPath.row == 3) {
-        NSLog(@"email: %@ nickname: %@", self.name, self.tag);
-        if ([self.name length] == 0 || [self.tag length] == 0) {
-            //error
-        } else {
-            
-            [self createClan];
-            
-        }
-        
-    }
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	// Navigation logic may go here. Create and push another view controller.
+	/*
+	   <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
+	   // ...
+	   // Pass the selected object to the new view controller.
+	   [self.navigationController pushViewController:detailViewController animated:YES];
+	 */
+	if (indexPath.row == 3) {
+		NSLog(@"email: %@ nickname: %@", self.name, self.tag);
+		if ([self.name length] == 0 || [self.tag length] == 0) {
+			//error
+		}
+		else {
+			[self createClan];
+		}
+	}
 }
 
-- (void) createClan {
-  /*  NSURLSessionDataTask *task = [[Player sharedPlayer] create:self.nick email:self.email callback:^(NSDictionary *errors) {
-        if(errors) {
-            //errors
-            NSLog(@"errors %@", errors);
-        } else {
-            [self.delegate userCreated:nil];
-        }
-    }];
-    [UIAlertView showAlertViewForTaskWithErrorOnCompletion:task delegate:nil];*/
+- (void)createClan {
+	/*  NSURLSessionDataTask *task = [[Player sharedPlayer] create:self.nick email:self.email callback:^(NSDictionary *errors) {
+	      if(errors) {
+	          //errors
+	          NSLog(@"errors %@", errors);
+	      } else {
+	          [self.delegate userCreated:nil];
+	      }
+	   }];
+	   [UIAlertView showAlertViewForTaskWithErrorOnCompletion:task delegate:nil];*/
 }
 
 /*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
+   // Override to support conditional editing of the table view.
+   - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+   {
     // Return NO if you do not want the specified item to be editable.
     return YES;
-}
-*/
+   }
+ */
 
 /*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
+   // Override to support editing the table view.
+   - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+   {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
+    }
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
+    }
+   }
+ */
 
 /*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
+   // Override to support rearranging the table view.
+   - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
+   {
+   }
+ */
 
 /*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
+   // Override to support conditional rearranging of the table view.
+   - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
+   {
     // Return NO if you do not want the item to be re-orderable.
     return YES;
-}
-*/
+   }
+ */
 
 /*
-#pragma mark - Navigation
+   #pragma mark - Navigation
 
-// In a story board-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
+   // In a story board-based application, you will often want to do a little preparation before navigation
+   - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+   {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-}
+   }
 
  */
 

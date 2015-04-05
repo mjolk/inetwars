@@ -9,12 +9,12 @@
 #import <UIKit/UIKit.h>
 
 @protocol MenuDelegate <NSObject>
-- (void) showPrograms;
-- (void) showLocals;
-- (void) showGlobals;
-- (void) showClan;
-- (void) showMessages;
-- (void) showPlayers;
+- (void)showPrograms;
+- (void)showLocals;
+- (void)showGlobals;
+- (void)showClan;
+- (void)showMessages;
+- (void)showPlayers;
 @end
 
 @interface NavCell : UITableViewCell
@@ -31,5 +31,5 @@
 - (void)programsSelected:(id)sender;
 - (void)clanSelected:(id)sender;
 - (void)playersSelected:(id)sender;
-- (void)initMenu:(NSArray *) enabled;
+- (void)initMenu:(NSArray *)enabled;
 @end

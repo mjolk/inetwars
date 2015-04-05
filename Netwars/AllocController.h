@@ -10,15 +10,15 @@
 #import "Program.h"
 
 typedef enum AllocType {
-    Allocate = 0,
-    Deallocate,
+	Allocate = 0,
+	Deallocate,
 } AllocType;
 
 @interface AllocController : UITableViewController
 
--(id) initWithProgram:(Program *) prog;
--(void) sliderChange:(id) sender;
--(void) allocSelect:(id) sender;
+- (id)initWithProgram:(Program *)prog;
+- (void)sliderChange:(id)sender;
+- (void)allocSelect:(id)sender;
 
 
 @end

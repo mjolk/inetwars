@@ -14,7 +14,7 @@
 
 
 
--(void) setEvent:(Event *) event;
+- (void)setEvent:(Event *)event;
 
 
 @end
