@@ -70,7 +70,7 @@
 	self.nick = [values objectForKey:@"nick"];
 	self.clanTag = [values objectForKey:@"clan_tag"];
 	self.avatar = [values objectForKey:@"avatar_thumb"];
-	self.playerID = [[values objectForKey:@"player_id"] integerValue];
+	self.ID = [[values objectForKey:@"player_id"] integerValue];
 	self.status = [values objectForKey:@"status"];
 	self.bandwidthUsage = [[values objectForKey:@"bandwidth_usage"] floatValue];
 }
@@ -102,7 +102,7 @@
 	__weak Player *weakPlayer = [Player sharedPlayer];
 	AFNetClient *client = [AFNetClient shared];
 	[client setRequestSerializer:[[AFJSONRequestSerializer alloc] init]];
-	return [client POST:@"players/" parameters:@{ @"nick":n, @"email":e, @"pwd":pw } success: ^(NSURLSessionDataTask *task, id responseObject) {
+	return [client PUT:@"players/" parameters:@{ @"nick":n, @"email":e, @"pwd":pw } success: ^(NSURLSessionDataTask *task, id responseObject) {
 	    weakPlayer.playerKey = [responseObject objectForKey:@"result"];
 	    weakPlayer.authenticated = YES;
 	    block(nil);
@@ -113,29 +113,28 @@
 
 - (NSURLSessionDataTask *)state:(PlayerState)block {
 	__weak Player *wPlayer = self;
-	return [[AFNetClient authGET] GET:@"players/status" parameters:nil success: ^(NSURLSessionDataTask *task, id responseObject) {
+	return [[AFNetClient authGET] GET:@"players/status/" parameters:nil success: ^(NSURLSessionDataTask *task, id responseObject) {
 	    NSLog(@"response: %@", responseObject);
 	    [wPlayer update:[responseObject objectForKey:@"result"]];
 	    block(NO);
 	}
-	                          failure   : ^(NSURLSessionDataTask *task, NSError *error) {
+        failure   : ^(NSURLSessionDataTask *task, NSError *error) {
 	    //send error message
 	    block(YES);
 	}];
 }
 
-+ (NSURLSessionDataTask *)list:(BOOL)rnge cursor:(NSString *)c callback:(PlayerList)block {
-	NSString *path = @"players/targets";
-	if (rnge) {
-		path = [NSString stringWithFormat:@"%@/%d", path, rnge];
-	}
++ (NSURLSessionDataTask *)list:(uint)rnge cursor:(NSString *)c callback:(PlayerList)block {
+    NSString *path = [NSString stringWithFormat:@"players/list/%d/", rnge];
 	if (c.length > 0) {
-		path = [NSString stringWithFormat:@"%@/%@", path, c];
+		path = [NSString stringWithFormat:@"%@/%@/", path, c];
 	}
+    NSLog(@" path :%@ \n", path);
 	return [[AFNetClient authGET] GET:path parameters:nil success: ^(NSURLSessionDataTask *task, id responseObject) {
 	    NSDictionary *listObj = [responseObject objectForKey:@"result"];
 	    NSString *cur = [listObj objectForKey:@"cursor"];
 	    NSArray *dictPls = [listObj objectForKey:@"players"];
+        NSLog(@"players %@", responseObject);
 	    NSMutableArray *pls = [[NSMutableArray alloc] initWithCapacity:[listObj count]];
 	    for (NSDictionary *pDict in dictPls) {
 	        [pls addObject:[[Player alloc] initForPublic:pDict]];

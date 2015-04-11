@@ -25,7 +25,7 @@
 		self.expires = [values objectForKey:@"expires"];
 		self.occurred = [values objectForKey:@"created"];
 		self.action = [values objectForKey:@"action"];
-		self.eventId = [[values objectForKey:@"event_id"] integerValue];
+		self.ID = [[values objectForKey:@"event_id"] integerValue];
 		self.eventType = [values objectForKey:@"event_type"];
 		self.newBandwidthUsage = [[values objectForKey:@"new_bandwidth_usage"] floatValue];
 		self.eventPrograms = [[NSMutableArray alloc] init];
@@ -58,9 +58,9 @@
 }
 
 + (NSURLSessionDataTask *)list:(NSString *)tpe cursor:(NSString *)c callback:(EventList)block {
-	NSString *path = [NSString stringWithFormat:@"players/%@events", tpe];
+	NSString *path = [NSString stringWithFormat:@"players/%@events/", tpe];
 	if ([c length] > 0) {
-		path = [NSString stringWithFormat:@"%@/%@", path, c];
+		path = [NSString stringWithFormat:@"%@/%@/", path, c];
 	}
 	return [[AFNetClient authGET] GET:path parameters:nil success: ^(NSURLSessionDataTask *task, id responseObject) {
 	    NSLog(@"events response %@", responseObject);

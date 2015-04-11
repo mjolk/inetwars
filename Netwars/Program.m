@@ -70,11 +70,11 @@
 	NSString *aType = @"";
 	switch (dir) {
 		case 0:
-			aType = @"players/allocation";
+			aType = @"players/allocations/";
 			break;
 
 		case 1:
-			aType = @"players/deallocation";
+			aType = @"players/deallocations/";
 			break;
 	}
 	return [[AFNetClient authPOST] POST:aType parameters:@{ @"prgkey": prgKey, @"amount": [NSNumber numberWithUnsignedInteger:a] } success: ^(NSURLSessionDataTask *task, id responseObject) {

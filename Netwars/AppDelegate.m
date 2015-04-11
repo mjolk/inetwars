@@ -8,7 +8,7 @@
 
 #import "AppDelegate.h"
 #import "AFNetworkActivityIndicatorManager.h"
-#import "StateController.h"
+#import "PlayerStateController.h"
 #import "Player.h"
 
 @implementation AppDelegate
@@ -20,12 +20,12 @@
 	[[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
 
 	if ([[Player sharedPlayer] authenticated]) {
-		self.navController = [[UINavigationController alloc] initWithRootViewController:[[StateController alloc]initWithStyle:UITableViewStylePlain]];
+		self.navController = [[UINavigationController alloc] initWithRootViewController:[[PlayerStateController alloc]initWithStyle:UITableViewStylePlain]];
 		[self.navController setNavigationBarHidden:YES];
 	}
 	else {
 		NSLog(@"player not authenticated");
-		LoginController *login = [[LoginController alloc] initWithStyle:UITableViewStylePlain];
+		PlayerController *login = [[PlayerController alloc] initWithStyle:UITableViewStylePlain];
 		self.navController = [[UINavigationController alloc] initWithRootViewController:login];
 		[self.navController setNavigationBarHidden:YES];
 		[login setDelegate:self];
@@ -42,8 +42,8 @@
 	return YES;
 }
 
-- (void)userCreated:(LoginController *)controller {
-	StateController *main = [[StateController alloc]initWithStyle:UITableViewStylePlain];
+- (void)playerCreated:(PlayerController *)controller {
+	PlayerStateController *main = [[PlayerStateController alloc]initWithStyle:UITableViewStylePlain];
 	[self.navController setViewControllers:@[main] animated:YES];
 }
 

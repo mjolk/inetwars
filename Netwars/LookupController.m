@@ -24,6 +24,7 @@
 	self = [super initWithStyle:style];
 	if (self) {
 		// Custom initialization
+        self.range = 0;
 	}
 	return self;
 }
@@ -38,7 +39,7 @@
 	// self.navigationItem.rightBarButtonItem = self.editButtonItem;
 	[self.tableView registerClass:[PlayerCell class] forCellReuseIdentifier:@"PlayerCell"];
 	self.players = [[NSMutableArray alloc] init];
-	self.range = NO;
+	self.range = 0;
 	self.cursor = @"";
 	[self load];
 }

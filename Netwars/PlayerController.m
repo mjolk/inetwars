@@ -6,18 +6,18 @@
 //  Copyright (c) 2013 mjolk. All rights reserved.
 //
 
-#import "LoginController.h"
-#import "InputCell.h"
+#import "PlayerController.h"
+#import "LoginCell.h"
 #import "Player.h"
 #import "UIAlertView+AFNetworking.h"
 
-@interface LoginController ()
+@interface PlayerController ()
 
 - (void)createPlayer;
 
 @end
 
-@implementation LoginController
+@implementation PlayerController
 
 - (id)initWithStyle:(UITableViewStyle)style {
 	self = [super initWithStyle:style];
@@ -35,7 +35,7 @@
 
 	// Uncomment the following line to display an Edit button in the navigation bar for this view controller.
 	// self.navigationItem.rightBarButtonItem = self.editButtonItem;
-	[self.tableView registerClass:[InputCell class] forCellReuseIdentifier:@"InputCell"];
+	[self.tableView registerClass:[LoginCell class] forCellReuseIdentifier:@"InputCell"];
 	[self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"RegularCell"];
 }
 
@@ -70,7 +70,7 @@
 
 		case 2: {
 			cell = [tableView dequeueReusableCellWithIdentifier:inputCell forIndexPath:indexPath];
-			InputCell *input = (InputCell *)cell;
+			LoginCell *input = (LoginCell *)cell;
 			input.nick.delegate = self;
 			input.email.delegate = self;
 			input.password.delegate = self;
@@ -199,7 +199,7 @@
 	        NSLog(@"errors %@", errors);
 		}
 	    else {
-	        [self.delegate userCreated:self];
+	        [self.delegate playerCreated:self];
 		}
 	}];
 	[UIAlertView showAlertViewForTaskWithErrorOnCompletion:task delegate:nil];

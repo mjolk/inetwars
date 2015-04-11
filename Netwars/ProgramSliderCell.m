@@ -41,7 +41,7 @@
 
 - (void)setProgram:(Program *)prog {
 	self.programName.text = prog.name;
-	NSLog(@"set program amount %d", prog.amount);
+	NSLog(@"set program amount %lu", (unsigned long)prog.amount);
 	self.programKey = prog.programKey;
 	self.amountLabel.text = @"0";
 	[self.slider setMaximumValue:(float)prog.amount];

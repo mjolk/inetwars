@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 mjolk. All rights reserved.
 //
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 
-@interface NetwarsTests : SenTestCase
+@interface NetwarsTests : XCTestCase
 
 @end

@@ -8,18 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+@class PlayerController;
 
-@class LoginController;
-
-@protocol LoginDelegate <NSObject>
-- (void)userCreated:(LoginController *)controller;
+@protocol PlayerDelegate <NSObject>
+- (void)playerCreated:(PlayerController *)controller;
 @end
 
-@interface LoginController : UITableViewController <UITextFieldDelegate>
+@interface PlayerController : UITableViewController <UITextFieldDelegate>
 
 @property (nonatomic, strong) NSString *email;
 @property (nonatomic, strong) NSString *nick;
 @property (nonatomic, strong) NSString *password;
-@property (nonatomic, weak) id <LoginDelegate> delegate;
+@property (nonatomic, weak) id <PlayerDelegate> delegate;
 
 @end

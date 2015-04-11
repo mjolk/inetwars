@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface InputCell : UITableViewCell
+@interface LoginCell : UITableViewCell
 
 @property (nonatomic, weak) UITextField *nick;
 @property (nonatomic, weak) UITextField *email;

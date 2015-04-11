@@ -60,7 +60,6 @@
 		//only programs for which you can have power.
 		if ([pGroup.ptype isEqualToString:@"Connection"]) {
 			for (Program *energy in pGroup.programs) {
-				NSLog(@"supported types : %@\n", [energy.effectors objectAtIndex:0]);
 				[supportedProgramTypes addObject:[energy.effectors objectAtIndex:0]];
 			}
 		}
@@ -69,14 +68,7 @@
 	[supportedProgramTypes addObject:@"Connection"];
 	NSPredicate *prgPred = [NSPredicate predicateWithFormat:@"ptype IN $NAME_LIST"];
 	NSArray *filtered = [self.programs filteredArrayUsingPredicate:[prgPred predicateWithSubstitutionVariables:@{ @"NAME_LIST":supportedProgramTypes }]];
-	for (ProgramGroup *_prog in filtered) {
-		NSLog(@"filtered program A--- %@", _prog.ptype);
-	}
 	self.filteredPrograms = [NSMutableArray arrayWithArray:filtered];
-	for (ProgramGroup *prog in self.filteredPrograms) {
-		NSLog(@"filtered program B--- %@", prog.ptype);
-	}
-	NSLog(@"filter ----");
 	[self.tableView reloadData];
 }
 

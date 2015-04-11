@@ -28,8 +28,8 @@
 }
 
 - (void)setProgram:(Program *)program {
-	self.adStats.text = [NSString stringWithFormat:@"%d / %d", program.attack, program.life];
-	self.cycleStat.text = [NSString stringWithFormat:@"%d", program.cycles];
+	self.adStats.text = [NSString stringWithFormat:@"%lu / %lu", (unsigned long)program.attack, (unsigned long)program.life];
+	self.cycleStat.text = [NSString stringWithFormat:@"%lu", (unsigned long)program.cycles];
 	self.memStat.text = [NSString stringWithFormat:@"%d", (int)(1.f / program.memory)];
 	self.programDescription.text = program.pdescription;
 	self.programName.text = program.name;
@@ -38,7 +38,7 @@
 	for (i = 0; i < 3; i++) {
 		EffectorView *effectView = [[self.effectView subviews] objectAtIndex:i];
 		NSString *tpe;
-		int len = [program.effectors count];
+		NSUInteger len = [program.effectors count];
 		if (i < len) {
 			tpe = [program.effectors[i] substringToIndex:2];
 		}
@@ -50,17 +50,17 @@
 }
 
 - (void)updateUserValues:(NSUInteger)aType amount:(NSUInteger)a owned:(NSUInteger)o {
-	self.ownedAmount.text = [NSString stringWithFormat:@"%d", o];
+	self.ownedAmount.text = [NSString stringWithFormat:@"%lu", (unsigned long)o];
 	switch (aType) {
 		case 0:
-			self.forecastValue.text = [NSString stringWithFormat:@"%d", (o + a)];
+			self.forecastValue.text = [NSString stringWithFormat:@"%lu", (o + a)];
 			break;
 
 		case 1:
-			self.forecastValue.text = [NSString stringWithFormat:@"%d", (o - a)];
+			self.forecastValue.text = [NSString stringWithFormat:@"%lu", (o - a)];
 			break;
 	}
-	self.amountValue.text = [NSString stringWithFormat:@"%d", a];
+	self.amountValue.text = [NSString stringWithFormat:@"%lu", (unsigned long)a];
 }
 
 - (void)setup {

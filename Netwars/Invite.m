@@ -24,7 +24,7 @@
 }
 
 + (NSURLSessionDataTask *)invites:(PlayerInvites)block {
-	return [[AFNetClient authGET] GET:@"clans/invitations" parameters:nil success: ^(NSURLSessionDataTask *task, id responseObject) {
+	return [[AFNetClient authGET] GET:@"clans/invitations/" parameters:nil success: ^(NSURLSessionDataTask *task, id responseObject) {
 	    NSDictionary *dictInvites = [responseObject objectForKey:@"result"];
 	    NSMutableArray *invites = [[NSMutableArray alloc] initWithCapacity:[dictInvites count]];
 	    for (NSDictionary *inv in dictInvites) {

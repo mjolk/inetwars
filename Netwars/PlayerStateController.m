@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 mjolk. All rights reserved.
 //
 
-#import "StateController.h"
+#import "PlayerStateController.h"
 #import "NavCell.h"
 #import "ProgramController.h"
 #import "Player.h"
@@ -23,13 +23,13 @@
 #import "InviteController.h"
 #import "DetailTextCell.h"
 
-@interface StateController ()
+@interface PlayerStateController ()
 
 - (void)load;
 
 @end
 
-@implementation StateController
+@implementation PlayerStateController
 
 - (id)initWithStyle:(UITableViewStyle)style {
 	self = [super initWithStyle:style];
@@ -81,7 +81,7 @@
 
 - (void)load {
 	self.navigationItem.rightBarButtonItem.enabled = NO;
-	__weak StateController *state = self;
+	__weak PlayerStateController *state = self;
 	NSURLSessionTask *task = [[Player sharedPlayer] state: ^(BOOL failed) {
 	    if (failed) {
 	        [state.refreshControl endRefreshing];

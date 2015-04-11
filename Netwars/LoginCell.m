@@ -6,14 +6,14 @@
 //  Copyright (c) 2013 mjolk. All rights reserved.
 //
 
-#import "InputCell.h"
+#import "LoginCell.h"
 
-@interface InputCell ()
+@interface LoginCell ()
 
 - (UITextField *)createInput;
 @end
 
-@implementation InputCell
+@implementation LoginCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
 	self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];

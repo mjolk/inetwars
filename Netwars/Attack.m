@@ -28,7 +28,7 @@
 }
 
 - (NSDictionary *)toDict {
-	NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithObjects:@[[NSNumber numberWithUnsignedInteger:self.type.intId], [NSNumber numberWithUnsignedInteger:self.target.playerID]] forKeys:@[@"attack_type", @"target"]];
+	NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithObjects:@[[NSNumber numberWithUnsignedInteger:self.type.intId], [NSNumber numberWithUnsignedInteger:self.target.ID]] forKeys:@[@"attack_type", @"target"]];
 	NSMutableArray *attackPrograms = [[NSMutableArray alloc] init];
 	for (Program *aProg in self.programs) {
 		[attackPrograms addObject:[[NSDictionary alloc] initWithObjects:@[aProg.programKey, [NSNumber numberWithUnsignedInteger:aProg.amount]] forKeys:@[@"key", @"amount"]]];
@@ -39,10 +39,11 @@
 
 - (NSURLSessionDataTask *)execute:(AttackBlock)block {
 	if (self.result == nil) {
-		NSURLSessionDataTask *task = [[AFNetClient authPOST] POST:@"attack" parameters:[self toDict] success: ^(NSURLSessionDataTask *task, id responseObject) {
+		NSURLSessionDataTask *task = [[AFNetClient authPOST] POST:@"attacks/" parameters:[self toDict] success: ^(NSURLSessionDataTask *task, id responseObject) {
 		    //BOOL result = [[responseObject objectForKey:@"success"] boolValue];
 		    block([[Event alloc] initWithValues:[responseObject objectForKey:@"result"]]);
 		} failure: ^(NSURLSessionDataTask *task, NSError *error) {
+            block(nil);
 		}];
 		return task;
 	}

@@ -26,7 +26,7 @@ typedef void (^EventList)(NSMutableArray *events, NSString *cursor);
 @property (nonatomic, strong) NSString *eventType;
 @property (nonatomic, assign) BOOL *direction; //NO = IN YES = OUT
 @property (nonatomic, strong) NSString *occurred;
-@property (nonatomic, assign) NSUInteger eventId;
+@property (nonatomic, assign) NSUInteger ID;
 @property (nonatomic, strong) NSMutableArray *eventPrograms;
 @property (nonatomic, assign) CGFloat bandwidthLost;
 @property (nonatomic, assign) NSUInteger programsLost;

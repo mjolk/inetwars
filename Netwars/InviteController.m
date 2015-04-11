@@ -7,7 +7,7 @@
 //
 
 #import "InviteController.h"
-#import "InputCell.h"
+#import "LoginCell.h"
 #import "Player.h"
 #import "Invite.h"
 
@@ -74,7 +74,7 @@
 	static NSString *btnCell = @"RegularCell";
 	static NSString *inputCell = @"InputCell";
 	if (indexPath.row == 0) {
-		InputCell *input = [tableView dequeueReusableCellWithIdentifier:inputCell forIndexPath:indexPath];
+		LoginCell *input = [tableView dequeueReusableCellWithIdentifier:inputCell forIndexPath:indexPath];
 		input.nick.delegate = self;
 		input.nick.tag = 1;
 		input.email.delegate = self;

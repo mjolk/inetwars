@@ -299,6 +299,9 @@
 		NSURLSessionDataTask *task;
 		if ([[self.currentAttack programs] count] > 0) {
 			task = [self.currentAttack execute: ^(Event *attackEvent) {
+                if (!attackEvent) {
+                    return;
+                }
 			    catt.result = attackEvent;
 			    NSLog(@"attack event: %@", attackEvent.dict);
 			    NSString *win = @"lost";

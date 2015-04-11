@@ -7,15 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "LoginController.h"
+#import "PlayerController.h"
 
 @class PageController;
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, LoginDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, PlayerDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (nonatomic, strong) UINavigationController *navController;
 
-- (void)userCreated:(LoginController *)controller;
+- (void)playerCreated:(PlayerController *)controller;
 
 @end

@@ -13,6 +13,6 @@
 
 @property (nonatomic, strong) NSMutableArray *players;
 @property (nonatomic, strong) NSString *cursor;
-@property (nonatomic, assign) BOOL range;
+@property (nonatomic, assign) uint range;
 
 @end

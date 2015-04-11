@@ -8,13 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-#import "LoginController.h"
+#import "PlayerController.h"
 #import "NavCell.h"
 #import "Event.h"
 #import "TrackerCell.h"
 
 
-@interface StateController : UITableViewController <MenuDelegate>
+@interface PlayerStateController : UITableViewController <MenuDelegate>
 
 @property (nonatomic, retain) UIActivityIndicatorView *activityIndicator;
 
