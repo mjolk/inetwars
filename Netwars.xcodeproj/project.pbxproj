@@ -67,6 +67,7 @@
 		06FAFFF317F1F2B3005E2362 /* activememory_22@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 06FAFFE617F1F2B3005E2362 /* activememory_22@2x.png */; };
 		06FAFFF417F1F2B3005E2362 /* bandwidth_22@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 06FAFFE717F1F2B3005E2362 /* bandwidth_22@2x.png */; };
 		06FAFFF517F1F2B3005E2362 /* cyclesicon_22@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 06FAFFE817F1F2B3005E2362 /* cyclesicon_22@2x.png */; };
+		06FC36891ADB17FF008A0243 /* ClanCreateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 06FC36881ADB17FF008A0243 /* ClanCreateCell.m */; };
 		06FEE46E17E9DD52001BDAE7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06FEE46D17E9DD52001BDAE7 /* QuartzCore.framework */; };
 		30068B531839887C00F97462 /* InviteController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30068B521839887C00F97462 /* InviteController.m */; };
 		3011AB3517E52D1E00B45374 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3011AB3417E52D1E00B45374 /* UIKit.framework */; };
@@ -194,6 +195,8 @@
 		06FAFFE617F1F2B3005E2362 /* activememory_22@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "activememory_22@2x.png"; sourceTree = "<group>"; };
 		06FAFFE717F1F2B3005E2362 /* bandwidth_22@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bandwidth_22@2x.png"; sourceTree = "<group>"; };
 		06FAFFE817F1F2B3005E2362 /* cyclesicon_22@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cyclesicon_22@2x.png"; sourceTree = "<group>"; };
+		06FC36871ADB17FF008A0243 /* ClanCreateCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClanCreateCell.h; sourceTree = "<group>"; };
+		06FC36881ADB17FF008A0243 /* ClanCreateCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClanCreateCell.m; sourceTree = "<group>"; };
 		06FEE46D17E9DD52001BDAE7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		30068B511839887C00F97462 /* InviteController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InviteController.h; sourceTree = "<group>"; };
 		30068B521839887C00F97462 /* InviteController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InviteController.m; sourceTree = "<group>"; };
@@ -210,7 +213,7 @@
 		3011AB4617E52D1E00B45374 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		3011AB4817E52D1E00B45374 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		3011AB4A17E52D1E00B45374 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		3011AB5117E52D1E00B45374 /* NetwarsTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NetwarsTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3011AB5117E52D1E00B45374 /* NetwarsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NetwarsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3011AB5A17E52D1E00B45374 /* NetwarsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "NetwarsTests-Info.plist"; sourceTree = "<group>"; };
 		3011AB5C17E52D1E00B45374 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3011AB5E17E52D1E00B45374 /* NetwarsTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetwarsTests.h; sourceTree = "<group>"; };
@@ -290,7 +293,7 @@
 			isa = PBXGroup;
 			children = (
 				3011AB3117E52D1E00B45374 /* Netwars.app */,
-				3011AB5117E52D1E00B45374 /* NetwarsTests.octest */,
+				3011AB5117E52D1E00B45374 /* NetwarsTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -477,6 +480,8 @@
 				3057618C1AC1A17200044038 /* Common.m */,
 				309C52591AC4A3AF0011C014 /* DetailTextCell.h */,
 				309C525A1AC4A3B00011C014 /* DetailTextCell.m */,
+				06FC36871ADB17FF008A0243 /* ClanCreateCell.h */,
+				06FC36881ADB17FF008A0243 /* ClanCreateCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -540,7 +545,7 @@
 			);
 			name = NetwarsTests;
 			productName = NetwarsTests;
-			productReference = 3011AB5117E52D1E00B45374 /* NetwarsTests.octest */;
+			productReference = 3011AB5117E52D1E00B45374 /* NetwarsTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -703,6 +708,7 @@
 				306B8DEF17E817DE00F7C24D /* Player.m in Sources */,
 				306B8DF217E86B5500F7C24D /* LoginCell.m in Sources */,
 				06AC8B4B17F9948600FD7A1A /* PlayerCell.m in Sources */,
+				06FC36891ADB17FF008A0243 /* ClanCreateCell.m in Sources */,
 				06B714891801DEC000B977A1 /* PickerCell.m in Sources */,
 				06AC8B5917FB4AC200FD7A1A /* AttackController.m in Sources */,
 				30F872A51835201D00EC7308 /* JSONResponseSerializerWithErrorData.m in Sources */,

@@ -7,9 +7,9 @@
 //
 
 #import "InviteController.h"
-#import "LoginCell.h"
 #import "Player.h"
 #import "Invite.h"
+#import "ClanCreateCell.h"
 
 @interface InviteController ()
 
@@ -37,9 +37,7 @@
 	// Uncomment the following line to display an Edit button in the navigation bar for this view controller.
 	// self.navigationItem.rightBarButtonItem = self.editButtonItem;
 
-	[self.tableView registerNib:[UINib nibWithNibName:@"InputCell"
-	                                           bundle:[NSBundle mainBundle]]
-	     forCellReuseIdentifier:@"InputCell"];
+	[self.tableView registerClass:[ClanCreateCell class] forCellReuseIdentifier:@"ClanInputCell"];
 	[self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"RegularCell"];
 
 	[self loadInvites];
@@ -72,13 +70,15 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	static NSString *btnCell = @"RegularCell";
-	static NSString *inputCell = @"InputCell";
+	static NSString *inputCell = @"ClanInputCell";
 	if (indexPath.row == 0) {
-		LoginCell *input = [tableView dequeueReusableCellWithIdentifier:inputCell forIndexPath:indexPath];
-		input.nick.delegate = self;
-		input.nick.tag = 1;
-		input.email.delegate = self;
-		input.email.tag = 2;
+		ClanCreateCell *input = [tableView dequeueReusableCellWithIdentifier:inputCell forIndexPath:indexPath];
+		input.name.delegate = self;
+		input.name.tag = 1;
+		input.clanTag.delegate = self;
+		input.clanTag.tag = 2;
+		[input setNeedsUpdateConstraints];
+		[input updateConstraintsIfNeeded];
 		return input;
 	}
 	else if (indexPath.row == 1) {
@@ -106,7 +106,7 @@
 	CGFloat height;
 	switch (indexPath.row) {
 		case 0:
-			height = 108.0f;
+			height = 200.0f;
 			break;
 
 		default:
@@ -143,7 +143,7 @@
 	   [self.navigationController pushViewController:detailViewController animated:YES];
 	 */
 	if (indexPath.row == 3) {
-		NSLog(@"email: %@ nickname: %@", self.name, self.tag);
+		NSLog(@"name: %@ tag: %@", self.name, self.tag);
 		if ([self.name length] == 0 || [self.tag length] == 0) {
 			//error
 		}
@@ -154,7 +154,7 @@
 }
 
 - (void)createClan {
-	/*  NSURLSessionDataTask *task = [[Player sharedPlayer] create:self.nick email:self.email callback:^(NSDictionary *errors) {
+	/*  NSURLSessionDataTask *task = [Clan create:self.name email:self.tag callback:^(NSDictionary *errors) {
 	      if(errors) {
 	          //errors
 	          NSLog(@"errors %@", errors);

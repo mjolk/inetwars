@@ -7,12 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Clan.h"
 
 @class ClanController;
 
-@protocol ClanDelegate <NSObject>
-- (void)clanCreated:(ClanController *)controller;
-@end
+
 
 @interface ClanController : UITableViewController
 

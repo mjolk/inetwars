@@ -47,6 +47,7 @@ typedef void (^PlayerList)(NSMutableArray *players, NSString *cursor);
 @property (nonatomic, strong) NSString *clanTag;
 @property (nonatomic, strong) NSString *clan;
 @property (nonatomic, strong) NSString *status;
+@property (nonatomic, strong) NSString *memberType;
 @property (nonatomic, strong) PlayerTracker *tracker;
 
 + (id)sharedPlayer;
@@ -56,6 +57,8 @@ typedef void (^PlayerList)(NSMutableArray *players, NSString *cursor);
 - (id)initWithDefaults;
 - (void)update:(NSDictionary *)values;
 - (id)initForPublic:(NSDictionary *)values;
+- (id)initForPublicClan:(NSDictionary *)values;
+- (id)initForPrivateClan:(NSDictionary *)values;
 - (void)persistKey;
 
 @end

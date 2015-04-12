@@ -8,8 +8,25 @@
 
 #import <Foundation/Foundation.h>
 
+@interface ClanConnection : NSObject
+
+@property (nonatomic, strong) NSDate *created;
+@property (nonatomic, strong) NSDate *expires;
+@property (nonatomic, assign) NSUInteger attacker;
+@property (nonatomic, assign) NSUInteger defender;
+@property (nonatomic, strong) NSString *attackerName;
+@property (nonatomic, strong) NSString *defenderName;
+@property (nonatomic, assign) NSUInteger declaredBy;
+- (id)initWithValues:(NSDictionary *)dict;
+
+
+@end
+
+
+@class Clan;
 
 typedef void (^ClanCreate)(BOOL);
+typedef void (^ClanState) (Clan *);
 
 @interface Clan : NSObject
 
@@ -24,7 +41,12 @@ typedef void (^ClanCreate)(BOOL);
 @property (nonatomic, strong) NSString *site;
 @property (nonatomic, strong) NSString *descr;
 @property (nonatomic, strong) NSArray *players;
+@property (nonatomic, strong) NSMutableArray *wars;
+@property (nonatomic, strong) NSMutableArray *members;
 
 + (NSURLSessionDataTask *)create:(NSString *)n tag:(NSString *)t callback:(ClanCreate)block;
++ (NSURLSessionDataTask *)state:(NSString *)playerKey callback:(ClanState)block;
+- (id)initWithValues:(NSDictionary *)dict public:
+    (BOOL)pub;
 
 @end

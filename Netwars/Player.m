@@ -26,6 +26,7 @@
 
 @interface Player ()
 - (void)updatePublic:(NSDictionary *)values;
+- (void)updateClan:(NSDictionary *)values;
 @end
 
 @implementation Player
@@ -66,6 +67,22 @@
 	return self;
 }
 
+- (id)initForPublicClan:(NSDictionary *)values {
+	self = [super init];
+	if (self) {
+		[self updateClanPublic:values];
+	}
+	return self;
+}
+
+- (id)initForPrivateClan:(NSDictionary *)values {
+	self = [super init];
+	if (self) {
+		[self updateClan:values];
+	}
+	return self;
+}
+
 - (void)updatePublic:(NSDictionary *)values {
 	self.nick = [values objectForKey:@"nick"];
 	self.clanTag = [values objectForKey:@"clan_tag"];
@@ -73,6 +90,29 @@
 	self.ID = [[values objectForKey:@"player_id"] integerValue];
 	self.status = [values objectForKey:@"status"];
 	self.bandwidthUsage = [[values objectForKey:@"bandwidth_usage"] floatValue];
+}
+
+- (void)updateClan:(NSDictionary *)values {
+	self.nick = [values objectForKey:@"nick"];
+	self.clanTag = [values objectForKey:@"clan_tag"];
+	self.avatar = [values objectForKey:@"avatar_thumb"];
+	self.ID = [[values objectForKey:@"player_id"] integerValue];
+	self.status = [values objectForKey:@"status"];
+	self.bandwidthUsage = [[values objectForKey:@"bandwidth_usage"] floatValue];
+	self.cps = [[values objectForKey:@"cps"] integerValue];
+	self.bandwidth = [[values objectForKey:@"bandwidth"] integerValue];
+	self.activeMemory = [[values objectForKey:@"active_mem"] integerValue];
+	self.memberType = [values objectForKey:@"member"];
+}
+
+- (void)updateClanPublic:(NSDictionary *)values {
+	self.nick = [values objectForKey:@"nick"];
+	self.clanTag = [values objectForKey:@"clan_tag"];
+	self.avatar = [values objectForKey:@"avatar_thumb"];
+	self.ID = [[values objectForKey:@"player_id"] integerValue];
+	self.status = [values objectForKey:@"status"];
+	self.bandwidthUsage = [[values objectForKey:@"bandwidth_usage"] floatValue];
+	self.memberType = [values objectForKey:@"member"];
 }
 
 - (void)persistKey {
@@ -118,23 +158,23 @@
 	    [wPlayer update:[responseObject objectForKey:@"result"]];
 	    block(NO);
 	}
-        failure   : ^(NSURLSessionDataTask *task, NSError *error) {
+	                          failure   : ^(NSURLSessionDataTask *task, NSError *error) {
 	    //send error message
 	    block(YES);
 	}];
 }
 
 + (NSURLSessionDataTask *)list:(uint)rnge cursor:(NSString *)c callback:(PlayerList)block {
-    NSString *path = [NSString stringWithFormat:@"players/list/%d/", rnge];
+	NSString *path = [NSString stringWithFormat:@"players/list/%d/", rnge];
 	if (c.length > 0) {
 		path = [NSString stringWithFormat:@"%@/%@/", path, c];
 	}
-    NSLog(@" path :%@ \n", path);
+	NSLog(@" path :%@ \n", path);
 	return [[AFNetClient authGET] GET:path parameters:nil success: ^(NSURLSessionDataTask *task, id responseObject) {
 	    NSDictionary *listObj = [responseObject objectForKey:@"result"];
 	    NSString *cur = [listObj objectForKey:@"cursor"];
 	    NSArray *dictPls = [listObj objectForKey:@"players"];
-        NSLog(@"players %@", responseObject);
+	    NSLog(@"players %@", responseObject);
 	    NSMutableArray *pls = [[NSMutableArray alloc] initWithCapacity:[listObj count]];
 	    for (NSDictionary *pDict in dictPls) {
 	        [pls addObject:[[Player alloc] initForPublic:pDict]];

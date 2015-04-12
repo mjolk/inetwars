@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@class ClanController;
+@class InviteController;
 
 @protocol ClanDelegate <NSObject>
-- (void)clanAvailable:(ClanController *)controller;
+- (void)clanCreated:(InviteController *)controller;
 @end
 
 
