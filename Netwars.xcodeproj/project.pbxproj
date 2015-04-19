@@ -96,6 +96,7 @@
 		307D16BB183D161C00ED7E7E /* Invite.m in Sources */ = {isa = PBXBuildFile; fileRef = 307D16BA183D161C00ED7E7E /* Invite.m */; };
 		309C525B1AC4A3B00011C014 /* DetailTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 309C525A1AC4A3B00011C014 /* DetailTextCell.m */; };
 		30DAB74E183D6201004F4D9D /* Clan.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DAB74D183D6201004F4D9D /* Clan.m */; };
+		30E822C81ADC2D2800549E95 /* ClanCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 30E822C71ADC2D2800549E95 /* ClanCell.m */; };
 		30F8729F1833EF2800EC7308 /* ClanController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30F8729E1833EF2800EC7308 /* ClanController.m */; };
 		30F872A51835201D00EC7308 /* JSONResponseSerializerWithErrorData.m in Sources */ = {isa = PBXBuildFile; fileRef = 30F872A41835201D00EC7308 /* JSONResponseSerializerWithErrorData.m */; };
 		30F872A7183526C500EC7308 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 30F872A6183526C500EC7308 /* Images.xcassets */; };
@@ -240,6 +241,8 @@
 		309C525A1AC4A3B00011C014 /* DetailTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailTextCell.m; sourceTree = "<group>"; };
 		30DAB74C183D6201004F4D9D /* Clan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Clan.h; sourceTree = "<group>"; };
 		30DAB74D183D6201004F4D9D /* Clan.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Clan.m; sourceTree = "<group>"; };
+		30E822C61ADC2D2800549E95 /* ClanCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClanCell.h; sourceTree = "<group>"; };
+		30E822C71ADC2D2800549E95 /* ClanCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClanCell.m; sourceTree = "<group>"; };
 		30F8729D1833EF2800EC7308 /* ClanController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClanController.h; sourceTree = "<group>"; };
 		30F8729E1833EF2800EC7308 /* ClanController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClanController.m; sourceTree = "<group>"; };
 		30F872A31835201D00EC7308 /* JSONResponseSerializerWithErrorData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONResponseSerializerWithErrorData.h; sourceTree = "<group>"; };
@@ -482,6 +485,8 @@
 				309C525A1AC4A3B00011C014 /* DetailTextCell.m */,
 				06FC36871ADB17FF008A0243 /* ClanCreateCell.h */,
 				06FC36881ADB17FF008A0243 /* ClanCreateCell.m */,
+				30E822C61ADC2D2800549E95 /* ClanCell.h */,
+				30E822C71ADC2D2800549E95 /* ClanCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -723,6 +728,7 @@
 				06DED8B717ECA5CB0067EAC5 /* NavCell.m in Sources */,
 				06DED8BC17ED4D5D0067EAC5 /* ProgramController.m in Sources */,
 				06DED8BF17ED4D8B0067EAC5 /* Program.m in Sources */,
+				30E822C81ADC2D2800549E95 /* ClanCell.m in Sources */,
 				309C525B1AC4A3B00011C014 /* DetailTextCell.m in Sources */,
 				06AC8B5317FA051F00FD7A1A /* EventCell.m in Sources */,
 				06DED8C517ED64BD0067EAC5 /* ProgramCell.m in Sources */,

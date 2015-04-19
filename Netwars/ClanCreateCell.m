@@ -27,7 +27,7 @@
         [self.contentView addSubview:em];
         self.clanTag = em;
         self.clanTag.tag = 1;
-        self.clanTag.placeholder = @"E-mail";
+        self.clanTag.placeholder = @"Clan Tag ";
     }
     return self;
 }

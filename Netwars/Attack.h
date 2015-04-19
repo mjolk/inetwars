@@ -13,7 +13,7 @@
 @class Player;
 @class Attack;
 
-typedef enum {
+typedef enum AttackTpe : NSUInteger {
 	BAL = MUT | HUK | DOS | SW,
 	MEM = MUT | HUK,
 	BW = DOS | SW,

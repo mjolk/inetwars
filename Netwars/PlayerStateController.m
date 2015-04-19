@@ -252,9 +252,10 @@
 }
 
 - (void)showClan {
+    NSLog(@"invite controller ----\n: %@", [[Player sharedPlayer] clan]);
 	if (![[Player sharedPlayer] clanMember]) {
-		NSLog(@"invite controller ----\n");
 		InviteController *invite = [[InviteController alloc] initWithStyle:UITableViewStylePlain];
+        invite.delegate = self;
 		[self.navigationController pushViewController:invite animated:YES];
 	}
 	else {
@@ -263,6 +264,12 @@
 		// Pass the selected object to the new view controller.
 		[self.navigationController pushViewController:clanController animated:YES];
 	}
+}
+
+- (void)clanCreated:(InviteController *)controller {
+    [self.navigationController popViewControllerAnimated:NO];
+    ClanController *clanController = [[ClanController alloc] initWithStyle:UITableViewStylePlain];
+    [self.navigationController pushViewController:clanController animated:YES];
 }
 
 /*

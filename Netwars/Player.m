@@ -53,6 +53,7 @@
 		else {
 			self.authenticated = YES;
 			self.playerKey = playerKey;
+            self.clanMember = NO;
 		}
 	}
 
@@ -129,7 +130,12 @@
 	self.memory = [[player objectForKey:@"mem"] integerValue];
 	self.cycles = [[player objectForKey:@"cycles"]integerValue];
 	self.activeMemory = [[player objectForKey:@"active_mem"] integerValue];
-	[self updatePublic:player];
+    self.clan = [player objectForKey:@"clan_member"];
+    if (self.clan.length > 0) {
+        self.clanMember = YES;
+    }
+    NSLog(@"clan member : %@", self.clan);
+	[self updateClan:player];
 	self.tracker = [[PlayerTracker alloc] initWithValues:[player objectForKey:@"tracker"]];
 	NSArray *pGroups = [player objectForKey:@"programs"];
 	self.programs = [[NSMutableArray alloc] initWithCapacity:[pGroups count]];
@@ -169,7 +175,6 @@
 	if (c.length > 0) {
 		path = [NSString stringWithFormat:@"%@/%@/", path, c];
 	}
-	NSLog(@" path :%@ \n", path);
 	return [[AFNetClient authGET] GET:path parameters:nil success: ^(NSURLSessionDataTask *task, id responseObject) {
 	    NSDictionary *listObj = [responseObject objectForKey:@"result"];
 	    NSString *cur = [listObj objectForKey:@"cursor"];

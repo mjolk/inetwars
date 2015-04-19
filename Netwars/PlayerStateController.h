@@ -12,9 +12,10 @@
 #import "NavCell.h"
 #import "Event.h"
 #import "TrackerCell.h"
+#import "InviteController.h"
 
 
-@interface PlayerStateController : UITableViewController <MenuDelegate>
+@interface PlayerStateController : UITableViewController <MenuDelegate, ClanDelegate>
 
 @property (nonatomic, retain) UIActivityIndicatorView *activityIndicator;
 
@@ -24,5 +25,6 @@
 - (void)showClan;
 - (void)showMessages;
 - (void)showPlayers;
+- (void)clanCreated:(InviteController *)controller;
 
 @end

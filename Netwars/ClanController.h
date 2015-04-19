@@ -15,4 +15,6 @@
 
 @interface ClanController : UITableViewController
 
+@property(nonatomic, strong) Clan *clan;
+
 @end

@@ -45,7 +45,7 @@ typedef void (^ClanState) (Clan *);
 @property (nonatomic, strong) NSMutableArray *members;
 
 + (NSURLSessionDataTask *)create:(NSString *)n tag:(NSString *)t callback:(ClanCreate)block;
-+ (NSURLSessionDataTask *)state:(NSString *)playerKey callback:(ClanState)block;
++ (NSURLSessionDataTask *)state:(ClanState)block;
 - (id)initWithValues:(NSDictionary *)dict public:
     (BOOL)pub;
 

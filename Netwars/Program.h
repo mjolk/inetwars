@@ -12,7 +12,7 @@
 typedef void (^ProgramList)(NSMutableArray *programs);
 typedef void (^PlayerAllocate)(BOOL);
 
-typedef enum {
+typedef enum ProgramType : NSUInteger {
 	SW = 1,
 	MUT = 1 << 1,
 	    HUK = 1 << 2,

@@ -39,9 +39,11 @@
 	}];
 }
 
-+ (NSURLSessionDataTask *)state:(NSString *)playerKey callback:(ClanState)block {
-	return [[AFNetClient authGET] GET:playerKey parameters:nil success: ^(NSURLSessionDataTask *task, id responseObject) {
-	    block([[Clan alloc] initWithValues:responseObject public:NO]);
++ (NSURLSessionDataTask *)state:(ClanState)block {
+	return [[AFNetClient authGET] GET:@"clans/status/" parameters:nil success: ^(NSURLSessionDataTask *task, id responseObject) {
+        NSLog(@"clan: %@", responseObject);
+        Clan *cl = [[Clan alloc] initWithValues:[responseObject objectForKey:@"result"] public:NO];
+	    block(cl);
 	} failure: ^(NSURLSessionDataTask *task, NSError *error) {
 	}];
 }
@@ -53,25 +55,28 @@
 		self.tag = [dict objectForKey:@"clan_tag"];
 		self.ID = [[dict objectForKey:@"clan_id"] integerValue];
 		self.bandwidthUsage = [[dict objectForKey:@"bandwidth_usage"] floatValue];
-		self.clanPoints = [[dict objectForKey:@"clan_cps"] integerValue];
+		self.clanPoints = [[dict objectForKey:@"cps"] integerValue];
 		self.amountPlayers = [[dict objectForKey:@"amount_players"] integerValue];
 		self.avatar = [dict objectForKey:@"avatar"];
 		self.message = [dict objectForKey:@"message"];
 		self.site = [dict objectForKey:@"clan_site"];
 		self.descr = [dict objectForKey:@"description"];
         NSDictionary *members = [dict objectForKey:@"clan_members"];
-        if ([members count] > 0) {
-            for (NSDictionary *member in members) {
-            pub?[self.members addObject:[[Player alloc] initForPublicClan:member]]:[self.members addObject:[[Player alloc] initForPrivateClan:member]];
+        if (![members isEqual:[NSNull null]]) {
+            if ([members count] > 0) {
+                for (NSDictionary *member in members) {
+                    pub?[self.members addObject:[[Player alloc] initForPublicClan:member]]:[self.members addObject:[[Player alloc] initForPrivateClan:member]];
+                }
             }
         }
         NSDictionary *wars = [dict objectForKey:@"wars"];
-        if ([wars count] > 0 && !pub) {
-            for (NSDictionary *war in wars) {
-                [self.wars addObject:[[ClanConnection alloc] initWithValues:war]];
+        if (![wars isEqual:[NSNull null]]) {
+            if ([wars count] > 0 && !pub) {
+                for (NSDictionary *war in wars) {
+                    [self.wars addObject:[[ClanConnection alloc] initWithValues:war]];
+                }
             }
         }
-        
 	}
 	return self;
 }

@@ -10,6 +10,8 @@
 #import "Player.h"
 #import "Invite.h"
 #import "ClanCreateCell.h"
+#import "Clan.h"
+#import "UIAlertView+AFNetworking.h"
 
 @interface InviteController ()
 
@@ -36,6 +38,7 @@
 
 	// Uncomment the following line to display an Edit button in the navigation bar for this view controller.
 	// self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    [self.navigationController setNavigationBarHidden:NO];
 
 	[self.tableView registerClass:[ClanCreateCell class] forCellReuseIdentifier:@"ClanInputCell"];
 	[self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"RegularCell"];
@@ -74,9 +77,9 @@
 	if (indexPath.row == 0) {
 		ClanCreateCell *input = [tableView dequeueReusableCellWithIdentifier:inputCell forIndexPath:indexPath];
 		input.name.delegate = self;
-		input.name.tag = 1;
+		input.name.tag = 0;
 		input.clanTag.delegate = self;
-		input.clanTag.tag = 2;
+		input.clanTag.tag = 1;
 		[input setNeedsUpdateConstraints];
 		[input updateConstraintsIfNeeded];
 		return input;
@@ -124,11 +127,11 @@
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
 	switch (textField.tag) {
-		case 1:
+		case 0:
 			self.name = textField.text;
 			break;
 
-		case 2:
+		case 1:
 			self.tag = textField.text;
 			break;
 	}
@@ -142,7 +145,8 @@
 	   // Pass the selected object to the new view controller.
 	   [self.navigationController pushViewController:detailViewController animated:YES];
 	 */
-	if (indexPath.row == 3) {
+    NSLog(@"selected row %ld", indexPath.row);
+	if (indexPath.row == 1) {
 		NSLog(@"name: %@ tag: %@", self.name, self.tag);
 		if ([self.name length] == 0 || [self.tag length] == 0) {
 			//error
@@ -154,15 +158,10 @@
 }
 
 - (void)createClan {
-	/*  NSURLSessionDataTask *task = [Clan create:self.name email:self.tag callback:^(NSDictionary *errors) {
-	      if(errors) {
-	          //errors
-	          NSLog(@"errors %@", errors);
-	      } else {
-	          [self.delegate userCreated:nil];
-	      }
-	   }];
-	   [UIAlertView showAlertViewForTaskWithErrorOnCompletion:task delegate:nil];*/
+	  NSURLSessionDataTask *task = [Clan create:self.name tag:self.tag callback:^(BOOL fail) {
+          [self.delegate clanCreated:self];
+    }];
+	   [UIAlertView showAlertViewForTaskWithErrorOnCompletion:task delegate:nil];
 }
 
 /*
