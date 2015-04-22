@@ -10,6 +10,9 @@
 
 @interface AFNetClient : AFHTTPSessionManager
 
+@property(nonatomic, strong) AFHTTPRequestSerializer *getSerializer;
+@property(nonatomic, strong) AFJSONRequestSerializer *postSerializer;
+
 + (AFNetClient *)shared;
 + (AFNetClient *)authGET;
 + (AFNetClient *)authPOST;

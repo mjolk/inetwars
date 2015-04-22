@@ -20,6 +20,8 @@ static NSString *const kAFAppNetwarsAPIBaseURLString = @"http://n3twars.appspot.
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 		_sharedClient = [[AFNetClient alloc] initWithBaseURL:[NSURL URLWithString:kAFAppNetwarsAPIBaseURLTestString]];
+        _sharedClient.postSerializer = [[AFJSONRequestSerializer alloc] init];
+        _sharedClient.getSerializer = [[AFHTTPRequestSerializer alloc] init];
 	});
 
 	return _sharedClient;
@@ -47,14 +49,14 @@ static NSString *const kAFAppNetwarsAPIBaseURLString = @"http://n3twars.appspot.
 
 + (AFNetClient *)authGET {
 	AFNetClient *client = [AFNetClient shared];
-	[client setRequestSerializer:[[AFHTTPRequestSerializer alloc] init]];
+	[client setRequestSerializer:client.getSerializer];
 	[client.requestSerializer setValue:[NSString stringWithFormat:@"n3twars%@", [[Player sharedPlayer] playerKey]] forHTTPHeaderField:@"Authorization"];
 	return client;
 }
 
 + (AFNetClient *)authPOST {
 	AFNetClient *client = [AFNetClient shared];
-	[client setRequestSerializer:[[AFJSONRequestSerializer alloc] init]];
+	[client setRequestSerializer:client.postSerializer];
 	[client.requestSerializer setValue:[NSString stringWithFormat:@"n3twars%@", [[Player sharedPlayer] playerKey]] forHTTPHeaderField:@"Authorization"];
 	return client;
 }
