@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ClanCreateCell : UITableViewCell
+@interface CreateClanCell : UITableViewCell
 
 @property (nonatomic, weak) UITextField *name;
 @property (nonatomic, weak) UITextField *clanTag;

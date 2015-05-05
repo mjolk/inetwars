@@ -7,13 +7,15 @@
 //
 
 #import "PlayerController.h"
-#import "LoginCell.h"
+#import "CreatePlayerCell.h"
 #import "Player.h"
 #import "UIAlertView+AFNetworking.h"
+#import "LoginCell.h"
 
 @interface PlayerController ()
 
 - (void)createPlayer;
+-(void) setupInput:(UITableViewCell *) cell;
 
 @end
 
@@ -27,6 +29,14 @@
 	return self;
 }
 
+- (id)initForCreate:(BOOL) type {
+    self = [super initWithStyle:UITableViewStylePlain];
+    if (self) {
+        self.create = type;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
 	[super viewDidLoad];
 
@@ -35,8 +45,25 @@
 
 	// Uncomment the following line to display an Edit button in the navigation bar for this view controller.
 	// self.navigationItem.rightBarButtonItem = self.editButtonItem;
-	[self.tableView registerClass:[LoginCell class] forCellReuseIdentifier:@"InputCell"];
+        [self.tableView registerClass:[CreatePlayerCell class] forCellReuseIdentifier:@"CreateCell"];
+        [self.tableView registerClass:[LoginCell class] forCellReuseIdentifier:@"LoginCell"];
+	
 	[self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"RegularCell"];
+}
+
+- (void) setupInput:(UITableViewCell *) cell {
+    if (self.create) {
+        CreatePlayerCell *input = (CreatePlayerCell *)cell;
+        input.nick.delegate = self;
+        input.email.delegate = self;
+        input.password.delegate = self;
+    } else {
+        LoginCell *input = (LoginCell *)cell;
+        input.email.delegate = self;
+        input.password.delegate = self;
+    }
+    [cell setNeedsUpdateConstraints];
+    [cell updateConstraintsIfNeeded];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -56,12 +83,17 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	static NSString *btnCell = @"RegularCell";
-	static NSString *inputCell = @"InputCell";
+	static NSString *createCell = @"CreateCell";
+    static NSString *loginCell = @"LoginCell";
 	UITableViewCell *cell;
 	switch (indexPath.row) {
 		case 0:
 			cell = [tableView dequeueReusableCellWithIdentifier:btnCell forIndexPath:indexPath];
-			cell.textLabel.text = @"Existing player";
+            if (self.create) {
+                cell.textLabel.text = @"Login";
+            } else {
+                cell.textLabel.text = @"New player";
+            }
 			break;
 
 		case 1:
@@ -69,19 +101,23 @@
 			break;
 
 		case 2: {
-			cell = [tableView dequeueReusableCellWithIdentifier:inputCell forIndexPath:indexPath];
-			LoginCell *input = (LoginCell *)cell;
-			input.nick.delegate = self;
-			input.email.delegate = self;
-			input.password.delegate = self;
-			[input setNeedsUpdateConstraints];
-			[input updateConstraintsIfNeeded];
+            if (self.create) {
+                cell = [tableView dequeueReusableCellWithIdentifier:createCell forIndexPath:indexPath];
+            } else {
+                cell = [tableView dequeueReusableCellWithIdentifier:loginCell forIndexPath:indexPath];
+            }
+			
+            [self setupInput:cell];
 			break;
 		}
 
 		case 3:
 			cell = [tableView dequeueReusableCellWithIdentifier:btnCell forIndexPath:indexPath];
-			cell.textLabel.text = @"Create new account";
+            if(self.create) {
+                cell.textLabel.text = @"Create new account";
+            } else {
+                cell.textLabel.text = @"Login";
+            }
 			break;
 	}
 	return cell;
@@ -178,7 +214,11 @@
 	   // Pass the selected object to the new view controller.
 	   [self.navigationController pushViewController:detailViewController animated:YES];
 	 */
-	if (indexPath.row == 3) {
+    if (indexPath.row == 0) {
+        self.create = self.create?NO:YES;
+        [self.tableView reloadData];
+    }
+	if (indexPath.row == 3 && self.create) {
 		NSLog(@"email: %@ \n nickname: %@ \n password: %@", self.email, self.nick, self.password);
 		if ([self.email length] == 0 || [self.nick length] == 0 || [self.password length] == 0) {
 			//error
@@ -186,7 +226,14 @@
 		else {
 			[self createPlayer];
 		}
-	}
+    } else if(indexPath.row == 3){
+        if ([self.email length] == 0 || [self.password length] == 0) {
+            //error
+        }
+        else {
+            [self login];
+        }
+    }
 }
 
 #pragma mark - create player
@@ -203,6 +250,13 @@
 		}
 	}];
 	[UIAlertView showAlertViewForTaskWithErrorOnCompletion:task delegate:nil];
+}
+
+-(void)login {
+    NSURLSessionDataTask *task = [Player login:self.email password:self.password callback: ^(BOOL result) {
+            [self.delegate playerCreated:self];
+    }];
+    [UIAlertView showAlertViewForTaskWithErrorOnCompletion:task delegate:nil];
 }
 
 @end

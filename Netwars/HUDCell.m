@@ -176,6 +176,7 @@
 }
 
 - (void)setUsageProgress:(CGFloat)progress {
+    NSLog(@"PROGRESS %f", progress);
 	[self.bandwidthProgress setProgress:progress animated:YES];
 }
 

@@ -87,18 +87,39 @@
 	return 44.0f;
 }
 
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle) editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+}
+
+- (NSArray *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    UITableViewRowAction *profileAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal title:@"Profile" handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
+        [self.tableView setEditing:NO];
+    }];
+    profileAction.backgroundColor = [UIColor blueColor];
+    
+    UITableViewRowAction *messageAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDestructive title:@"Message"  handler:^(UITableViewRowAction *action, NSIndexPath *indexPath){
+        [self.tableView setEditing:NO];
+    }];
+    
+    //TODO if player not in clan and clan open spot -> invite action
+    
+    return @[profileAction, messageAction];
+
+}
+
 /*- (void)    tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell
     forRowAtIndexPath:(NSIndexPath *)indexPath {
    }*/
 
-/*
+
    // Override to support conditional editing of the table view.
-   - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-   {
+  // - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+   //{
    // Return NO if you do not want the specified item to be editable.
-   return YES;
-   }
- */
+  // return YES;
+  // }
+
 
 /*
    // Override to support editing the table view.

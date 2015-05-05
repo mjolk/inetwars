@@ -22,16 +22,12 @@
 	if ([[Player sharedPlayer] authenticated]) {
 		self.navController = [[UINavigationController alloc] initWithRootViewController:[[PlayerStateController alloc]initWithStyle:UITableViewStylePlain]];
 		[self.navController setNavigationBarHidden:YES];
-	}
-	else {
-		NSLog(@"player not authenticated");
-		PlayerController *login = [[PlayerController alloc] initWithStyle:UITableViewStylePlain];
+	} else {
+		PlayerController *login = [[PlayerController alloc] initForCreate:YES];
 		self.navController = [[UINavigationController alloc] initWithRootViewController:login];
 		[self.navController setNavigationBarHidden:YES];
 		[login setDelegate:self];
 	}
-
-	//self.navigationController.navigationBar.tintColor = [UIColor darkGrayColor];
 
 	self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	// Override point for customization after application launch.

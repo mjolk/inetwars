@@ -36,4 +36,12 @@
 	}];
 }
 
+- (NSURLSessionDataTask *)join:(PlayerJoin)block {
+    return [[AFNetClient authPOST] POST:@"clans/links/" parameters:@{@"key": self.inviteKey} success:^(NSURLSessionDataTask *task, id responseObject) {
+        block(YES);
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        block(NO);
+    }];
+}
+
 @end

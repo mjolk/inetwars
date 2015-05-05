@@ -9,7 +9,7 @@
 #import "InviteController.h"
 #import "Player.h"
 #import "Invite.h"
-#import "ClanCreateCell.h"
+#import "CreateClanCell.h"
 #import "Clan.h"
 #import "UIAlertView+AFNetworking.h"
 
@@ -40,7 +40,7 @@
 	// self.navigationItem.rightBarButtonItem = self.editButtonItem;
     [self.navigationController setNavigationBarHidden:NO];
 
-	[self.tableView registerClass:[ClanCreateCell class] forCellReuseIdentifier:@"ClanInputCell"];
+	[self.tableView registerClass:[CreateClanCell class] forCellReuseIdentifier:@"ClanInputCell"];
 	[self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"RegularCell"];
 
 	[self loadInvites];
@@ -75,7 +75,7 @@
 	static NSString *btnCell = @"RegularCell";
 	static NSString *inputCell = @"ClanInputCell";
 	if (indexPath.row == 0) {
-		ClanCreateCell *input = [tableView dequeueReusableCellWithIdentifier:inputCell forIndexPath:indexPath];
+		CreateClanCell *input = [tableView dequeueReusableCellWithIdentifier:inputCell forIndexPath:indexPath];
 		input.name.delegate = self;
 		input.name.tag = 0;
 		input.clanTag.delegate = self;

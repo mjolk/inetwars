@@ -139,11 +139,13 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 	// Return the number of sections.
+    NSLog(@"numberofsections %@", self.filteredPrograms);
 	return [self.filteredPrograms count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	// Return the number of rows in the section.
+    NSLog(@"numberofrowsinsections %@", self.filteredPrograms);
 	return [[[self.filteredPrograms objectAtIndex:section] programs] count];
 }
 

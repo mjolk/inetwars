@@ -67,7 +67,7 @@
 		06FAFFF317F1F2B3005E2362 /* activememory_22@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 06FAFFE617F1F2B3005E2362 /* activememory_22@2x.png */; };
 		06FAFFF417F1F2B3005E2362 /* bandwidth_22@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 06FAFFE717F1F2B3005E2362 /* bandwidth_22@2x.png */; };
 		06FAFFF517F1F2B3005E2362 /* cyclesicon_22@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 06FAFFE817F1F2B3005E2362 /* cyclesicon_22@2x.png */; };
-		06FC36891ADB17FF008A0243 /* ClanCreateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 06FC36881ADB17FF008A0243 /* ClanCreateCell.m */; };
+		06FC36891ADB17FF008A0243 /* CreateClanCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 06FC36881ADB17FF008A0243 /* CreateClanCell.m */; };
 		06FEE46E17E9DD52001BDAE7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06FEE46D17E9DD52001BDAE7 /* QuartzCore.framework */; };
 		30068B531839887C00F97462 /* InviteController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30068B521839887C00F97462 /* InviteController.m */; };
 		3011AB3517E52D1E00B45374 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3011AB3417E52D1E00B45374 /* UIKit.framework */; };
@@ -91,8 +91,9 @@
 		303465451ABDFF4A002F9510 /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 303465441ABDFF4A002F9510 /* Launch Screen.xib */; };
 		305761891AC03DA800044038 /* TrackerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 305761881AC03DA800044038 /* TrackerCell.m */; };
 		3057618D1AC1A17200044038 /* Common.m in Sources */ = {isa = PBXBuildFile; fileRef = 3057618C1AC1A17200044038 /* Common.m */; };
+		306828291AEFACAD00866DDF /* LoginCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 306828281AEFACAD00866DDF /* LoginCell.m */; };
 		306B8DEF17E817DE00F7C24D /* Player.m in Sources */ = {isa = PBXBuildFile; fileRef = 306B8DEE17E817DE00F7C24D /* Player.m */; };
-		306B8DF217E86B5500F7C24D /* LoginCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 306B8DF117E86B5500F7C24D /* LoginCell.m */; };
+		306B8DF217E86B5500F7C24D /* CreatePlayerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 306B8DF117E86B5500F7C24D /* CreatePlayerCell.m */; };
 		307D16BB183D161C00ED7E7E /* Invite.m in Sources */ = {isa = PBXBuildFile; fileRef = 307D16BA183D161C00ED7E7E /* Invite.m */; };
 		309C525B1AC4A3B00011C014 /* DetailTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 309C525A1AC4A3B00011C014 /* DetailTextCell.m */; };
 		30DAB74E183D6201004F4D9D /* Clan.m in Sources */ = {isa = PBXBuildFile; fileRef = 30DAB74D183D6201004F4D9D /* Clan.m */; };
@@ -196,8 +197,8 @@
 		06FAFFE617F1F2B3005E2362 /* activememory_22@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "activememory_22@2x.png"; sourceTree = "<group>"; };
 		06FAFFE717F1F2B3005E2362 /* bandwidth_22@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bandwidth_22@2x.png"; sourceTree = "<group>"; };
 		06FAFFE817F1F2B3005E2362 /* cyclesicon_22@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cyclesicon_22@2x.png"; sourceTree = "<group>"; };
-		06FC36871ADB17FF008A0243 /* ClanCreateCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClanCreateCell.h; sourceTree = "<group>"; };
-		06FC36881ADB17FF008A0243 /* ClanCreateCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClanCreateCell.m; sourceTree = "<group>"; };
+		06FC36871ADB17FF008A0243 /* CreateClanCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateClanCell.h; sourceTree = "<group>"; };
+		06FC36881ADB17FF008A0243 /* CreateClanCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateClanCell.m; sourceTree = "<group>"; };
 		06FEE46D17E9DD52001BDAE7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		30068B511839887C00F97462 /* InviteController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InviteController.h; sourceTree = "<group>"; };
 		30068B521839887C00F97462 /* InviteController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InviteController.m; sourceTree = "<group>"; };
@@ -231,10 +232,12 @@
 		305761881AC03DA800044038 /* TrackerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackerCell.m; sourceTree = "<group>"; };
 		3057618B1AC1A17200044038 /* Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Common.h; sourceTree = "<group>"; };
 		3057618C1AC1A17200044038 /* Common.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Common.m; sourceTree = "<group>"; };
+		306828271AEFACAD00866DDF /* LoginCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginCell.h; sourceTree = "<group>"; };
+		306828281AEFACAD00866DDF /* LoginCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginCell.m; sourceTree = "<group>"; };
 		306B8DED17E817DE00F7C24D /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
 		306B8DEE17E817DE00F7C24D /* Player.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Player.m; sourceTree = "<group>"; };
-		306B8DF017E86B5500F7C24D /* LoginCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginCell.h; sourceTree = "<group>"; };
-		306B8DF117E86B5500F7C24D /* LoginCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginCell.m; sourceTree = "<group>"; };
+		306B8DF017E86B5500F7C24D /* CreatePlayerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreatePlayerCell.h; sourceTree = "<group>"; };
+		306B8DF117E86B5500F7C24D /* CreatePlayerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreatePlayerCell.m; sourceTree = "<group>"; };
 		307D16B9183D161C00ED7E7E /* Invite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Invite.h; sourceTree = "<group>"; };
 		307D16BA183D161C00ED7E7E /* Invite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Invite.m; sourceTree = "<group>"; };
 		309C52591AC4A3AF0011C014 /* DetailTextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailTextCell.h; sourceTree = "<group>"; };
@@ -451,8 +454,8 @@
 			isa = PBXGroup;
 			children = (
 				303465441ABDFF4A002F9510 /* Launch Screen.xib */,
-				306B8DF017E86B5500F7C24D /* LoginCell.h */,
-				306B8DF117E86B5500F7C24D /* LoginCell.m */,
+				306B8DF017E86B5500F7C24D /* CreatePlayerCell.h */,
+				306B8DF117E86B5500F7C24D /* CreatePlayerCell.m */,
 				065E8CEF17E9AFEB004D2276 /* HUDCell.h */,
 				065E8CF017E9AFEB004D2276 /* HUDCell.m */,
 				06DED8B517ECA5CA0067EAC5 /* NavCell.h */,
@@ -483,10 +486,12 @@
 				3057618C1AC1A17200044038 /* Common.m */,
 				309C52591AC4A3AF0011C014 /* DetailTextCell.h */,
 				309C525A1AC4A3B00011C014 /* DetailTextCell.m */,
-				06FC36871ADB17FF008A0243 /* ClanCreateCell.h */,
-				06FC36881ADB17FF008A0243 /* ClanCreateCell.m */,
+				06FC36871ADB17FF008A0243 /* CreateClanCell.h */,
+				06FC36881ADB17FF008A0243 /* CreateClanCell.m */,
 				30E822C61ADC2D2800549E95 /* ClanCell.h */,
 				30E822C71ADC2D2800549E95 /* ClanCell.m */,
+				306828271AEFACAD00866DDF /* LoginCell.h */,
+				306828281AEFACAD00866DDF /* LoginCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -711,14 +716,15 @@
 				3011ABAD17E54DF600B45374 /* PlayerController.m in Sources */,
 				06AC8B5C17FB4B5800FD7A1A /* Attack.m in Sources */,
 				306B8DEF17E817DE00F7C24D /* Player.m in Sources */,
-				306B8DF217E86B5500F7C24D /* LoginCell.m in Sources */,
+				306B8DF217E86B5500F7C24D /* CreatePlayerCell.m in Sources */,
 				06AC8B4B17F9948600FD7A1A /* PlayerCell.m in Sources */,
-				06FC36891ADB17FF008A0243 /* ClanCreateCell.m in Sources */,
+				06FC36891ADB17FF008A0243 /* CreateClanCell.m in Sources */,
 				06B714891801DEC000B977A1 /* PickerCell.m in Sources */,
 				06AC8B5917FB4AC200FD7A1A /* AttackController.m in Sources */,
 				30F872A51835201D00EC7308 /* JSONResponseSerializerWithErrorData.m in Sources */,
 				06AC8B5617FA056200FD7A1A /* Event.m in Sources */,
 				307D16BB183D161C00ED7E7E /* Invite.m in Sources */,
+				306828291AEFACAD00866DDF /* LoginCell.m in Sources */,
 				065E8CE617E99172004D2276 /* PlayerStateController.m in Sources */,
 				30DAB74E183D6201004F4D9D /* Clan.m in Sources */,
 				06AC8B5017FA04F500FD7A1A /* EventController.m in Sources */,

@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 typedef void (^PlayerInvites)(NSMutableArray *invites);
+typedef void (^PlayerJoin)(BOOL);
 
 @interface Invite : NSObject
 
@@ -20,5 +21,6 @@ typedef void (^PlayerInvites)(NSMutableArray *invites);
 
 - (id)initWithValues:(NSDictionary *)values;
 + (NSURLSessionDataTask *)invites:(PlayerInvites)block;
+- (NSURLSessionDataTask *)join:(PlayerJoin)block;
 
 @end

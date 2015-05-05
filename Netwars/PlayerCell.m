@@ -16,7 +16,7 @@
 	self = [super initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseIdentifier];
 	if (self) {
 		// Initialization code
-		self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+		//self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 		self.imageView.translatesAutoresizingMaskIntoConstraints = NO;
 		[self.imageView autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
 		[self.imageView autoSetDimension:ALDimensionWidth toSize:32.f];

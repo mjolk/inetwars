@@ -13,7 +13,6 @@
 
 typedef void (^PlayerCreate)(NSDictionary *errors);
 typedef void (^PlayerState)(BOOL);
-typedef void (^PlayerProfile)(BOOL);
 typedef void (^PlayerList)(NSMutableArray *players, NSString *cursor);
 
 @interface PlayerTracker : NSObject
@@ -53,7 +52,9 @@ typedef void (^PlayerList)(NSMutableArray *players, NSString *cursor);
 + (id)sharedPlayer;
 + (NSURLSessionDataTask *)create:(NSString *)n email:(NSString *)e password:(NSString *)pw callback:(PlayerCreate)block;
 - (NSURLSessionDataTask *)state:(PlayerState)block;
+- (NSURLSessionDataTask *)invite:(PlayerState)block;
 + (NSURLSessionDataTask *)list:(uint)rnge cursor:(NSString *)c callback:(PlayerList)block;
++ (NSURLSessionDataTask *)login:(NSString *)email password:(NSString *) pw callback:(PlayerState)block;
 - (id)initWithDefaults;
 - (void)update:(NSDictionary *)values;
 - (id)initForPublic:(NSDictionary *)values;

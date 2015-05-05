@@ -44,6 +44,7 @@
 	for (i = 0; i < 3; i++) {
 		EffectorView *effectView = [[self.effectsView subviews] objectAtIndex:i];
 		NSString *tpe;
+        NSLog(@"effectors---- %@", program.effectors);
 		int len = (int)[program.effectors count];
 		if (i < len) {
 			tpe = [program.effectors[i] substringToIndex:2];

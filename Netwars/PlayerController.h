@@ -19,6 +19,9 @@
 @property (nonatomic, strong) NSString *email;
 @property (nonatomic, strong) NSString *nick;
 @property (nonatomic, strong) NSString *password;
+@property (nonatomic, assign) BOOL create;
 @property (nonatomic, weak) id <PlayerDelegate> delegate;
+
+-(id) initForCreate:(BOOL) tpe;
 
 @end

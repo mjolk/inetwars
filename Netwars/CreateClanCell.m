@@ -6,9 +6,9 @@
 //  Copyright (c) 2015 mjolk. All rights reserved.
 //
 
-#import "ClanCreateCell.h"
+#import "CreateClanCell.h"
 
-@implementation ClanCreateCell
+@implementation CreateClanCell
 
 - (void)awakeFromNib {
     // Initialization code

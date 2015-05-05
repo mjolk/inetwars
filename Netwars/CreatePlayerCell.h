@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LoginCell : UITableViewCell
+@interface CreatePlayerCell : UITableViewCell
 
+@property (nonatomic, weak) UITextField *nick;
 @property (nonatomic, weak) UITextField *email;
 @property (nonatomic, weak) UITextField *password;
 @property (nonatomic, assign) BOOL didSetupConstraints;

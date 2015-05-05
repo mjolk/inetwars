@@ -146,15 +146,29 @@
 
 + (NSURLSessionDataTask *)create:(NSString *)n email:(NSString *)e password:(NSString *)pw callback:(PlayerCreate)block {
 	__weak Player *weakPlayer = [Player sharedPlayer];
-	AFNetClient *client = [AFNetClient shared];
-	[client setRequestSerializer:[[AFJSONRequestSerializer alloc] init]];
+	AFNetClient *client = [AFNetClient authPOST];
 	return [client PUT:@"players/" parameters:@{ @"nick":n, @"email":e, @"pwd":pw } success: ^(NSURLSessionDataTask *task, id responseObject) {
 	    weakPlayer.playerKey = [responseObject objectForKey:@"result"];
 	    weakPlayer.authenticated = YES;
 	    block(nil);
 	} failure: ^(NSURLSessionDataTask *task, NSError *error) {
 	    //errors
+        NSLog(@"create player error %@", error);
 	}];
+}
+
++ (NSURLSessionDataTask *)login:(NSString *)email password:(NSString *) pw callback:(PlayerState)block {
+    __weak Player *weakPlayer = [Player sharedPlayer];
+    AFNetClient *client = [AFNetClient authPOST];
+    return [client POST:@"players/login/" parameters:@{@"email":email, @"pwd":pw } success: ^(NSURLSessionDataTask *task, id responseObject) {
+        weakPlayer.playerKey = [responseObject objectForKey:@"result"];
+        weakPlayer.authenticated = YES;
+        block(nil);
+    } failure: ^(NSURLSessionDataTask *task, NSError *error) {
+        //errors
+        NSLog(@"login error %@", error);
+    }];
+    
 }
 
 - (NSURLSessionDataTask *)state:(PlayerState)block {
@@ -163,15 +177,14 @@
 	    NSLog(@"response: %@", responseObject);
 	    [wPlayer update:[responseObject objectForKey:@"result"]];
 	    block(NO);
-	}
-	                          failure   : ^(NSURLSessionDataTask *task, NSError *error) {
+	} failure   : ^(NSURLSessionDataTask *task, NSError *error) {
 	    //send error message
 	    block(YES);
 	}];
 }
 
 + (NSURLSessionDataTask *)list:(uint)rnge cursor:(NSString *)c callback:(PlayerList)block {
-	NSString *path = [NSString stringWithFormat:@"players/list/%d/", rnge];
+	NSString *path = [NSString stringWithFormat:@"players/lists/%d/", rnge];
 	if (c.length > 0) {
 		path = [NSString stringWithFormat:@"%@/%@/", path, c];
 	}
@@ -188,6 +201,16 @@
 	} failure: ^(NSURLSessionDataTask *task, NSError *error) {
 	    //error
 	}];
+}
+
+- (NSURLSessionDataTask *)invite:(PlayerState)block {
+    return [[AFNetClient authPOST] PUT:@"clans/invitations/" parameters:@{@"id": [[NSNumber alloc] initWithUnsignedInteger:self.ID]} success: ^(NSURLSessionDataTask *task, id responseObject) {
+        NSLog(@"response: %@", responseObject);
+        block(NO);
+    } failure   : ^(NSURLSessionDataTask *task, NSError *error) {
+        //send error message
+        block(YES);
+    }];
 }
 
 @end
