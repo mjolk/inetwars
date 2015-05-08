@@ -11,7 +11,7 @@
 #import "Player.h"
 
 static NSString *const kAFAppNetwarsAPIBaseURLTestString = @"http://localhost:8080/";
-static NSString *const kAFAppNetwarsAPIBaseURLString = @"http://n3twars.appspot.com/";
+static NSString *const kAFAppNetwarsAPIBaseURLString = @"https://n3twars.appspot.com/";
 
 @implementation AFNetClient
 
@@ -19,9 +19,9 @@ static NSString *const kAFAppNetwarsAPIBaseURLString = @"http://n3twars.appspot.
 	static AFNetClient *_sharedClient = nil;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		_sharedClient = [[AFNetClient alloc] initWithBaseURL:[NSURL URLWithString:kAFAppNetwarsAPIBaseURLTestString]];
-        _sharedClient.postSerializer = [[AFJSONRequestSerializer alloc] init];
-        _sharedClient.getSerializer = [[AFHTTPRequestSerializer alloc] init];
+		_sharedClient = [[AFNetClient alloc] initWithBaseURL:[NSURL URLWithString:kAFAppNetwarsAPIBaseURLString]];
+		_sharedClient.postSerializer = [[AFJSONRequestSerializer alloc] init];
+		_sharedClient.getSerializer = [[AFHTTPRequestSerializer alloc] init];
 	});
 
 	return _sharedClient;

@@ -53,7 +53,7 @@
 		else {
 			self.authenticated = YES;
 			self.playerKey = playerKey;
-            self.clanMember = NO;
+			self.clanMember = NO;
 		}
 	}
 
@@ -130,11 +130,11 @@
 	self.memory = [[player objectForKey:@"mem"] integerValue];
 	self.cycles = [[player objectForKey:@"cycles"]integerValue];
 	self.activeMemory = [[player objectForKey:@"active_mem"] integerValue];
-    self.clan = [player objectForKey:@"clan_member"];
-    if (self.clan.length > 0) {
-        self.clanMember = YES;
-    }
-    NSLog(@"clan member : %@", self.clan);
+	self.clan = [player objectForKey:@"clan_member"];
+	if (self.clan.length > 0) {
+		self.clanMember = YES;
+	}
+	NSLog(@"clan member : %@", self.clan);
 	[self updateClan:player];
 	self.tracker = [[PlayerTracker alloc] initWithValues:[player objectForKey:@"tracker"]];
 	NSArray *pGroups = [player objectForKey:@"programs"];
@@ -148,27 +148,27 @@
 	__weak Player *weakPlayer = [Player sharedPlayer];
 	AFNetClient *client = [AFNetClient authPOST];
 	return [client PUT:@"players/" parameters:@{ @"nick":n, @"email":e, @"pwd":pw } success: ^(NSURLSessionDataTask *task, id responseObject) {
+	    NSLog(@"create player response: %@", responseObject);
 	    weakPlayer.playerKey = [responseObject objectForKey:@"result"];
 	    weakPlayer.authenticated = YES;
 	    block(nil);
 	} failure: ^(NSURLSessionDataTask *task, NSError *error) {
 	    //errors
-        NSLog(@"create player error %@", error);
+	    NSLog(@"create player error %@", error);
 	}];
 }
 
-+ (NSURLSessionDataTask *)login:(NSString *)email password:(NSString *) pw callback:(PlayerState)block {
-    __weak Player *weakPlayer = [Player sharedPlayer];
-    AFNetClient *client = [AFNetClient authPOST];
-    return [client POST:@"players/login/" parameters:@{@"email":email, @"pwd":pw } success: ^(NSURLSessionDataTask *task, id responseObject) {
-        weakPlayer.playerKey = [responseObject objectForKey:@"result"];
-        weakPlayer.authenticated = YES;
-        block(nil);
-    } failure: ^(NSURLSessionDataTask *task, NSError *error) {
-        //errors
-        NSLog(@"login error %@", error);
-    }];
-    
++ (NSURLSessionDataTask *)login:(NSString *)email password:(NSString *)pw callback:(PlayerState)block {
+	__weak Player *weakPlayer = [Player sharedPlayer];
+	AFNetClient *client = [AFNetClient authPOST];
+	return [client POST:@"players/login/" parameters:@{ @"email":email, @"pwd":pw } success: ^(NSURLSessionDataTask *task, id responseObject) {
+	    weakPlayer.playerKey = [responseObject objectForKey:@"result"];
+	    weakPlayer.authenticated = YES;
+	    block(nil);
+	} failure: ^(NSURLSessionDataTask *task, NSError *error) {
+	    //errors
+	    NSLog(@"login error %@", error);
+	}];
 }
 
 - (NSURLSessionDataTask *)state:(PlayerState)block {
@@ -177,7 +177,7 @@
 	    NSLog(@"response: %@", responseObject);
 	    [wPlayer update:[responseObject objectForKey:@"result"]];
 	    block(NO);
-	} failure   : ^(NSURLSessionDataTask *task, NSError *error) {
+	} failure: ^(NSURLSessionDataTask *task, NSError *error) {
 	    //send error message
 	    block(YES);
 	}];
@@ -204,13 +204,13 @@
 }
 
 - (NSURLSessionDataTask *)invite:(PlayerState)block {
-    return [[AFNetClient authPOST] PUT:@"clans/invitations/" parameters:@{@"id": [[NSNumber alloc] initWithUnsignedInteger:self.ID]} success: ^(NSURLSessionDataTask *task, id responseObject) {
-        NSLog(@"response: %@", responseObject);
-        block(NO);
-    } failure   : ^(NSURLSessionDataTask *task, NSError *error) {
-        //send error message
-        block(YES);
-    }];
+	return [[AFNetClient authPOST] PUT:@"clans/invitations/" parameters:@{ @"id": [[NSNumber alloc] initWithUnsignedInteger:self.ID] } success: ^(NSURLSessionDataTask *task, id responseObject) {
+	    NSLog(@"response: %@", responseObject);
+	    block(NO);
+	} failure: ^(NSURLSessionDataTask *task, NSError *error) {
+	    //send error message
+	    block(YES);
+	}];
 }
 
 @end
