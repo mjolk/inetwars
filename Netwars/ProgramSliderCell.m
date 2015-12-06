@@ -15,20 +15,13 @@
 	self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
 	if (self) {
 		// Initialization code
-
 		UILabel *amountLabel = [[UILabel alloc] initForAutoLayout];
 		[self.contentView addSubview:amountLabel];
 		self.amountLabel = amountLabel;
 		amountLabel.font = [UIFont systemFontOfSize:26.f];
-		[amountLabel autoSetDimension:ALDimensionWidth toSize:44.f];
-		[amountLabel autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
-		[amountLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.contentView withOffset:20.f];
-		[self positionSlider:amountLabel];
 		UILabel *progLabel = [[UILabel alloc] initForAutoLayout];
 		[self.contentView addSubview:progLabel];
 		self.programName = progLabel;
-		[progLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.contentView withOffset:5.f];
-		[progLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.slider withOffset:-10.f];
 		[self.slider addTarget:self action:@selector(sliderChange:) forControlEvents:UIControlEventValueChanged];
 	}
 	return self;
@@ -48,13 +41,19 @@
 	[self.slider setMinimumValue:0.f];
 }
 
-/*
-   // Only override drawRect: if you perform custom drawing.
-   // An empty implementation adversely affects performance during animation.
-   - (void)drawRect:(CGRect)rect
-   {
-    // Drawing code
-   }
- */
-
+- (void)updateConstraints {
+    if (!self.didSetupConstraints) {
+        self.didSetupConstraints = YES;
+        [self.amountLabel autoSetDimension:ALDimensionWidth toSize:44.f];
+        [self.amountLabel autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
+        [self.amountLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.contentView withOffset:20.f];
+        [self.slider autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.amountLabel withOffset:10.f];
+        [self.slider autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.amountLabel withOffset:10.f];
+        [self.slider autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.contentView withOffset:-10.f];
+        [self.programName autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.contentView withOffset:5.f];
+        [self.programName autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.slider withOffset:-10.f];
+    }
+    
+    [super updateConstraints];
+}
 @end

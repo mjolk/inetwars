@@ -44,7 +44,8 @@
 	n.textAlignment = NSTextAlignmentCenter;
 	n.clearButtonMode = UITextFieldViewModeWhileEditing;
 	n.borderStyle = UITextBorderStyleNone;
-	n.font = [UIFont systemFontOfSize:12.0f];
+	n.font = [UIFont systemFontOfSize:16.0f];
+    //[n sizeToFit];
 	return n;
 }
 
@@ -57,7 +58,7 @@
 		[self.nick autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.contentView];
 		[self.password autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.contentView];
 		[self.password autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.contentView];
-		[self.contentView.subviews autoDistributeViewsAlongAxis:ALAxisVertical alignedTo:ALAttributeVertical withFixedSpacing:32.0f];
+		[self.contentView.subviews autoDistributeViewsAlongAxis:ALAxisVertical alignedTo:ALAttributeVertical withFixedSize:24];
 	}
 	[super updateConstraints];
 }

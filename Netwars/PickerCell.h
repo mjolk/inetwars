@@ -12,5 +12,6 @@
 
 @property (nonatomic, weak) UIPickerView *picker;
 @property (nonatomic, weak) UITextField *typeField;
+@property(nonatomic, assign) BOOL didSetupConstraints;
 
 @end

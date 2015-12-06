@@ -11,6 +11,7 @@
 @interface Common : NSObject
 
 + (UILabel *)createLabel:(UIView *)container text:(NSString *)content fontSize:(CGFloat)size;
++ (UILabel *)createLabel:(UIView *)container fontSize:(CGFloat)size;
 + (UIImageView *)createIcon:(NSString *)path;
 
 @end

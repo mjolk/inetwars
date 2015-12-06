@@ -14,7 +14,7 @@
 #import "PgHeader.h"
 #import "UIActivityIndicatorView+AFNetworking.h"
 #import "UIAlertView+AFNetworking.h"
-#import "LookupController.h"
+#import "PlayerController.h"
 #import "EventController.h"
 #import "DACircularProgressView.h"
 #import "Program.h"
@@ -221,34 +221,34 @@
 #pragma mark - Menu delegate
 
 - (void)showPrograms {
-	ProgramController *programController = [[ProgramController alloc] initWithStyle:UITableViewStylePlain];
-	// ...
-	// Pass the selected object to the new view controller.
-	[self.navigationController pushViewController:programController animated:YES];
+    if ([self programController] == nil) {
+        [self setProgramController:[[ProgramController alloc] initWithStyle:UITableViewStylePlain]];
+    }
+	[self.navigationController pushViewController:[self programController] animated:YES];
 }
 
 - (void)showPlayers {
-	LookupController *lookupController = [[LookupController alloc] initWithStyle:UITableViewStylePlain];
-	// ...
-	// Pass the selected object to the new view controller.
-	[self.navigationController pushViewController:lookupController animated:YES];
+    if ([self playerController] == nil) {
+        [self setPlayerController:[[PlayerController alloc] initWithStyle:UITableViewStylePlain]];
+    }
+	[self.navigationController pushViewController:[self playerController] animated:YES];
 }
 
 - (void)showMessages {
 }
 
 - (void)showLocals {
-	EventController *eventController = [[EventController alloc] initForEventType:@"local"];
-	// ...
-	// Pass the selected object to the new view controller.
-	[self.navigationController pushViewController:eventController animated:YES];
+    if ([self localEventController] == nil) {
+        [self setLocalEventController:[[EventController alloc] initForEventType:@"local"]];
+    }
+	[self.navigationController pushViewController:[self localEventController] animated:YES];
 }
 
 - (void)showGlobals {
-	EventController *eventController = [[EventController alloc] initForEventType:@"global"];
-	// ...
-	// Pass the selected object to the new view controller.
-	[self.navigationController pushViewController:eventController animated:YES];
+    if([self globalEventController] == nil) {
+        [self setGlobalEventController:[[EventController alloc] initForEventType:@"global"]];
+    }
+	[self.navigationController pushViewController:[self globalEventController] animated:YES];
 }
 
 - (void)showClan {
@@ -259,17 +259,16 @@
 		[self.navigationController pushViewController:invite animated:YES];
 	}
 	else {
-		ClanController *clanController = [[ClanController alloc] initWithStyle:UITableViewStylePlain];
-		// ...
-		// Pass the selected object to the new view controller.
-		[self.navigationController pushViewController:clanController animated:YES];
+        if ([self clanController] == nil) {
+            [self setClanController:[[ClanController alloc]initWithStyle:UITableViewStylePlain]];
+        }
+		[self.navigationController pushViewController:[self clanController] animated:YES];
 	}
 }
 
 - (void)clanCreated:(InviteController *)controller {
     [self.navigationController popViewControllerAnimated:NO];
-    ClanController *clanController = [[ClanController alloc] initWithStyle:UITableViewStylePlain];
-    [self.navigationController pushViewController:clanController animated:YES];
+    [self showClan];
 }
 
 /*

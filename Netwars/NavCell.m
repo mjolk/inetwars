@@ -7,6 +7,7 @@
 //
 
 #import "NavCell.h"
+#import <math.h>
 
 @interface NavCell ()
 
@@ -61,7 +62,8 @@
 			[btn autoSetDimension:ALDimensionHeight toSize:60.0f];
 			[btn autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.scroller];
 		}
-		[[self.scroller subviews] autoDistributeViewsAlongAxis:ALAxisHorizontal alignedTo:ALAttributeHorizontal withFixedSpacing:44.0f insetSpacing:NO];
+        CGFloat spacing = (self.contentView.bounds.size.width - 240.0f)/3;
+		[[self.scroller subviews] autoDistributeViewsAlongAxis:ALAxisHorizontal alignedTo:ALAttributeHorizontal withFixedSpacing:spacing insetSpacing:NO];
 		[self.scroller autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.contentView];
 		[self.scroller autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.contentView];
 		[self.scroller autoSetDimension:ALDimensionHeight toSize:self.contentView.bounds.size.height];

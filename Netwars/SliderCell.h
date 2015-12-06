@@ -11,7 +11,6 @@
 @interface SliderCell : UITableViewCell
 
 @property (nonatomic, weak) UISlider *slider;
-
-- (void)positionSlider:(UIView *)view;
+@property (nonatomic, assign) BOOL didSetupConstraints;
 
 @end

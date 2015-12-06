@@ -49,6 +49,8 @@ typedef void (^PlayerList)(NSMutableArray *players, NSString *cursor);
 @property (nonatomic, strong) NSString *memberType;
 @property (nonatomic, strong) PlayerTracker *tracker;
 
+
+-(BOOL) isEqualToPlayer:(Player *) player;
 + (id)sharedPlayer;
 + (NSURLSessionDataTask *)create:(NSString *)n email:(NSString *)e password:(NSString *)pw callback:(PlayerCreate)block;
 - (NSURLSessionDataTask *)state:(PlayerState)block;

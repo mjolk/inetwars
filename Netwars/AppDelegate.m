@@ -23,7 +23,7 @@
 		self.navController = [[UINavigationController alloc] initWithRootViewController:[[PlayerStateController alloc]initWithStyle:UITableViewStylePlain]];
 		[self.navController setNavigationBarHidden:YES];
 	} else {
-		PlayerController *login = [[PlayerController alloc] initForCreate:YES];
+		AuthController *login = [[AuthController alloc] initForCreate:YES];
 		self.navController = [[UINavigationController alloc] initWithRootViewController:login];
 		[self.navController setNavigationBarHidden:YES];
 		[login setDelegate:self];
@@ -38,7 +38,7 @@
 	return YES;
 }
 
-- (void)playerCreated:(PlayerController *)controller {
+- (void)playerCreated:(AuthController *)controller {
 	PlayerStateController *main = [[PlayerStateController alloc]initWithStyle:UITableViewStylePlain];
 	[self.navController setViewControllers:@[main] animated:YES];
 }

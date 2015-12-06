@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Player.h"
+#import "Clan.h"
 
 @class PlayerTracker;
 
@@ -14,13 +16,8 @@ typedef void (^EventList)(NSMutableArray *events, NSString *cursor);
 
 @interface Event : NSObject
 
-@property (nonatomic, strong) NSString *clan;
-@property (nonatomic, strong) NSString *clanName;
-@property (nonatomic, assign) NSUInteger clanId;
-@property (nonatomic, strong) NSString *playerName;
-@property (nonatomic, assign) NSUInteger playerId;
-@property (nonatomic, strong) NSString *targetName;
-@property (nonatomic, assign) NSUInteger targetId;
+@property (nonatomic, strong) Player *targetPlayer;
+@property (nonatomic, strong) Clan *targetClan;
 @property (nonatomic, strong) NSString *expires;
 @property (nonatomic, assign) CGFloat newBandwidthUsage;
 @property (nonatomic, strong) NSString *eventType;
@@ -40,7 +37,7 @@ typedef void (^EventList)(NSMutableArray *events, NSString *cursor);
 @property (nonatomic, assign) NSUInteger memory;
 @property (nonatomic, strong) NSString *action;
 @property (nonatomic, strong) NSDictionary *dict;
-@property (nonatomic, assign) BOOL win;
+@property (nonatomic, assign) BOOL result;
 
 - (id)initWithValues:(NSDictionary *)values;
 + (NSURLSessionDataTask *)list:(NSString *)tpe cursor:(NSString *)c callback:(EventList)block;

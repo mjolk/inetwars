@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PlayerController.h"
+#import "AuthController.h"
 
 @class PageController;
 
@@ -16,6 +16,6 @@
 @property (strong, nonatomic) UIWindow *window;
 @property (nonatomic, strong) UINavigationController *navController;
 
-- (void)playerCreated:(PlayerController *)controller;
+- (void)playerCreated:(AuthController *)controller;
 
 @end

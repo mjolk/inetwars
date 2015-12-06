@@ -15,305 +15,258 @@
 #import "Program.h"
 #import "Event.h"
 #import "UIAlertView+AFNetworking.h"
+#import "TableConfiguration.h"
+#import "CellConfiguration.h"
+#import "EventViewCell.h"
+
+@implementation Picker
+@end
+
+@implementation AttackButton
+@end
 
 
 @interface AttackController ()
 
-@property (nonatomic, strong) Attack *currentAttack;
-- (void)filterPrograms;
+- (void)filter;
 - (void)refreshPrograms;
+- (Attack *) currentAttack;
 
 @end
 
 @implementation AttackController
 
 
-- (id)initWithTarget:(Player *)target {
-	self = [super initWithStyle:UITableViewStylePlain];
-	if (self) {
-		// Custom initialization
-		self.target = target;
-		AttackType *atpe = [[AttackType alloc] initWithNameAndTypes:@"Balanced" intid:BAL types:@[@"Mutator", @"Swarm", @"d0s", @"Hunter/Killer"]];
-		AttackType *btpe = [[AttackType alloc] initWithNameAndTypes:@"Bandwidth" intid:BW types:@[@"d0s", @"Hunter/Killer"]];
-		AttackType *ctpe = [[AttackType alloc] initWithNameAndTypes:@"Memory" intid:MEM types:@[@"Mutator", @"Swarm"]];
-		AttackType *dtpe = [[AttackType alloc] initWithNameAndTypes:@"Ice" intid:AICE types:@[@"Ice"]];
-		AttackType *etpe = [[AttackType alloc] initWithNameAndTypes:@"Intelligence" intid:AINT types:@[@"Intelligence"]];
-		self.attackTypes = @[atpe, btpe, ctpe, dtpe, etpe];
-		self.selectedType = atpe;
-		//self.attacks = [[NSMutableArray alloc] initWithObjects:self.currentAttack, nil];
-		[self filterPrograms];
-	}
-	return self;
+- (id)initWithTarget:(Player *)target andIndex:(NSIndexPath *)vIndex
+{
+    self = [super init];
+    if (self) {
+        self.virtualIndex = vIndex;
+        NSLog(@"attack initialized on index: %lu", [vIndex row]);
+        self.target = target;
+        self.attackTypes = @[[[AttackType alloc] initWithName:@"Balanced"
+                                                       typeId:BAL
+                                                        types:@[@"Mutator", @"Swarm", @"d0s", @"Hunter/Killer"]],
+                             [[AttackType alloc] initWithName:@"Bandwidth"
+                                                       typeId:BW
+                                                        types:@[@"d0s", @"Hunter/Killer"]],
+                             [[AttackType alloc] initWithName:@"Memory"
+                                                       typeId:MEM
+                                                        types:@[@"Mutator", @"Swarm"]],
+                             [[AttackType alloc] initWithName:@"Ice"
+                                                       typeId:AICE
+                                                        types:@[@"Ice"]],
+                             [[AttackType alloc] initWithName:@"Intelligence"
+                                                       typeId:AINT
+                                                        types:@[@"Intelligence"]]];
+        self.selectedType = [self.attackTypes objectAtIndex:0];
+        //self.attacks = [[NSMutableArray alloc] initWithObjects:self.currentAttack, nil];
+        self.filterPrograms = [[NSMutableArray alloc] init];
+        __weak AttackController *control = self;
+        TableConfiguration *config = [[TableConfiguration alloc] initWithConfig:
+                                      @[[[CellConfiguration alloc] initWithConfig:
+                                         ^(Picker *item, PickerCell *cell){
+                                             cell.picker.delegate = control;
+                                             cell.picker.dataSource = control;
+                                             cell.typeField.text = control.selectedType.name;
+                                         } andIdentifier:@"PickerCell" forData:[[Picker alloc] init]],
+                                        [[CellConfiguration alloc] initWithConfig:
+                                         ^(Program *program, ProgramSliderCell *cell){
+                                             [cell setProgram:program];
+                                         } andIdentifier:@"ProgramSliderCell" forData:[[Program alloc] init]],
+                                        [[CellConfiguration alloc] initWithConfig:
+                                         ^(AttackButton *item, UITableViewCell *cell){
+                                             cell.textLabel.text = @"Attack";
+                                         } andIdentifier:@"NormalCell" forData:[[AttackButton alloc] init]],
+                                        [[CellConfiguration alloc] initWithConfig:
+                                         ^(Event *event, EventViewCell *cell) {
+                                             NSLog(@"event %@", event);
+                                             [cell load:event];
+                                         } andIdentifier:@"EventCell" forData:[[Event alloc] init]]
+                                        ] forIndex:vIndex];
+        [self setConfig:config];
+        
+    }
+    return self;
 }
 
-- (void)emptySectionAtIndex:(NSInteger)aSectionIndex
-              withAnimation:(UITableViewRowAnimation)animation {
-	if (aSectionIndex >= [self.viewPrograms count] + 1) {
-		return;
-	}
-
-	NSMutableArray *indexPaths = [NSMutableArray array];
-	int i;
-	NSUInteger count = [[[self.viewPrograms objectAtIndex:aSectionIndex - 1] programs] count];
-	for (i = 0; i < count; i++) {
-		[indexPaths addObject:[NSIndexPath indexPathForRow:i inSection:aSectionIndex]];
-	}
-
-	[[[self.viewPrograms objectAtIndex:aSectionIndex - 1] programs] removeAllObjects];
-
-	if (count) {
-		NSLog(@"delete rows");
-		[self.tableView
-		 deleteRowsAtIndexPaths:indexPaths
-		       withRowAnimation:animation];
-	}
+- (Attack *) currentAttack
+{
+    return [self.attacks objectAtIndex:[self.attacks count]];
 }
 
-- (void)refreshPrograms {
-	[self.tableView reloadData];
-	NSUInteger len = [self.viewPrograms count];
-	for (int r = 0; r < len; r++) {
-		NSLog(@"empty section: %d", r);
-		[self emptySectionAtIndex:r + 1 withAnimation:UITableViewRowAnimationNone];
-	}
-	for (int i = 0; i < len; i++) {
-		NSLog(@"insert program");
-		NSUInteger plen = [[[self.filteredPrograms objectAtIndex:i] programs] count];
-		NSLog(@"insert program plen %lu", (unsigned long)plen);
-		for (int j = 0; j < plen; j++) {
-			[[[self.viewPrograms objectAtIndex:i] programs] addObject:[[[[self.filteredPrograms objectAtIndex:i] programs] objectAtIndex:j] copy]];
-			[self.tableView insertRowsAtIndexPaths:
-			 [NSArray arrayWithObject:
-			  [NSIndexPath
-			   indexPathForRow:j
-			         inSection:i + 1]]
-			                      withRowAnimation:UITableViewRowAnimationTop];
-		}
-	}
-
-
-	//self.filteredPrograms = [[Player sharedPlayer] programs] filter
+- (NSUInteger) endIndex
+{
+    return [self.virtualIndex row] + ([self.filterPrograms count] + 2) + [self.attacks count];
 }
 
-- (void)filterPrograms {
-	NSLog(@"filterprograms");
-	NSPredicate *pred = [NSPredicate predicateWithFormat:@"ptype IN $NAME_LIST and programs[SIZE] > 0"];
-	NSArray *filtered = [[[Player sharedPlayer] programs] filteredArrayUsingPredicate:[pred predicateWithSubstitutionVariables:@{ @"NAME_LIST":self.selectedType.ptypes }]];
-	self.filteredPrograms = [NSMutableArray arrayWithArray:filtered];
-	self.viewPrograms = [[NSMutableArray alloc] init];
-	for (ProgramGroup *pg in self.filteredPrograms) {
-		NSLog(@"filtered group type : %@ , count: %lu \n", pg.ptype, (unsigned long)[pg.programs count]);
-		[self.viewPrograms addObject:[pg copy]];
-	}
-	for (ProgramGroup *pg in self.viewPrograms) {
-		NSLog(@"group type : %@ , count: %lu \n", pg.ptype, (unsigned long)[pg.programs count]);
-	}
+
+- (BOOL) indexInrange:(NSIndexPath *)idx
+{
+    if ([idx row] > [self.virtualIndex row] && [idx row] <= [self endIndex]) {
+        return YES;
+    }
+    return NO;
 }
 
-- (void)viewDidLoad {
-	[super viewDidLoad];
-
-	// Uncomment the following line to preserve selection between presentations.
-	// self.clearsSelectionOnViewWillAppear = NO;
-
-	// Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-	// self.navigationItem.rightBarButtonItem = self.editButtonItem;
-	[self.tableView registerClass:[PlayerCell class] forCellReuseIdentifier:@"PlayerCell"];
-	[self.tableView registerClass:[ProgramSliderCell class] forCellReuseIdentifier:@"ProgramSliderCell"];
-	[self.tableView registerClass:[PickerCell class] forCellReuseIdentifier:@"PickerCell"];
-	[self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"NormalCell"];
-	self.currentAttack = [[Attack alloc] initWithTargetAndType:self.target type:self.selectedType];
+- (void) trash
+{
+    [self removePrograms:UITableViewRowAnimationFade];
+    [self.config.dataSource removeObjectAtIndex:[self endIndex]];
+    [self.config.dataSource removeObjectAtIndex:([self.virtualIndex row] + 1)];
+    [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:[self endIndex] inSection:0],
+                                             [NSIndexPath indexPathForRow:([self.virtualIndex row] + 1) inSection:0]]
+                          withRowAnimation:UITableViewRowAnimationFade];
+    
 }
 
-- (void)didReceiveMemoryWarning {
-	[super didReceiveMemoryWarning];
-	// Dispose of any resources that can be recreated.
+- (NSUInteger) count
+{
+    return [self.attacks count] + ([self.filterPrograms count] + 2);
 }
 
-#pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-	// Return the number of sections.
-	return 2 + [self.viewPrograms count];
+
+- (void)removePrograms:(UITableViewRowAnimation)animation
+{
+    if ([self.filterPrograms count] > 0) {
+        NSMutableArray *indexPaths = [NSMutableArray array];
+        NSUInteger i = [self.virtualIndex row] + 2;
+        NSUInteger count = i + [self.filterPrograms count];
+        for (; i < count; i++) {
+            NSLog(@"delete rows at indexpaths %lu \n", i);
+            [indexPaths addObject:[NSIndexPath indexPathForRow:i inSection:0]];
+            [self.config.dataSource removeObjectAtIndex:i];
+        }
+        [self.filterPrograms removeAllObjects];
+        if (count) {
+            
+            [self.tableView
+             deleteRowsAtIndexPaths:indexPaths
+             withRowAnimation:animation];
+        }
+    }
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	// Return the number of rows in the section.
-	if (section == 0) {
-		return 2;
-	}
-	if (section == [self.viewPrograms count] + 1) {
-		return 1;
-	}
-	NSLog(@"indexpath section : %ld rowcount: %lu", (long)section, (unsigned long)[[[self.viewPrograms objectAtIndex:section - 1] programs]count]);
-	return [[[self.viewPrograms objectAtIndex:section - 1] programs]count];
+- (void) initViewPrograms:(NSMutableArray *)viewPrograms
+{
+    [self.config setDataSource:viewPrograms];
+    [self.config addItem:[[Picker alloc] init] atIndex:([self.virtualIndex row] + 1)];
+    [self.config addItem:[[AttackButton alloc] init] atIndex:[self endIndex]];
+    NSLog(@"insert controls at: %lu \n and at %lu", ([self.virtualIndex row] + 1), [self endIndex]);
+    [self.tableView insertRowsAtIndexPaths: @[[NSIndexPath indexPathForRow:([self.virtualIndex row] + 1) inSection:0],
+                                              [NSIndexPath indexPathForRow:([self.virtualIndex row] + 2) inSection:0]]
+                          withRowAnimation: UITableViewRowAnimationTop];
+    [self refreshPrograms];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-	static NSString *sliderCell = @"ProgramSliderCell";
-	static NSString *playerCell = @"PlayerCell";
-	static NSString *pickerCell = @"PickerCell";
-	static NSString *normalCell = @"NormalCell";
-	UITableViewCell *cell;
-	if (indexPath.section < 1) {
-		if (indexPath.row == 0) {
-			PlayerCell *pcell = [tableView dequeueReusableCellWithIdentifier:playerCell forIndexPath:indexPath];
-			[pcell setPlayer:self.target];
-			return pcell;
-		}
-		else if (indexPath.row == 1) {
-			PickerCell *picell = [tableView dequeueReusableCellWithIdentifier:pickerCell forIndexPath:indexPath];
-			picell.picker.delegate = self;
-			picell.picker.dataSource = self;
-			picell.typeField.text = self.currentAttack.type.name;
-			[picell.picker selectedRowInComponent:0];
-			return picell;
-		}
-	}
-	else if (indexPath.section < [self.viewPrograms count] + 1) {
-		NSLog(@"row: %ld \n", (long)indexPath.row);
-		if ([[[self.viewPrograms objectAtIndex:(indexPath.section - 1)] programs] count] > 0) {
-			ProgramSliderCell *pscell = [tableView dequeueReusableCellWithIdentifier:sliderCell forIndexPath:indexPath];
-			//  NSLog(@"pgroup : %@", [[[self.filteredPrograms objectAtIndex:(indexPath.section -1)] programs] objectAtIndex:indexPath.row]);
-			[pscell setProgram:[[[self.viewPrograms objectAtIndex:(indexPath.section - 1)] programs] objectAtIndex:indexPath.row]];
-			return pscell;
-		}
-	}
-
-	// Configure the cell...
-	cell = [tableView dequeueReusableCellWithIdentifier:normalCell forIndexPath:indexPath];
-	cell.textLabel.text = @"Attack";
-
-	return cell;
+- (void)refreshPrograms
+{
+    [self removePrograms: UITableViewRowAnimationFade];
+    [self filter];
+    if ([self.filterPrograms count] > 0) {
+        NSUInteger i = ([self.virtualIndex row] + 2);
+        NSUInteger count = (i + [self.filterPrograms count]);
+        for (; i < count; i++) {
+            NSUInteger j = i - ([self.virtualIndex row] + 2);
+            NSLog(@"program nr %lu \n from total cnt %lu \n index : %lu \n minus : %lu", j, [self.filterPrograms count], i, ([self.virtualIndex row] + 2));
+            [self.config addItem:[self.filterPrograms objectAtIndex:j] atIndex:i];
+            [self.tableView insertRowsAtIndexPaths:
+             [NSArray arrayWithObject:[NSIndexPath indexPathForRow:i
+                                                         inSection:0]]
+                                  withRowAnimation:UITableViewRowAnimationTop];
+        }
+    }
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-	if (indexPath.section == 0) {
-		switch (indexPath.row) {
-			case 0:
-				return 100.f;
-
-			case 1:
-				return 32.f;
-		}
-	}
-	else if (indexPath.section < [self.viewPrograms count] + 1) {
-		return 66.f;
-	}
-	return 44.0f;
+- (void)filter
+{
+    NSLog(@"filterprograms");
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"ptype IN $NAME_LIST and programs[SIZE] > 0"];
+    NSArray *filtered = [[[Player sharedPlayer] programs]
+                         filteredArrayUsingPredicate:
+                         [pred predicateWithSubstitutionVariables:@{ @"NAME_LIST":[self.selectedType ptypes] }]];
+    [self.filterPrograms removeAllObjects];
+    for (ProgramGroup *group in filtered) {
+        for (Program *program in [group programs]) {
+            [self.filterPrograms addObject:[program copy]];
+            
+        }
+    }
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSUInteger firstCell = ([self.virtualIndex row] + 1);
+    NSUInteger lastCell = [self.virtualIndex row] + ([self.config.dataSource count] + 2);
+    if (indexPath.row == firstCell) {
+        return 40.f;
+    } else if (indexPath.row > firstCell && indexPath.row < lastCell) {
+        return 66.f;
+    } else if (indexPath.row == lastCell) {
+        return 44.0f;
+    }
+    return 0;
+}
 #pragma mark - picker datasource
 
 // returns the number of 'columns' to display.
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
-	return 1;
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 1;
 }
 
 // returns the # of rows in each component..
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-	return [self.attackTypes count];
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    return [self.attackTypes count];
 }
 
 #pragma mark - picker delegate
 
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-	//selected attack type
-	NSLog(@"selcted row : %ld selected type= %@", (long)row, [self.attackTypes objectAtIndex:row]);
-	self.selectedType = [self.attackTypes objectAtIndex:row];
-	[self.currentAttack setType:self.selectedType];
-	[self.tableView endEditing:YES];
-	[self filterPrograms];
-	[self refreshPrograms];
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    //selected attack type
+    NSLog(@"selcted row : %ld selected type= %@", (long)row, [self.attackTypes objectAtIndex:row]);
+    self.selectedType = [self.attackTypes objectAtIndex:row];
+    [self.tableView endEditing:YES];
+    [self.tableView reloadData];
+    [self refreshPrograms];
 }
 
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-	return [[self.attackTypes objectAtIndex:row] name];
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    return [[self.attackTypes objectAtIndex:row] name];
 }
 
-/*
-   // Override to support conditional editing of the table view.
-   - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-   {
-   // Return NO if you do not want the specified item to be editable.
-   return YES;
-   }
- */
-
-/*
-   // Override to support editing the table view.
-   - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-   {
-   if (editingStyle == UITableViewCellEditingStyleDelete) {
-   // Delete the row from the data source
-   [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-   }
-   else if (editingStyle == UITableViewCellEditingStyleInsert) {
-   // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-   }
-   }
- */
-
-/*
-   // Override to support rearranging the table view.
-   - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-   {
-   }
- */
-
-/*
-   // Override to support conditional rearranging of the table view.
-   - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-   {
-   // Return NO if you do not want the item to be re-orderable.
-   return YES;
-   }
- */
-
-/*
-   #pragma mark - Navigation
-
-   // In a story board-based application, you will often want to do a little preparation before navigation
-   - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-   {
-   // Get the new view controller using [segue destinationViewController].
-   // Pass the selected object to the new view controller.
-   }*/
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	if (indexPath.section == [self.viewPrograms count] + 1) {
-		[self.currentAttack.programs removeAllObjects];
-		for (int i = 0; i < indexPath.section - 1; i++) {
-			NSUInteger progCount = [[[self.viewPrograms objectAtIndex:i] programs] count];
-			for (int j = 0; j < progCount; j++) {
-				NSIndexPath *indexPath = [NSIndexPath indexPathForRow:j inSection:i + 1];
-				ProgramSliderCell *cell = (ProgramSliderCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-				if (cell.slider.value > 0) {
-					Program *attackProgram = [[[self.viewPrograms objectAtIndex:i] programs] objectAtIndex:j];
-					attackProgram.amount = (int)cell.slider.value;
-					[self.currentAttack.programs addObject:attackProgram];
-				}
-			}
-		}
-		__weak Attack *catt = self.currentAttack;
-		NSURLSessionDataTask *task;
-		if ([[self.currentAttack programs] count] > 0) {
-			task = [self.currentAttack execute: ^(Event *attackEvent) {
-                if (!attackEvent) {
-                    return;
-                }
-			    catt.result = attackEvent;
-			    NSLog(@"attack event: %@", attackEvent.dict);
-			    NSString *win = @"lost";
-			    if (attackEvent.win) {
-			        win = @"win";
-				}
-			    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"attack event : %@", win] message:[NSString stringWithFormat:@"%@", attackEvent.dict] delegate:Nil cancelButtonTitle:@"ok" otherButtonTitles:nil];
-			    [alert show];
-			}];
-		}
-		[UIAlertView showAlertViewForTaskWithErrorOnCompletion:task delegate:nil];
-	}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row == [self endIndex]) {
+        Attack *attack = [[Attack alloc] initWithTargetAndType:self.target type:self.selectedType];
+        NSUInteger i = ([self.virtualIndex row] + 2);
+        for (; i < ([self endIndex] + [self.attacks count]); i++) {
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+            ProgramSliderCell *cell = (ProgramSliderCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+            if (cell.slider.value > 0) {
+                Program *attackProgram = [[self.config.dataSource objectAtIndex:i] dataItem];
+                attackProgram.amount = (int)cell.slider.value;
+                [attack.programs addObject:attackProgram];
+            }
+        }
+        __weak AttackController *catt = self;
+        NSURLSessionDataTask *task;
+        if ([[attack programs] count] > 0) {
+            task = [attack execute: ^(Event *attackEvent) {
+                NSLog(@"Attack Event: %@", attackEvent);
+                [catt.config addItem:attackEvent atIndex:([self endIndex] - 1)];
+                [self.attacks addObject:attack];
+                [self.tableView insertRowsAtIndexPaths:
+                 [NSArray arrayWithObject:[NSIndexPath indexPathForRow:([self endIndex] - 1)
+                                                             inSection:0]] withRowAnimation:UITableViewRowAnimationTop];
+            }];
+        }
+        [UIAlertView showAlertViewForTaskWithErrorOnCompletion:task delegate:nil];
+    }
 }
 
 @end

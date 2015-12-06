@@ -15,13 +15,12 @@
 	if (self) {
 		// Initialization code
 		UIPickerView *picker = [UIPickerView newAutoLayoutView];
+        //[self.contentView addSubview:picker];
 		self.picker = picker;
 		UITextField *typeField = [[UITextField alloc] initForAutoLayout];
 		[self.contentView addSubview:typeField];
 		self.typeField = typeField;
 		typeField.font = [UIFont systemFontOfSize:14.f];
-		[self.typeField autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.contentView withOffset:6.f];
-		[self.typeField autoAlignAxisToSuperviewAxis:ALAxisVertical];
 		self.typeField.inputView = picker;
 		// picker.backgroundColor = [UIColor greenColor];
 		// [picker autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.contentView];
@@ -34,6 +33,14 @@
 	[super setSelected:selected animated:animated];
 
 	// Configure the view for the selected state
+}
+
+- (void)updateConstraints {
+    if (!self.didSetupConstraints) {
+        [self.typeField autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.contentView withOffset:6.f];
+        [self.typeField autoAlignAxisToSuperviewAxis:ALAxisVertical];
+    }
+    [super updateConstraints];
 }
 
 @end

@@ -14,12 +14,12 @@
 @class Attack;
 
 typedef enum AttackTpe : NSUInteger {
-	BAL = MUT | HUK | DOS | SW,
-	MEM = MUT | HUK,
-	BW = DOS | SW,
-	AINT = INT,
-	AINF = INF,
-	AICE = ICE,
+    BAL = MUT | HUK | DOS | SW,
+    MEM = MUT | HUK,
+    BW = DOS | SW,
+    AINT = INT,
+    AINF = INF,
+    AICE = ICE,
 } AttackTpe;
 
 typedef void (^AttackBlock)(Event *attackEvent);
@@ -27,10 +27,10 @@ typedef void (^AttackBlock)(Event *attackEvent);
 @interface AttackType : NSObject
 
 @property (nonatomic, strong) NSString *name;
-@property (nonatomic, assign) AttackTpe intId;
+@property (nonatomic, assign) AttackTpe typeId;
 @property (nonatomic, strong) NSArray *ptypes;
 
-- (id)initWithNameAndTypes:(NSString *)name intid:(AttackTpe)tpe types:(NSArray *)ptypes;
+- (id)initWithName:(NSString *)name typeId:(AttackTpe)tpe types:(NSArray *)ptypes;
 
 @end
 

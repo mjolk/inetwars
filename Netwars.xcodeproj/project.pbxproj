@@ -18,10 +18,13 @@
 		0655ACD917F3A3C400B960C6 /* SliderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0655ACD817F3A3C400B960C6 /* SliderCell.m */; };
 		065E8CE617E99172004D2276 /* PlayerStateController.m in Sources */ = {isa = PBXBuildFile; fileRef = 065E8CE517E99172004D2276 /* PlayerStateController.m */; };
 		065E8CF117E9AFEB004D2276 /* HUDCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 065E8CF017E9AFEB004D2276 /* HUDCell.m */; };
+		0670CE1E1B2F6C630008BBE3 /* EventViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0670CE1D1B2F6C630008BBE3 /* EventViewCell.m */; };
+		0670CE2C1B3EDBE30008BBE3 /* CellConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 0670CE2B1B3EDBE30008BBE3 /* CellConfiguration.m */; };
+		0670CE311B4096930008BBE3 /* TableConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 0670CE301B4096930008BBE3 /* TableConfiguration.m */; };
 		06AC8B0C17F4262600FD7A1A /* thumb_46@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 06AC8B0B17F4262600FD7A1A /* thumb_46@2x.png */; };
 		06AC8B0E17F4263D00FD7A1A /* track_46@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 06AC8B0D17F4263D00FD7A1A /* track_46@2x.png */; };
 		06AC8B1117F6DEEA00FD7A1A /* PgHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 06AC8B1017F6DEEA00FD7A1A /* PgHeader.m */; };
-		06AC8B1417F8C32C00FD7A1A /* LookupController.m in Sources */ = {isa = PBXBuildFile; fileRef = 06AC8B1317F8C32C00FD7A1A /* LookupController.m */; };
+		06AC8B1417F8C32C00FD7A1A /* PlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 06AC8B1317F8C32C00FD7A1A /* PlayerController.m */; };
 		06AC8B4B17F9948600FD7A1A /* PlayerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 06AC8B4A17F9948600FD7A1A /* PlayerCell.m */; };
 		06AC8B4D17F9FF4C00FD7A1A /* programs_32@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 06AC8B4C17F9FF4C00FD7A1A /* programs_32@2x.png */; };
 		06AC8B5017FA04F500FD7A1A /* EventController.m in Sources */ = {isa = PBXBuildFile; fileRef = 06AC8B4F17FA04F500FD7A1A /* EventController.m */; };
@@ -84,7 +87,7 @@
 		3011AB5D17E52D1E00B45374 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3011AB5B17E52D1E00B45374 /* InfoPlist.strings */; };
 		3011AB6017E52D1E00B45374 /* NetwarsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3011AB5F17E52D1E00B45374 /* NetwarsTests.m */; };
 		3011ABAA17E545B200B45374 /* AFNetClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 3011ABA917E545B200B45374 /* AFNetClient.m */; };
-		3011ABAD17E54DF600B45374 /* PlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3011ABAC17E54DF600B45374 /* PlayerController.m */; };
+		3011ABAD17E54DF600B45374 /* AuthController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3011ABAC17E54DF600B45374 /* AuthController.m */; };
 		3011ABC117E5AB6A00B45374 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3011ABC017E5AB6A00B45374 /* MobileCoreServices.framework */; };
 		3011ABC317E5AB7400B45374 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3011ABC217E5AB7400B45374 /* SystemConfiguration.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		3011ABC517E5AEA000B45374 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3011ABC417E5AEA000B45374 /* Security.framework */; };
@@ -133,12 +136,18 @@
 		065E8CE517E99172004D2276 /* PlayerStateController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerStateController.m; sourceTree = "<group>"; };
 		065E8CEF17E9AFEB004D2276 /* HUDCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HUDCell.h; sourceTree = "<group>"; };
 		065E8CF017E9AFEB004D2276 /* HUDCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HUDCell.m; sourceTree = "<group>"; };
+		0670CE1C1B2F6C630008BBE3 /* EventViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventViewCell.h; sourceTree = "<group>"; };
+		0670CE1D1B2F6C630008BBE3 /* EventViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventViewCell.m; sourceTree = "<group>"; };
+		0670CE2A1B3EDBE30008BBE3 /* CellConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellConfiguration.h; sourceTree = "<group>"; };
+		0670CE2B1B3EDBE30008BBE3 /* CellConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellConfiguration.m; sourceTree = "<group>"; };
+		0670CE2D1B403DCA0008BBE3 /* TableConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableConfiguration.h; sourceTree = "<group>"; };
+		0670CE301B4096930008BBE3 /* TableConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableConfiguration.m; sourceTree = "<group>"; };
 		06AC8B0B17F4262600FD7A1A /* thumb_46@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "thumb_46@2x.png"; sourceTree = "<group>"; };
 		06AC8B0D17F4263D00FD7A1A /* track_46@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "track_46@2x.png"; sourceTree = "<group>"; };
 		06AC8B0F17F6DEEA00FD7A1A /* PgHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PgHeader.h; sourceTree = "<group>"; };
 		06AC8B1017F6DEEA00FD7A1A /* PgHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PgHeader.m; sourceTree = "<group>"; };
-		06AC8B1217F8C32C00FD7A1A /* LookupController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LookupController.h; sourceTree = "<group>"; };
-		06AC8B1317F8C32C00FD7A1A /* LookupController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LookupController.m; sourceTree = "<group>"; };
+		06AC8B1217F8C32C00FD7A1A /* PlayerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerController.h; sourceTree = "<group>"; };
+		06AC8B1317F8C32C00FD7A1A /* PlayerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerController.m; sourceTree = "<group>"; };
 		06AC8B4917F9948600FD7A1A /* PlayerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerCell.h; sourceTree = "<group>"; };
 		06AC8B4A17F9948600FD7A1A /* PlayerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerCell.m; sourceTree = "<group>"; };
 		06AC8B4C17F9FF4C00FD7A1A /* programs_32@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "programs_32@2x.png"; sourceTree = "<group>"; };
@@ -222,8 +231,8 @@
 		3011AB5F17E52D1E00B45374 /* NetwarsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NetwarsTests.m; sourceTree = "<group>"; };
 		3011ABA817E545B200B45374 /* AFNetClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetClient.h; sourceTree = "<group>"; };
 		3011ABA917E545B200B45374 /* AFNetClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetClient.m; sourceTree = "<group>"; };
-		3011ABAB17E54DF600B45374 /* PlayerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerController.h; sourceTree = "<group>"; };
-		3011ABAC17E54DF600B45374 /* PlayerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerController.m; sourceTree = "<group>"; };
+		3011ABAB17E54DF600B45374 /* AuthController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthController.h; sourceTree = "<group>"; };
+		3011ABAC17E54DF600B45374 /* AuthController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthController.m; sourceTree = "<group>"; };
 		3011ABC017E5AB6A00B45374 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		3011ABC217E5AB7400B45374 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		3011ABC417E5AEA000B45374 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -283,6 +292,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0670CE261B3EDB9C0008BBE3 /* Table */ = {
+			isa = PBXGroup;
+			children = (
+				0670CE301B4096930008BBE3 /* TableConfiguration.m */,
+				0670CE2A1B3EDBE30008BBE3 /* CellConfiguration.h */,
+				0670CE2B1B3EDBE30008BBE3 /* CellConfiguration.m */,
+				0670CE2D1B403DCA0008BBE3 /* TableConfiguration.h */,
+			);
+			name = Table;
+			sourceTree = "<group>";
+		};
 		3011AB2817E52D1E00B45374 = {
 			isa = PBXGroup;
 			children = (
@@ -322,6 +342,7 @@
 		3011AB3A17E52D1E00B45374 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				0670CE261B3EDB9C0008BBE3 /* Table */,
 				3011ABA717E5415C00B45374 /* Networking */,
 				3011ABA617E5413000B45374 /* Views */,
 				3011ABA517E5412500B45374 /* Controllers */,
@@ -428,16 +449,16 @@
 		3011ABA517E5412500B45374 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				3011ABAB17E54DF600B45374 /* PlayerController.h */,
-				3011ABAC17E54DF600B45374 /* PlayerController.m */,
+				3011ABAB17E54DF600B45374 /* AuthController.h */,
+				3011ABAC17E54DF600B45374 /* AuthController.m */,
 				065E8CE417E99172004D2276 /* PlayerStateController.h */,
 				065E8CE517E99172004D2276 /* PlayerStateController.m */,
 				06DED8BA17ED4D5D0067EAC5 /* ProgramController.h */,
 				06DED8BB17ED4D5D0067EAC5 /* ProgramController.m */,
 				06DED8C617ED9FDE0067EAC5 /* AllocController.h */,
 				06DED8C717ED9FDE0067EAC5 /* AllocController.m */,
-				06AC8B1217F8C32C00FD7A1A /* LookupController.h */,
-				06AC8B1317F8C32C00FD7A1A /* LookupController.m */,
+				06AC8B1217F8C32C00FD7A1A /* PlayerController.h */,
+				06AC8B1317F8C32C00FD7A1A /* PlayerController.m */,
 				06AC8B4E17FA04F500FD7A1A /* EventController.h */,
 				06AC8B4F17FA04F500FD7A1A /* EventController.m */,
 				06AC8B5717FB4AC200FD7A1A /* AttackController.h */,
@@ -492,6 +513,8 @@
 				30E822C71ADC2D2800549E95 /* ClanCell.m */,
 				306828271AEFACAD00866DDF /* LoginCell.h */,
 				306828281AEFACAD00866DDF /* LoginCell.m */,
+				0670CE1C1B2F6C630008BBE3 /* EventViewCell.h */,
+				0670CE1D1B2F6C630008BBE3 /* EventViewCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -569,7 +592,7 @@
 				ORGANIZATIONNAME = mjolk;
 				TargetAttributes = {
 					3011AB3017E52D1E00B45374 = {
-						DevelopmentTeam = 48L4L8KNFZ;
+						DevelopmentTeam = 63WMN8YASH;
 					};
 				};
 			};
@@ -705,15 +728,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0670CE1E1B2F6C630008BBE3 /* EventViewCell.m in Sources */,
 				30068B531839887C00F97462 /* InviteController.m in Sources */,
 				3011AB4117E52D1E00B45374 /* main.m in Sources */,
 				3011AB4517E52D1E00B45374 /* AppDelegate.m in Sources */,
 				30F8729F1833EF2800EC7308 /* ClanController.m in Sources */,
 				305761891AC03DA800044038 /* TrackerCell.m in Sources */,
 				0655ACD917F3A3C400B960C6 /* SliderCell.m in Sources */,
-				06AC8B1417F8C32C00FD7A1A /* LookupController.m in Sources */,
+				06AC8B1417F8C32C00FD7A1A /* PlayerController.m in Sources */,
 				3011ABAA17E545B200B45374 /* AFNetClient.m in Sources */,
-				3011ABAD17E54DF600B45374 /* PlayerController.m in Sources */,
+				3011ABAD17E54DF600B45374 /* AuthController.m in Sources */,
 				06AC8B5C17FB4B5800FD7A1A /* Attack.m in Sources */,
 				306B8DEF17E817DE00F7C24D /* Player.m in Sources */,
 				306B8DF217E86B5500F7C24D /* CreatePlayerCell.m in Sources */,
@@ -722,6 +746,7 @@
 				06B714891801DEC000B977A1 /* PickerCell.m in Sources */,
 				06AC8B5917FB4AC200FD7A1A /* AttackController.m in Sources */,
 				30F872A51835201D00EC7308 /* JSONResponseSerializerWithErrorData.m in Sources */,
+				0670CE311B4096930008BBE3 /* TableConfiguration.m in Sources */,
 				06AC8B5617FA056200FD7A1A /* Event.m in Sources */,
 				307D16BB183D161C00ED7E7E /* Invite.m in Sources */,
 				306828291AEFACAD00866DDF /* LoginCell.m in Sources */,
@@ -734,6 +759,7 @@
 				06DED8B717ECA5CB0067EAC5 /* NavCell.m in Sources */,
 				06DED8BC17ED4D5D0067EAC5 /* ProgramController.m in Sources */,
 				06DED8BF17ED4D8B0067EAC5 /* Program.m in Sources */,
+				0670CE2C1B3EDBE30008BBE3 /* CellConfiguration.m in Sources */,
 				30E822C81ADC2D2800549E95 /* ClanCell.m in Sources */,
 				309C525B1AC4A3B00011C014 /* DetailTextCell.m in Sources */,
 				06AC8B5317FA051F00FD7A1A /* EventCell.m in Sources */,
@@ -846,7 +872,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Dries Pauwels (J925YW6SED)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Netwars/Netwars-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -869,7 +895,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Dries Pauwels (J925YW6SED)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Netwars/Netwars-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -891,6 +917,8 @@
 			baseConfigurationReference = EC95371CF107EF4520E8F73F /* Pods.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Netwars.app/Netwars";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Dries Pauwels (J925YW6SED)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Dries Pauwels (J925YW6SED)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
@@ -909,6 +937,8 @@
 			baseConfigurationReference = 051EC9F84DF2F3EBE022CEAA /* Pods.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Netwars.app/Netwars";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Dries Pauwels (J925YW6SED)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Dries Pauwels (63WMN8YASH)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
